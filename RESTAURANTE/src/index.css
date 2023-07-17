@@ -1,0 +1,20 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+.myh1{
+    font-family: 'Pacifico', cursive;
+
+}
+.p1{
+    font-family: 'Pacifico', cursive;
+
+}
+.font2{
+    font-family: 'Lobster Two', cursive;
+}
