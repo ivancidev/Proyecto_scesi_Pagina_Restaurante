@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import Order from "../components/Orden/Order";
 import Comentarios from "../components/Comentarios/Comentarios";
+import ViewCompra from "../Views/ViewCompra";
 
 const Card = (props) => {
   const { showOrder, setShowOrder } = props;
@@ -12,6 +13,7 @@ const Card = (props) => {
   const { propCliente } = props;
   const { productos, setProductos } = props;
   const [idPlato, setIdPlato] = useState(0);
+  const [mostrarBotones, setMostrarBotones] = useState(false);
 
   useEffect(() => {
     setTotalPrecio(Math.abs(orden - totalPrecio));
@@ -56,6 +58,10 @@ const Card = (props) => {
     quitarCantidad(idPlato);
     setIdPlato(0);
   });
+
+  const handleCompraClick = () => {
+    setMostrarBotones(true);
+  };
 
   return (
     <div
@@ -137,11 +143,30 @@ const Card = (props) => {
             <span>{Math.abs(totalPrecio)}</span>
           </div>
           <div>
-            <button className="bg-[#ec7c6a] w-full py-2 px-4 rounded-lg">
+            <button
+              onClick={handleCompraClick}
+              className="bg-[#ec7c6a] w-full py-2 px-4 rounded-lg"
+            >
               Comprar
             </button>
           </div>
         </div>
+      </div>
+      <div
+        className={`${
+          mostrarBotones
+            ? "fixed inset-0 flex items-center justify-center z-50"
+            : "hidden"
+        }`}
+      >
+        <ViewCompra
+          mostrarBotones={mostrarBotones}
+          setMostrarBotones={setMostrarBotones}
+          propCliente = {propCliente}
+          productos = {productos}
+          totalPrecio = {totalPrecio}
+
+        />
       </div>
     </div>
   );

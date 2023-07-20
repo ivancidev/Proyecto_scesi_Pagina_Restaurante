@@ -98,6 +98,37 @@ app.post("/restaurante/comentarios", (req, res) => {
   connection.end();
 });
 
+app.post('/detalleCompra', (req, res) => {
+  const { nombre, direccion, telefono, tarjeta } = req.body;
+  const nombresPlatos = req.body.nombresPlatos; // Concatenar los nombres de los platos en una cadena
+  const totalPrecio = req.body.totalPrecio;
+  const fechaEntrega = req.body.fechaEntrega;
+  const horaEnvio = req.body.horaEnvio;
+
+  const detalleCompraData = {
+    nombre,
+    direccion,
+    telefono,
+    tarjeta,
+    nombresPlatos,
+    totalPrecio,
+    fechaEntrega,
+    horaEnvio,
+  };
+  const connection = mysql.createConnection(baseD);
+
+  connection.query('INSERT INTO detalleCompra SET ?', detalleCompraData, (err, result) => {
+    if (err) {
+      console.error('Error al insertar los datos:', err);
+      res.status(500).send('Error al insertar los datos');
+    } else {
+      console.log('Datos insertados correctamente:', result);
+      res.status(200).send('Compra realizada con éxito');
+    }
+    connection.end(); // Cierra la conexión después de ejecutar la consulta
+  });
+});
+
 app.get("/comentarios", (req, res) => {
   var connection = mysql.createConnection(baseD);
   connection.query("SELECT * FROM comentario", (error, result) => {
@@ -131,7 +162,7 @@ app.get("/platos/:tipo", (req, res) => {
   var connection = mysql.createConnection(baseD);
   var consulta = ""
   
-  // Utilizamos la función escape de mysql para evitar posibles ataques de inyección de SQL
+  // la función escape de mysql para evitar posibles ataques de inyección de SQL
   const tipoPlatoEscaped = connection.escape(`${tipoPlato}%`);
   if(tipoPlato == "fritos"){
     consulta = "SELECT * FROM plato WHERE nombrePlato NOT LIKE '%sopa%' AND nombrePlato NOT LIKE '%jugo%' AND nombrePlato NOT LIKE '%desayuno%' AND nombrePlato NOT LIKE '%postre%'"
@@ -169,5 +200,7 @@ app.get("/platos/:tipo", (req, res) => {
 	});
 	connection.end();
   });
+
+
 
 app.listen(4000, () => console.log("hola soy el servidor"));
