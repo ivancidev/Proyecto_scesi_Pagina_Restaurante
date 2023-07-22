@@ -25,16 +25,14 @@ const Login = () => {
 
     // Validación del campo email
     if (!cliente.correo) {
-      nuevosErrores.correo = "El email es obligatorio";
+      nuevosErrores.correo = "El correo es obligatorio";
     } else if (!/\S+@\S+\.\S+/.test(cliente.correo)) {
-      nuevosErrores.correo = "El email no es válido";
+      nuevosErrores.correo = "El correo no es válido";
     }
 
     // Validación del campo password
     if (!cliente.contraseña) {
       nuevosErrores.contraseña = "La contraseña es obligatoria";
-    } else if (cliente.contraseña.length < 6) {
-      nuevosErrores.contraseña = "La contraseña debe tener al menos 6 caracteres";
     }else if(cliente.contraseña != clienteBd.contraseña){
       nuevosErrores.contraseña = "La contraseña es incorrecta";
     }
