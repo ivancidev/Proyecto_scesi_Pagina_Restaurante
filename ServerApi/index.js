@@ -60,14 +60,14 @@ app.post("/cambioContraseña", (req, res) => {
 });
 
 app.post("/restaurante/registro", (req, res) => {
-  const { nombre, correo, contraseña, telefono, fecha, genero, avatar } =
+  const { nombre, correo, contraseña, telefono, avatar } =
     req.body;
   const params = [
-    [nombre, correo, contraseña, telefono, fecha, genero, avatar],
+    [nombre, correo, contraseña, telefono, avatar],
   ];
   var connection = mysql.createConnection(baseD);
   connection.query(
-    "INSERT INTO cliente (nombre, correo, contraseña, telefono, fecha, genero, avatar) VALUES ?",
+    "INSERT INTO cliente (nombre, correo, contraseña, telefono, avatar) VALUES ?",
     [params],
     (err, result) => {
       if (err) {
@@ -128,6 +128,43 @@ app.post('/detalleCompra', (req, res) => {
     connection.end(); // Cierra la conexión después de ejecutar la consulta
   });
 });
+
+app.post('/detalleCompraRestaurante', (req, res) => {
+  const {nombre, telefono, tarjeta} = req.body
+  const nombresPlatos = req.body.nombresPlatos
+  const totalPrecio = req.body.totalPrecio
+  const fechaCompra = req.body.fechaEntrega;
+  const horaCompra = req.body.horaEnvio;
+  const tiempoLlegada = req.body.valorCombox
+  const numeroMesa = req.body.numeroMesa
+
+  var detalleCompraData = {
+    numeroMesa,
+    tarjeta,
+    nombresPlatos,
+    tiempoLlegada,
+    fechaCompra,
+    horaCompra,
+    telefono,
+    nombre,
+    totalPrecio
+  }
+
+  const connection = mysql.createConnection(baseD);
+
+  connection.query('INSERT INTO detallecomprarestaurante SET ?', detalleCompraData, (err, result) => {
+    if (err) {
+      console.error('Error al insertar los datos:', err);
+      res.status(500).send('Error al insertar los datos');
+    } else {
+      console.log('Datos insertados correctamente:', result);
+      res.status(200).send('Compra realizada con éxito');
+    }
+    connection.end(); // Cierra la conexión después de ejecutar la consulta
+  });
+
+
+})
 
 app.get("/comentarios", (req, res) => {
   var connection = mysql.createConnection(baseD);
@@ -200,6 +237,8 @@ app.get("/platos/:tipo", (req, res) => {
 	});
 	connection.end();
   });
+
+
 
 
 

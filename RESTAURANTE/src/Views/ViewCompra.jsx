@@ -8,7 +8,7 @@ const ViewCompra = (props) => {
   const { mostrarBotones, setMostrarBotones } = props;
   const [seleccionOpcion, setSeleccionOpcion] = useState(null);
   const [abrirModal, setAbrirModal] = useState(false);
-  const {propCliente} = props
+  const {cliente} = props
   const{productos} = props
   const {totalPrecio} = props
 
@@ -28,20 +28,9 @@ const ViewCompra = (props) => {
           />
           <div className={`${abrirModal ? "flex justify-center" : "hidden"}`}>
             <div
-              className={`${
-                seleccionOpcion == "Delivery" ? "flex justify-center" : "hidden"
-              }`}
+              className={`flex justify-center`}
             >
-              <DetalleCompra setAbrirModal={setAbrirModal} propCliente = {propCliente} productos = {productos} totalPrecio={totalPrecio} setMostrarBotones = {setMostrarBotones}/>
-            </div>
-            <div
-              className={`${
-                seleccionOpcion == "Restaurante"
-                  ? "flex justify-center"
-                  : "hidden"
-              }`}
-            >
-              <p>Restaurante</p>
+              <DetalleCompra seleccionOpcion = {seleccionOpcion} setAbrirModal={setAbrirModal} cliente = {cliente} productos = {productos} totalPrecio={totalPrecio} setMostrarBotones = {setMostrarBotones}/>
             </div>
           </div>
         </div>

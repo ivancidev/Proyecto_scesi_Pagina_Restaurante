@@ -51,7 +51,7 @@ const Comentarios = (props) => {
     };
 
     fetchClient();
-  }, [propCliente.nombre]);
+  }, [propCliente.correo]);
 
   useEffect(()=>{
     const fetchComentarios = async()=>{

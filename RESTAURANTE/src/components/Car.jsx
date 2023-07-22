@@ -14,15 +14,31 @@ const Card = (props) => {
   const { productos, setProductos } = props;
   const [idPlato, setIdPlato] = useState(0);
   const [mostrarBotones, setMostrarBotones] = useState(false);
+  const [cliente, setCliente] = useState([]);
 
-  useEffect(() => {
-    setTotalPrecio(Math.abs(orden - totalPrecio));
-    setOrden(0);
-  });
 
   const handleClickComentarios = () => {
     setComentarios(true);
   };
+
+  useEffect(() => {
+    
+    const fetchCliente = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:4000/cliente/correo/${propCliente.correo}`);
+          if(!response.ok){
+            throw new Error('Error al obtener los datos del cliente');
+          }
+        const data = await response.json();
+        setCliente(data);
+      } catch (error) {
+        console.error("Error al obtener el correo del cliente:", error);
+      }
+    };
+
+    fetchCliente();
+  }, []);
 
   const quitarCantidad = (productoId) => {
     // Buscar el producto por su ID en el array
@@ -131,8 +147,8 @@ const Card = (props) => {
         {/* Comprar */}
         <div
           className={`${cambioFondo ? "bg-stone-800" : "bg-[#d60e0e]"} ${
-            comentarios ? "hidden" : "block"
-          } relative w-full bottom-0 left-0 p-4`}
+            comentarios ? "hidden" : "block relative w-full bottom-0 left-0 p-4"
+          }`}
         >
           <div className="flex items-center justify-between mb-4">
             <span className="text-gray-400">Descuento</span>
@@ -162,7 +178,7 @@ const Card = (props) => {
         <ViewCompra
           mostrarBotones={mostrarBotones}
           setMostrarBotones={setMostrarBotones}
-          propCliente = {propCliente}
+          cliente = {cliente}
           productos = {productos}
           totalPrecio = {totalPrecio}
 
