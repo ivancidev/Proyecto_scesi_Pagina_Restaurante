@@ -13,7 +13,7 @@ En el transurso de los dias se subira mas informacion.
 
 Necesitarás tener instalado ``` node.js ``` a partir de la versión 14 y tener acceso a una terminal para seguir los siguientes pasos:
 >
-1. Entramos a la carpeta que acabamos de clonar e instalamos las dependencias necesarias
+1. Entramos a la carpeta e instalamos las dependencias necesarias
 ```
 npm install
 #
