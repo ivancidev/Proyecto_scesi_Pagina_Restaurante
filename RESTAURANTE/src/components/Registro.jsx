@@ -94,40 +94,6 @@ const Registro = () => {
     return nuevosErrores;
   };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   // Validar campos antes de enviar el formulario
-  //   if (!newUser.nombre) {
-  //     alert('Debes ingresar tu nombre');
-  //     return;
-  //   }else if (!newUser.correo || !/^\S+@\S+\.\S+$/.test(newUser.correo)) {
-  //     alert('Debes ingresar un correo válido');
-  //     return;
-  //   }else if (!newUser.telefono) {
-  //     alert('Debes ingresar tu número de teléfono');
-  //     return;
-  //   }else if (!newUser.contraseña || newUser.contraseña.length < 6) {
-  //     alert('La contraseña debe tener al menos 6 caracteres');
-  //     return;
-  //   }else if(newUser.avatar == ""){
-  //     alert('Selecciona un avatar');
-  //   }else{
-  //     // Aquí enviarías los datos a tu servidor o realizarías las acciones necesarias con los datos
-  //   alert('Formulario válido, se enviarán los datos');
-  //     event.preventDefault()
-  //         axios.post('http://localhost:4000/restaurante/registro', newUser).then(({data})=>{
-  //             console.log(data)
-  //             console.log("Se encontro al cliente")
-  //             navigate('/productos', {state:{prop:newUser}})
-
-  //         }).catch(({response})=>{
-  //             event.preventDefault()
-  //             console.log(response.data)
-  //         })
-  //   }
-
-  // };
-
   return (
     <section className="flex items-center justify-center h-auto bg-[url(./assets/imagenes/fondoregistro.jpg)] bg-cover  bg-center w-[100%] overflow-hidden">
       <div className="w-[100%] flex h-[100vh] ml-[10px] justify-between">
