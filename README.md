@@ -19,6 +19,8 @@ En el transurso de los dias se subira mas informacion.
 
 [![Captura-de-pantalla-2023-07-22-191700.png](https://i.postimg.cc/brVFhF7d/Captura-de-pantalla-2023-07-22-191700.png)](https://postimg.cc/ctYc7T4N)
 
+[![Captura-de-pantalla-2023-07-22-191343.png](https://i.postimg.cc/JzstMDkh/Captura-de-pantalla-2023-07-22-191343.png)](https://postimg.cc/RWzvT0Gr)
+
 
 # 📱 En movil el comentario
 
