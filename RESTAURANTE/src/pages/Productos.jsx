@@ -98,11 +98,11 @@ function Productos() {
         key={plato.idPlato}
       >
         <Card
-          img={plato.imagen}
-          description={plato.descripcionPlato}
-          price={plato.precio}
-          inventory={plato.disponibilidad}
-          name={plato.nombrePlato}
+          imagen={plato.imagen}
+          descripcion={plato.descripcionPlato}
+          precio={plato.precio}
+          disponibilidad={plato.disponibilidad}
+          nombrePlato={plato.nombrePlato}
         />
         <div className="flex flex-col h-[100%] gap-4 justify-end">
           <button
