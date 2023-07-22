@@ -17,6 +17,7 @@ import logo from "../assets/imagenes/logo.png";
 import { BsXCircleFill } from "react-icons/bs";
 import ViewError from "../Views/ViewError";
 import ChangePassword from "../components/changePassword/ChangePassword";
+import { FaShoppingCart } from "react-icons/fa";
 
 function Productos() {
   const [showMenu, setShowMenu] = useState(false);
@@ -117,10 +118,10 @@ function Productos() {
         />    
         <div className="flex flex-col h-[100%] gap-4 justify-end">
           <button
-            className={`${plato.disponibilidad == "Disponible" ? "block pt-2 pb-2 pr-12 pl-12 bg-orange-400 rounded-[10px] text-[14px] text-white":"hidden"} `}
+            className={`${plato.disponibilidad == "Disponible" ? "flex gap-2 pt-2 pb-2 pr-12 pl-12 bg-orange-400 rounded-[10px] text-[14px] text-white":"hidden"} `}
             onClick={() => agregarProducto(plato)}
           >
-            Agregar
+            Agregar< FaShoppingCart className="mr-3 text-[20px]"/>
           </button>
           <button
             className={`${plato.disponibilidad == "No disponible" ? "block pt-2 pb-2 pr-12 pl-12 bg-red-600 rounded-[10px] text-[14px] text-white":"hidden"} `}

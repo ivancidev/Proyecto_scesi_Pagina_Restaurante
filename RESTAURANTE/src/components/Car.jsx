@@ -4,6 +4,7 @@ import Order from "../components/Orden/Order";
 import Comentarios from "../components/Comentarios/Comentarios";
 import ViewCompra from "../Views/ViewCompra";
 import ViewError from "../Views/ViewError";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Card = (props) => {
   const { showOrder, setShowOrder } = props;
@@ -111,8 +112,11 @@ const Card = (props) => {
             } text-white p-3 py-2 px-4 rounded-xl`}
             onClick={() => setComentarios(false)}
           >
-            Carrito Compra
+            
+            <p className="mr-6 flex justify-center gap-4 items-center">Carrito< FaShoppingCart className="mr-3 text-[20px]"/></p>
+            
           </button>
+          <p></p>
           <button
             className={`${
               comentarios ? "bg-[#1F1D2B] " : "bg-none border border-white"
