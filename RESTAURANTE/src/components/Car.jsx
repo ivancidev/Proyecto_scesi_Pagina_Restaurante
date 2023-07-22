@@ -3,6 +3,7 @@ import { RiCloseLine } from "react-icons/ri";
 import Order from "../components/Orden/Order";
 import Comentarios from "../components/Comentarios/Comentarios";
 import ViewCompra from "../Views/ViewCompra";
+import ViewError from "../Views/ViewError";
 
 const Card = (props) => {
   const { showOrder, setShowOrder } = props;
@@ -15,6 +16,7 @@ const Card = (props) => {
   const [idPlato, setIdPlato] = useState(0);
   const [mostrarBotones, setMostrarBotones] = useState(false);
   const [cliente, setCliente] = useState([]);
+  const [mostrarError, setMostrarError] = useState(false)
 
 
   const handleClickComentarios = () => {
@@ -76,7 +78,15 @@ const Card = (props) => {
   });
 
   const handleCompraClick = () => {
-    setMostrarBotones(true);
+    if(productos.length == 0){
+      setMostrarError(true)
+      setTimeout(() => {
+        setMostrarError(false);
+      }, 3000);
+    }else{
+      setMostrarBotones(true);
+    }
+    
   };
 
   return (
@@ -87,6 +97,7 @@ const Card = (props) => {
         showOrder ? "right-0" : "-right-full"
       }`}
     >
+      <ViewError mostrar = {mostrarError} contenido={"Agrega productos al carrito de compra"}/>
       <div className="relative pt-16 lg:pt-3 text-gray-300 p-8 h-full">
         <RiCloseLine
           onClick={() => setShowOrder(false)}
@@ -100,7 +111,7 @@ const Card = (props) => {
             } text-white p-3 py-2 px-4 rounded-xl`}
             onClick={() => setComentarios(false)}
           >
-            Orden Cliente
+            Carrito Compra
           </button>
           <button
             className={`${
