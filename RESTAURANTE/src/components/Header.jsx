@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { RiSearch2Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import { BsXCircleFill } from "react-icons/bs";
+import logo from "../assets/imagenes/logo.png";
+
 
 const Header = (props) => {
   const [searchValue, setSearchValue] = useState("");
   const [platos, setPlatos] = useState([]);
   const navigate = useNavigate();
   const { plato, setPlato } = props;
+  const [comida, setComida] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   
   const handleSearchChange = (event) => {
@@ -32,9 +37,65 @@ const Header = (props) => {
 
     fetchPlatos();
   }, []);
+  const handleOpenClick = (c) => {
+    setModalOpen(true);
+    setComida(c);
+  };
+
+  const cerrarModal = ()=>{
+    setModalOpen(false)
+    setSearchValue("")
+  }
 
   return (
     <header>
+
+      <div
+        className={`fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75 ${
+          modalOpen ? "flex" : "hidden"
+        }`}
+      >
+        <div className="items-center justify-center flex w-full h-full overflow-auto">
+          <div className="bg-red-100 p-9 rounded-[12px] md:rounded-[20px] md:mt-[-2px] mt-24 md:w-[75%] w-[95%] relative">
+            <BsXCircleFill
+              className="text-[30px] text-orange-500 transition-all absolute md:top-5 top-56 right-4 cursor-pointer"
+              onClick={cerrarModal}
+            />
+            <div className="md:flex md:mt-10 mt-52 md:justify-center">
+              <div className="md:w-[400px] md:mr-6 md:mt-[-2px] mt-4">
+                <h1 className="p1 p-1 text-center text-2xl text-orange-500 whitespace-nowrap">
+                  {comida.nombrePlato}
+                </h1>
+                <div className="mt-4 mb-4 flex justify-center">
+                  <img
+                    src={comida.imagen}
+                    alt="no existe imagen"
+                    className="rounded-lg w-full h-auto md:w-[400px]"
+                  />
+                </div>
+                <p className="p1 text-center text-orange-500 p-1 text-lg text-[25px]">
+                  {comida.precio}Bs
+                </p>
+                <p className="p1 text-[20px] text-center text-orange-500 p-1">
+                  {comida.disponibilidad}
+                </p>
+                <p className="mt-5">{comida.descripcionPlato}</p>
+              </div>
+              <div className="md:w-[500px] mt-4 md:mt-0">
+                <div className="flex justify-center p-4">
+                  <img
+                    src={logo}
+                    alt="no disponible"
+                    className="w-44 h-44 rounded-full"
+                  />
+                </div>
+                <p className="text-left">{comida.descripcionServicio}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="absolute ml-7 hidden md:block">
         <p className="text-orange-600 text-[35px] p1"> ¡Bienvenido!</p>
       </div>
@@ -63,7 +124,7 @@ const Header = (props) => {
                   <div
                     className={`p-3 w-full flex text-gray-300 bg-orange-600  hover:bg-[#1F1D2B] hover:cursor-pointer hover:text-white hover:rounded `}
                     key={card.idPlato}
-                    onClick={() => navigate(`/${card.nombrePlato}`)}
+                    onClick={()=>handleOpenClick(card)}
                   >
                     <ul className="flex items-center">
                       <img

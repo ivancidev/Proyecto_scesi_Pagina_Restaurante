@@ -14,7 +14,7 @@ const Sidebar = (props) => {
     contraseña: "",
     newContraseña: "",
   })
-  const [ventana, setVentana] = useState(false)
+  const {ventana, setVentana}= props
   const {cambioFondo, setFondo} = props
   const navigate = useNavigate()
   const [cliente, setCliente] = useState([]);
@@ -76,47 +76,7 @@ const Sidebar = (props) => {
         showMenu ? "left-0" : "-left-full"
       }`}
     >
-      <div className={`flex justify-center z-50 ${ventana ? "flex transition-all":"hidden transition-all"}`}>
-        <div className="absolute flex items-center justify-center ml-[130vh] mt-[10vh] transition-all">
-        <form className=' w-[420px] p-4 h-[620px] rounded-[20px] bg-red-600'>
-          <div className='w-full'>
-            <div className="flex justify-end hover:cursor-pointer" onClick={()=> setVentana(false)}>
-              <BsXCircleFill className="text-[26px] text-white"/>
-            </div>
-            <div className='flex justify-center'>
-              <img src={cliente.avatar} alt="logo" className='rounded-[50%] w-[100px] mb-5'/>
-            </div>  
-          </div>
-          
-            <label className="font2 block text-white font-semibold mb-2" id='nom'> Usuario: </label>
-
-            <input type="text"  className="border-b-[4px] 
-             border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50" name='nombre'  aria-labelledby='nom' placeholder='Ingresa tu nombre' value={cambioCuenta.nombre} onChange={inputChange}/>
-
-            <label className="font2 block text-white font-semibold mb-2 mt-4" id='nom'> Nuevo Usuario: </label>
-
-            <input type="text"  className="border-b-[4px] 
-          border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50" name='newNombre'  aria-labelledby='nom' placeholder='Ingresa tu nuevo usuario'
-            value={cambioCuenta.newNombre} onChange={inputChange}/>
-
-            <label className="font2 block text-white font-semibold mb-2 mt-5" id='cont'>Contraseña:</label>
-
-            <input type="password" autoComplete='on'  className="border-b-[4px] 
-             border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50" name='contraseña' aria-labelledby='cont' placeholder='Ingresa tu contraseña' value={cambioCuenta.contraseña} onChange={inputChange}/>
-            
-            <label className="font2 block text-white font-semibold mb-2 mt-5" id='cont'>Nueva Constraseña:</label>
-
-            <input type="password" autoComplete='on'  className="border-b-[4px] 
-             border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50" name='newContraseña' aria-labelledby='cont' placeholder='Ingresa tu nueva contraseña' value={cambioCuenta.newContraseña} onChange={inputChange}/>
-
-            <div className="font2 flex justify-center">
-            <button onClick={handleSubmit}  className="bg-orange-600 text-white px-16 py-2 rounded-lg mt-[30px] hover:bg-orange-500" >Cambiar</button>
-            
-          </div>
-        </form>
-        </div>
-
-      </div>
+      
       <div>
         <div className="flex justify-end">
           <button onClick={() => setShowMenu(false)}>

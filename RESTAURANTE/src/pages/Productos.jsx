@@ -16,6 +16,7 @@ import { BsPersonCircle } from "react-icons/bs";
 import logo from "../assets/imagenes/logo.png";
 import { BsXCircleFill } from "react-icons/bs";
 import ViewError from "../Views/ViewError";
+import ChangePassword from "../components/changePassword/ChangePassword";
 
 function Productos() {
   const [showMenu, setShowMenu] = useState(false);
@@ -32,6 +33,7 @@ function Productos() {
   const [plato, setPlato] = useState("fritos");
   const [productos, setProductos] = useState([]);
   const [mostrarError, setMostrarError] = useState(false)
+  const [ventana, setVentana] = useState(false)
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -112,7 +114,7 @@ function Productos() {
           precio={plato.precio}
           disponibilidad={plato.disponibilidad}
           nombrePlato={plato.nombrePlato}
-        />
+        />    
         <div className="flex flex-col h-[100%] gap-4 justify-end">
           <button
             className={`${plato.disponibilidad == "Disponible" ? "block pt-2 pb-2 pr-12 pl-12 bg-orange-400 rounded-[10px] text-[14px] text-white":"hidden"} `}
@@ -144,6 +146,7 @@ function Productos() {
         cambioFondo ? "bg-stone-800" : "bg-white"
       } w-full min-h-screen`}
     >
+      <ChangePassword propUser = {propUser} ventana = {ventana} setVentana = {setVentana}/>
       <ViewError mostrar = {mostrarError} contenido = {"Producto no disponible por el momento"}/>
       <div
         className={`fixed inset-0 z-50 bg-white bg-transparent p-4 ${
@@ -207,6 +210,7 @@ function Productos() {
           propCliente={propCliente}
           cambioFondo={cambioFondo}
           setFondo={setFondo}
+          ventana = {ventana} setVentana = {setVentana}
         />
       </div>
 
