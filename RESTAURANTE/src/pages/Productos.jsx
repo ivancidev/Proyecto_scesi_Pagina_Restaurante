@@ -15,6 +15,7 @@ import { useLocation } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
 import logo from "../assets/imagenes/logo.png";
 import { BsXCircleFill } from "react-icons/bs";
+import ViewError from "../Views/ViewError";
 
 function Productos() {
   const [showMenu, setShowMenu] = useState(false);
@@ -30,6 +31,7 @@ function Productos() {
   const propUser = location.state?.prop;
   const [plato, setPlato] = useState("fritos");
   const [productos, setProductos] = useState([]);
+  const [mostrarError, setMostrarError] = useState(false)
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -48,6 +50,13 @@ function Productos() {
 
   const handlePrecio = (p) => {
     setTotalPrecio(parseInt(totalPrecio) + parseInt(p));
+  };
+
+  const handleButtonErrorClick = () => {
+    setMostrarError(true);
+    setTimeout(() => {
+      setMostrarError(false);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -106,10 +115,16 @@ function Productos() {
         />
         <div className="flex flex-col h-[100%] gap-4 justify-end">
           <button
-            className="pt-2 pb-2 pr-12 pl-12 bg-orange-400 rounded-[10px] text-[14px] text-white"
+            className={`${plato.disponibilidad == "Disponible" ? "block pt-2 pb-2 pr-12 pl-12 bg-orange-400 rounded-[10px] text-[14px] text-white":"hidden"} `}
             onClick={() => agregarProducto(plato)}
           >
             Agregar
+          </button>
+          <button
+            className={`${plato.disponibilidad == "No disponible" ? "block pt-2 pb-2 pr-12 pl-12 bg-red-600 rounded-[10px] text-[14px] text-white":"hidden"} `}
+            onClick={handleButtonErrorClick}
+          >
+            No disponible
           </button>
           <button
             className="pt-2 pb-2 bg-orange-400 rounded-[10px] text-[14px] text-white"
@@ -119,6 +134,7 @@ function Productos() {
           </button>
         </div>
       </div>
+      
     );
   });
 
@@ -128,6 +144,7 @@ function Productos() {
         cambioFondo ? "bg-stone-800" : "bg-white"
       } w-full min-h-screen`}
     >
+      <ViewError mostrar = {mostrarError} contenido = {"Producto no disponible por el momento"}/>
       <div
         className={`fixed inset-0 z-50 bg-white bg-transparent p-4 ${
           modalOpen ? "flex" : "hidden"
