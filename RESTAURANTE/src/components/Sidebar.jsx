@@ -53,7 +53,7 @@ const Sidebar = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-      axios.post('http://localhost:4000/cambioContraseña', cambioCuenta).then(({data})=>{
+      axios.post('http://localhost:4000/cambioUsuario', cambioCuenta).then(({data})=>{
           console.log(data)
           navigate('/login')
       }).catch(({response})=>{

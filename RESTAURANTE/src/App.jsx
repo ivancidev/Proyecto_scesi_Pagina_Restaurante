@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Login from "./components/Login";
+import Login from "./pages/Login";
 import Productos from "./pages/Productos";
-import Registro from "./components/Registro";
+import Registro from "./pages/Registro";
 import ViewCard from "./Views/ViewCard";
 import { useEffect, useState } from "react";
 import PrivateRouter from "./routes/PrivateRouter";
@@ -38,8 +38,8 @@ const App = () => {
     <>
       <Router>
         <Routes>
+          <Route path="/" exact element={<Home />}></Route>
           <Route element={<PrivateRouter />}>
-            <Route path="/" exact element={<Home />}></Route>
             <Route path="/productos" element={<Productos />}></Route>
             <Route path="/registro" element={<Registro />}></Route>
             {routes.map((route) => (
@@ -51,7 +51,6 @@ const App = () => {
             ))}
 
             <Route path="*" element={<NotFound />} />
-
           </Route>
 
           <Route path="/login" element={<Login />}></Route>

@@ -41,8 +41,8 @@ app.post("/restaurante/cliente", (req, res) => {
   connection.end();
 });
 
-app.post("/cambioContraseña", (req, res) => {
-  const { nombre, newNombre, contraseña, newContraseña } = req.body;
+app.post("/cambioUsuario", (req, res) => {
+  const { nombre, newNombre, newContraseña } = req.body;
   const params = [newNombre, newContraseña, nombre];
   var connection = mysql.createConnection(baseD);
   connection.query(
