@@ -8,12 +8,6 @@ import { useNavigate } from 'react-router-dom'
 const Sidebar = (props) => {
   const { showMenu, setShowMenu } = props
   const{propUser, setUser} = props
-  const [cambioCuenta, setCambio] = useState({
-    nombre: "",
-    newNombre:"",
-    contraseña: "",
-    newContraseña: "",
-  })
   const {ventana, setVentana}= props
   const {cambioFondo, setFondo} = props
   const navigate = useNavigate()
@@ -42,25 +36,6 @@ const Sidebar = (props) => {
 
   const handlClickVentana = () =>{
     setVentana(!ventana)
-  }
-
-  const inputChange = (event)=>{
-    setCambio({
-        ...cambioCuenta,
-        [event.target.name]: event.target.value
-    })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-      axios.post('http://localhost:4000/cambioUsuario', cambioCuenta).then(({data})=>{
-          console.log(data)
-          navigate('/login')
-      }).catch(({response})=>{
-          e.preventDefault()
-          console.log(response.data)
-      })
-
   }
 
   const cerrarPaginaAnterior = () => {
