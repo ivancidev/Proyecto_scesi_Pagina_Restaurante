@@ -81,10 +81,8 @@ const Comentarios = (props) => {
   return (
     <header>
       <div className="p-4">
-        <h2 className="text-xl font-bold mb-4">Comentarios de las personas</h2>
-
         {comentariosBD.map((comment) => (
-          <div className="bg-white rounded-lg shadow p-4 mb-4" key={comment.idComentario}>
+          <div className="bg-white rounded-[15px] shadow p-4 mb-4" key={comment.idComentario}>
             <div className="flex items-center">
               <img
                 className="w-12 h-12 rounded-full mr-4"
@@ -102,10 +100,10 @@ const Comentarios = (props) => {
           </div>
         ))}
         {comments.map((comment, index) => (
-          <div className="bg-white rounded-lg shadow p-4 mb-4" key={index}>
+          <div className="bg-white shadow rounded-[15px] p-4 mb-4" key={index}>
             <div className="flex items-center">
               <img
-                className="w-10 h-10 rounded-full mr-4"
+                className="w-12 h-12 rounded-full mr-4"
                 src={cliente.avatar}
                 alt="Avatar del usuario"
               />
@@ -125,11 +123,11 @@ const Comentarios = (props) => {
           <textarea
             value={newComment}
             onChange={handleInputChange}
-            className="w-full p-4 rounded text-black" placeholder="Comentario"
+            className="w-full p-4 rounded-[15px] text-black" placeholder="Escribe tu comentario"
           />
           <button
             type="submit"
-            className="bg-[#d60e0e] text-white px-4 py-2 rounded mt-2"
+            className="bg-blue-500 text-white px-4 py-2 rounded-[12px] mt-4 w-full"
             onClick={handleSubmit}
           >
             Comentar

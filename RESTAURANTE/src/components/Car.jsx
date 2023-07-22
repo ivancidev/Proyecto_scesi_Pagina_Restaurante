@@ -82,7 +82,7 @@ const Card = (props) => {
   return (
     <div
       className={` lg:col-span-2 fixed top-0 ${
-        cambioFondo ? "bg-stone-800" : "bg-orange-600"
+        cambioFondo ? "bg-stone-800" : "bg-orange-500"
       } w-full lg:w-96 lg:right-0 h-full transition-all z-20 ${
         showOrder ? "right-0" : "-right-full"
       }`}
@@ -93,10 +93,10 @@ const Card = (props) => {
           className="lg:hidden absolute left-4 top-4 p-3 box-content text-black bg-slate-100 rounded-full text-xl cursor-pointer"
         />
         {/* Botones */}
-        <div className="flex items-center gap-4 flex-wrap mb-5">
+        <div className={`flex items-center gap-4 flex-wrap mb-5`}>
           <button
             className={`${
-              comentarios ? "bg-none border border-white" : "bg-[#d60e0e]"
+              comentarios ? "bg-none border border-white" : "bg-[#1F1D2B]"
             } text-white p-3 py-2 px-4 rounded-xl`}
             onClick={() => setComentarios(false)}
           >
@@ -104,24 +104,26 @@ const Card = (props) => {
           </button>
           <button
             className={`${
-              comentarios ? "bg-[#d60e0e] " : "bg-none border border-white"
+              comentarios ? "bg-[#1F1D2B] " : "bg-none border border-white"
             } text-white p-3 py-2 px-4 rounded-xl `}
             onClick={handleClickComentarios}
           >
             Comentarios
           </button>
         </div>
-        {/* Car */}
         <div>
-          <div className="grid grid-cols-5 mb-2 p-4">
+          <div className={`${comentarios? "hidden":"grid grid-cols-5 mb-2 p-4"} `}>
             <h5 className="col-span-4 text-white">Comida</h5>
             <h5 className="text-white">SubTotal</h5>
           </div>
-          {/* Productos */}
+          <div className={`${comentarios? "flex justify-center p-3 ":"hidden"}`}>
+            <h2 className="text-[18px] text-white">Comentarios de las personas</h2>
+          </div>
+          {/* Productos seleccionados */}
           <div
             className={`${
               comentarios ? "hidden" : "block"
-            } h-[400px] md:h-[700px] lg:h-[460px] overflow-auto`}
+            } h-[350px] md:h-[700px] lg:h-[490px] sm:h-[350px] overflow-auto`}
           >
             {productos.map((arreglo, index) => (
               <Order
@@ -139,29 +141,25 @@ const Card = (props) => {
           <div
             className={`${
               comentarios ? "flex flex-col-reverse " : "hidden"
-            } h-[400px] md:h-[700px] lg:h-[645px] overflow-y-scroll`}
+            } h-[470px] md:h-[700px] lg:h-[645px] overflow-y-scroll`}
           >
             <Comentarios propCliente={propCliente} />
           </div>
         </div>
         {/* Comprar */}
         <div
-          className={`${cambioFondo ? "bg-stone-800" : "bg-[#d60e0e]"} ${
-            comentarios ? "hidden" : "block relative w-full bottom-0 left-0 p-4"
+          className={`${cambioFondo ? "bg-stone-800" : "bg-[#1F1D2B]"} ${
+            comentarios ? "hidden" : "block relative w-full bottom-0 left-0 p-4 rounded-[10px]"
           }`}
         >
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-gray-400">Descuento</span>
-            <span>{totalPrecio > 100 ? "10%" : "0"}</span>
-          </div>
           <div className="flex items-center justify-between mb-6">
-            <p className="text-gray-400 pt-2 pb-2 text-[14px]">Total</p>
-            <span>{Math.abs(totalPrecio)}</span>
+            <p className="text-white pt-2 pb-2 text-[17px]">Total Pago</p>
+            <span className="text-white text-[17px]">{Math.abs(totalPrecio)}Bs</span>
           </div>
           <div>
             <button
               onClick={handleCompraClick}
-              className="bg-[#ec7c6a] w-full py-2 px-4 rounded-lg"
+              className="bg-sky-100 w-full py-2 px-4 rounded-lg text-black hover:bg-slate-500 hover:text-white text-[17px]"
             >
               Comprar
             </button>

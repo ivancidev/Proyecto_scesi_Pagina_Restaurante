@@ -32,20 +32,13 @@ const Order = (props) => {
         </div>
       </div>
       {/* Note */}
-      <div className="grid grid-cols-6 items-center">
-        <form className="col-span-5">
-          <input
-            type="text"
-            className="bg-[#1F1D2B] py-2 px-4 rounded-lg outline-none"
-            placeholder="Describe la orden..."
-          />
-        </form>
+      <div className="flex justify-center">
         <div>
           <button
             onClick={() => setIdPlato(productos.idPlato)}
-            className="border border-red-500 p-2 rounded-lg"
+            className="border border-red-600 p-2 rounded-lg"
           >
-            <RiDeleteBin6Line className="text-red-500" />
+            <RiDeleteBin6Line className="text-red-600 font-bold" />
           </button>
         </div>
       </div>

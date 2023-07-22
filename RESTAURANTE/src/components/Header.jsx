@@ -46,7 +46,7 @@ const Header = (props) => {
             <input
               type="text"
               className="bg-[#262837] w-full py-2 pl-10 pr-4 rounded-lg text-gray-300 outline-none"
-              placeholder="Buscar"
+              placeholder="Buscar plato"
               value={searchValue}
               onChange={handleSearchChange}
             />

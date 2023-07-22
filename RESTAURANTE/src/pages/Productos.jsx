@@ -206,7 +206,7 @@ function Productos() {
         setProductos={setProductos}
       />
       {/* Menu movil */}
-      <nav className="bg-orange-600 lg:hidden fixed w-full bottom-0 left-0 text-3xl text-gray-400 py-2 px-8 flex items-center justify-between rounded-tl-xl rounded-tr-xl z-20">
+      <nav className="bg-orange-600 lg:hidden fixed w-full bottom-0 left-0 text-3xl text-gray-400 py-2 px-8 flex items-center justify-between rounded-tl-xl rounded-tr-xl z-50">
         <button className="p-2">
           <RiUser3Line />
         </button>
