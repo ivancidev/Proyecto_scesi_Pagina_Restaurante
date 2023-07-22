@@ -37,9 +37,10 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" exact element={<Home />}></Route>
+          <Route path="/registro" element={<Registro />}></Route>
           <Route element={<PrivateRouter />}>
             <Route path="/productos" element={<Productos />}></Route>
-            <Route path="/registro" element={<Registro />}></Route>
+            
             {/* {routes.map((route) => (
               <Route
                 key={route.path}

@@ -33,19 +33,28 @@ const Registro = () => {
     const nuevosErrores = validarForm();
     setErrores(nuevosErrores);
 
-    if (Object.keys(nuevosErrores).length === 0) {
-      axios
-        .post("http://localhost:4000/restaurante/registro", usuario)
-        .then(({ data }) => {
-          console.log(data);
-          console.log("Se encontro al cliente");
-          navigate("/productos", { state: { prop: usuario } });
-        })
-        .catch(({ response }) => {
-          e.preventDefault();
-          console.log(response.data);
-        });
+    try {
+      if (Object.keys(nuevosErrores).length === 0) {
+        axios
+          .post("http://localhost:4000/restaurante/registro", usuario)
+          .then(({ data }) => {
+            console.log("Se encontro al cliente");
+            sessionStorage.setItem("guest_session_id", "sdfsdf23423");
+            setTimeout(() => {
+              navigate("/productos", { state: { prop: usuario } });
+              console.log(data);
+            });
+          })
+          .catch(({ response }) => {
+            e.preventDefault();
+            console.log(response.data);
+          });
+      }
+    } catch (error) {
+      console.log(error);
     }
+
+    
   };
 
   const validarForm = () => {
@@ -95,9 +104,9 @@ const Registro = () => {
   };
 
   return (
-    <section className="flex items-center justify-center h-auto bg-[url(./assets/imagenes/fondoregistro.jpg)] bg-cover  bg-center w-[100%] overflow-hidden">
-      <div className="w-[100%] flex h-[100vh] ml-[10px] justify-between">
-        <div className="ml-[80px] mt-[15px] h-[97vh]  w-[600px] bg-white p-4 rounded-[30px]">
+    <section className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-[url(./assets/imagenes/fondoregistro.jpg)] bg-cover  bg-center w-[100%] p-1 gap-14">
+      
+        <div className=" mt-[15px] h-[93vh] md:w-[500px]  w-[350px] bg-white p-4 rounded-[30px]">
           <div>
             <h2 className="font2 text-center  text-[35px] mb-[18px]">
               Registrate
@@ -341,44 +350,43 @@ const Registro = () => {
           </form>
 
           <div className="flex justify-center">
-            <button
-              className="bg-orange-500 text-white px-40 py-2 rounded-lg mt-[30px] hover:bg-orange-600"
-              onClick={handleSubmit}
-            >
-              Registrarse
-            </button>
-          </div>
+  <button
+    className="bg-orange-500 text-white px-8 md:px-16 lg:px-32 py-2 rounded-lg mt-5 md:mt-10 lg:mt-20 hover:bg-orange-600"
+    onClick={handleSubmit}
+  >
+    Registrarse
+  </button>
+</div>
+
         </div>
 
-        <div className="mt-[12px] mb-[20px] w-[800px] items-center flex ">
-          <div className="bg-white p-8 rounded-[20px] mr-[120px] ml-[25px]">
-            <div className="flex justify-center mb-[20px]">
-              <img src={logo} alt="asd" className="w-[150px] rounded-[50%]" />
-            </div>
-            <p>
-              ¡Bienvenidos a nuestro restaurante! En nuestro acogedor
-              restaurante, nos enorgullece ofrecer una experiencia gastronómica
-              excepcional para todos nuestros comensales. Nuestro objetivo es
-              brindar una combinación perfecta de deliciosos sabores,
-              ingredientes frescos y un servicio amable y atento. Nuestro
-              talentoso equipo de chefs expertos se esfuerza por crear platos
-              exquisitos que despierten tus sentidos y te hagan disfrutar de
-              cada bocado. Desde deliciosas entradas hasta tentadores platos
-              principales y postres indulgentes, cada plato está cuidadosamente
-              preparado con pasión y dedicación. Nuestro equipo de servicio está
-              comprometido en hacer que tu visita sea especial y se encargará de
-              que te sientas atendido en todo momento. Nos esforzamos por
-              superar tus expectativas y asegurarnos de que tengas una
-              experiencia gastronómica inolvidable.
-              <strong className="font2 text-blue-600 text-center mt-[10px]">
-                ¡Esperamos recibirte pronto en nuestro restaurante y brindarte
-                una experiencia culinaria excepcional que deleitará tus sentidos
-                y dejará una impresión duradera en tu paladar!
-              </strong>
-            </p>
-          </div>
-        </div>
-      </div>
+        <div className="mb-10 md:w-[800px] w-[350px]">
+  <div className="bg-white p-8 rounded-[30px] md:ml-[25px]">
+    <div className="flex justify-center mb-4">
+      <img src={logo} alt="asd" className="w-40 rounded-full" />
+    </div>
+    <p>
+      ¡Bienvenidos a nuestro restaurante! En nuestro acogedor restaurante, nos
+      enorgullece ofrecer una experiencia gastronómica excepcional para todos
+      nuestros comensales. Nuestro objetivo es brindar una combinación perfecta
+      de deliciosos sabores, ingredientes frescos y un servicio amable y atento.
+      Nuestro talentoso equipo de chefs expertos se esfuerza por crear platos
+      exquisitos que despierten tus sentidos y te hagan disfrutar de cada bocado.
+      Desde deliciosas entradas hasta tentadores platos principales y postres
+      indulgentes, cada plato está cuidadosamente preparado con pasión y
+      dedicación. Nuestro equipo de servicio está comprometido en hacer que tu
+      visita sea especial y se encargará de que te sientas atendido en todo
+      momento. Nos esforzamos por superar tus expectativas y asegurarnos de que
+      tengas una experiencia gastronómica inolvidable.
+      <strong className="font2 text-blue-600 block mt-4">
+        ¡Esperamos recibirte pronto en nuestro restaurante y brindarte una
+        experiencia culinaria excepcional que deleitará tus sentidos y dejará una
+        impresión duradera en tu paladar!
+      </strong>
+    </p>
+  </div>
+</div>
+
     </section>
   );
 };

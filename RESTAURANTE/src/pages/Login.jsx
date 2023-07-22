@@ -20,6 +20,8 @@ const Login = () => {
     });
   };
 
+  const handleClickRegistro = () => navigate("/registro");
+
   const validateForm = () => {
     let nuevosErrores = {};
 
@@ -101,8 +103,8 @@ const Login = () => {
   }, [cliente.correo]);
 
   return (
-    <section className="flex items-center justify-center min-h-screen bg-[url(./assets/imagenes/fondoregistro.jpg)] bg-cover bg-center w-full">
-      <div className="mx-auto">
+    <section className="flex flex-col md:flex-row  items-center justify-center min-h-screen bg-[url(./assets/imagenes/fondoregistro.jpg)] bg-cover bg-center w-full p-10 gap-6">
+
         <form className="mx-4 md:w-[450px] p-6 md:h-[600px] rounded-3xl bg-white">
           <div className="w-full">
             <h1 className="font2 text-center mb-5 text-3xl font-bold">
@@ -152,19 +154,22 @@ const Login = () => {
             >
               Enviar
             </button>
+            
           </div>
+          <span className=" flex justify-center text-center  mt-4 mb-4" >¿No tienes una cuenta?   <p className="text-blue-500 underline hover:cursor-pointer" onClick={handleClickRegistro}> Regístrate aquí</p> </span>
         </form>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl mx-auto bg-white p-6 mt-10 order-first sm:order-last rounded-[20px]">
-        <h1 className="col-span-full text-center text-2xl font-bold mb-4">
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl bg-white p-6 mt-10 sm:order-last rounded-[20px]">
+        <h1 className="col-span-full text-center text-[28px] font-bold font2">
           🧑‍🍳Te espera una gran variedad de platos🍲
         </h1>
+        <p className="col-span-full text-center text-[19px] font-bold font2">¡¡Vamos inicia sesión!!</p>
         {platos.map((imagen) => (
           <div key={imagen.idPlato} className="flex justify-center">
             <img
               src={imagen.imagen}
               alt="login1"
-              className="w-40 h-40 rounded-full"
+              className="w-[160px] h-[160px] rounded-full"
             />
           </div>
         ))}
