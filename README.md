@@ -1,29 +1,35 @@
 
 # 🧑‍🍳EL BOCADO PERFECTO🍲
 
-[![logo3.png](https://i.postimg.cc/m2rNwQ6v/logo3.png)](https://postimg.cc/DmtXfbh6)
+[![Captura-de-pantalla-2023-07-22-192937.png](https://i.postimg.cc/CKSSR3f2/Captura-de-pantalla-2023-07-22-192937.png)](https://postimg.cc/QF4RPnmg)
 
 
-Descripción
+# Descripción
 
-Esta es una pagina que brinda servicios de comida a un restaurante llamado "El bocado perfecto" que atiende a sus clientes por medio de una página que pueden elegir los platos diferentes que ofrece el restaurante, y al final comprar además puede comentar sobre el restaurante y ver los diferentes comentarios que tiene el restaurante.😎
-En el transurso de los dias se subira mas informacion.
+Esta es una página que brinda servicios de comida a un restaurante llamado "El bocado perfecto" que atiende a sus clientes por medio de una página web, el cual pueden elegir diferentes platos, jugos, desayunos sopas que ofrece el restaurante tambien tiene un buscador que permite la comida mas facilmente. Además el cliente puede comentar sobre el restaurante y ver los diferentes comentarios que tiene el restaurante.😎
+Tambien puede tener tu propia cuenta e iniciar sesión, la compra ademas puede ser en el resturante o por delivery.
 
 
 # 💻 En escritorio
 
-[![Captura-de-pantalla-2023-07-22-192937.png](https://i.postimg.cc/CKSSR3f2/Captura-de-pantalla-2023-07-22-192937.png)](https://postimg.cc/QF4RPnmg)
-
 
 [![Captura-de-pantalla-2023-07-22-191316.png](https://i.postimg.cc/vmyxQ8Lx/Captura-de-pantalla-2023-07-22-191316.png)](https://postimg.cc/JsTzxLFR)
 
+[![Captura-de-pantalla-2023-07-25-154259.png](https://i.postimg.cc/6qCS2wLq/Captura-de-pantalla-2023-07-25-154259.png)](https://postimg.cc/ZvKj2GQz)
+
 [![Captura-de-pantalla-2023-07-22-191700.png](https://i.postimg.cc/brVFhF7d/Captura-de-pantalla-2023-07-22-191700.png)](https://postimg.cc/ctYc7T4N)
 
+[![Captura-de-pantalla-2023-07-25-154411.png](https://i.postimg.cc/GhV8hCgG/Captura-de-pantalla-2023-07-25-154411.png)](https://postimg.cc/tYdC2Lj4)
 
+[![Captura-de-pantalla-2023-07-25-154524.png](https://i.postimg.cc/j2C2tgzM/Captura-de-pantalla-2023-07-25-154524.png)](https://postimg.cc/2LRrxx9W)
+
+[![Captura-de-pantalla-2023-07-25-154724.png](https://i.postimg.cc/s2y2vDYQ/Captura-de-pantalla-2023-07-25-154724.png)](https://postimg.cc/mPX4n46B)
 
 # 📱 En movil el comentario
 
-[![Captura-de-pantalla-2023-07-22-192131.png](https://i.postimg.cc/TYqptvXR/Captura-de-pantalla-2023-07-22-192131.png)](https://postimg.cc/hfvDGwjw)
+[![Captura-de-pantalla-2023-07-25-154808.png](https://i.postimg.cc/PJLXBLjc/Captura-de-pantalla-2023-07-25-154808.png)](https://postimg.cc/JHLCXztc)
+
+[![Captura-de-pantalla-2023-07-25-154848.png](https://i.postimg.cc/rp88qZT5/Captura-de-pantalla-2023-07-25-154848.png)](https://postimg.cc/qN5fLLz7)
 
 
 
@@ -41,4 +47,3 @@ yarn
 2. Ejecutamos nuestro proyecto en local
 ```
 npm run dev
->
