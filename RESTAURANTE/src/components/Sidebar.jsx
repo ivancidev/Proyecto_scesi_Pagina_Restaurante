@@ -55,7 +55,7 @@ const Sidebar = (props) => {
       <div>
         <div className="flex justify-end">
           <button onClick={() => setShowMenu(false)}>
-          {<FiArrowLeft className="text-[30px] text-white mr-5 hover:text-[#262837]"/>}
+          {<FiArrowLeft className={`${cambioFondo? "hover:text-slate-400":"hover:text-[#262837]"} text-[30px] text-white mr-5 `}/>}
           </button>
         </div>
         <ul className="pl-4">
@@ -65,7 +65,7 @@ const Sidebar = (props) => {
             </div>
             <p className="text-center mb-3 text-[18px] text-white">{cliente.nombre}</p>
           </li>
-          <li className="p-4 rounded-tl-xl rounded-bl-xl flex hover:bg-[#262837] hover:cursor-pointer mt-32" onClick={handlClickVentana}>
+          <li className="p-4 rounded-tl-xl rounded-bl-xl flex hover:bg-[#262837] hover:cursor-pointer mt-28" onClick={handlClickVentana}>
             <BsPersonSquare className="text-2xl text-white" /> 
             <p className="ml-3 text-white">Cambiar contraseña</p>  
             
@@ -78,7 +78,7 @@ const Sidebar = (props) => {
         </ul>
       </div>
       <div>
-        <ul className="pl-4 mt-2">
+        <ul className="pl-4 md:mt-80 mt-56">
           <li className="hover:bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl group transition-colors flex hover:cursor-pointer" onClick={cerrarPaginaAnterior}>
               <RiLogoutCircleRLine className="text-2xl text-white" />
               <p className="ml-3 text-white">Salir</p>

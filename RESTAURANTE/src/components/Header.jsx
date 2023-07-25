@@ -12,6 +12,7 @@ const Header = (props) => {
   const { plato, setPlato } = props;
   const [comida, setComida] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const {cambioFondo} = props
 
   
   const handleSearchChange = (event) => {
@@ -103,10 +104,10 @@ const Header = (props) => {
       <div className="flex flex-col md:flex-row md:justify-end md:items-center gap-4 mb-6">
         <form>
           <div className="w-full relative">
-            <RiSearch2Line className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
+            <RiSearch2Line className={`${cambioFondo? "text-black":"text-white"} absolute left-3 top-1/2 -translate-y-1/2 `} />
             <input
               type="text"
-              className="bg-[#262837] w-full py-2 pl-10 pr-4 rounded-lg text-gray-300 outline-none"
+              className={`${cambioFondo ? "text-black  bg-white":"text-gray-300 bg-[#262837]"}  w-full py-2 pl-10 pr-4 rounded-lg  outline-none`}
               placeholder="Buscar plato"
               value={searchValue}
               onChange={handleSearchChange}
@@ -144,12 +145,12 @@ const Header = (props) => {
         </form>
       </div>
       {/* Tabs */}
-      <nav className="text-gray-300 flex items-center justify-between md:justify-start md:gap-8 border-b-4 border-orange-700 mb-6">
+      <nav className={`flex items-center justify-between md:justify-start md:gap-8 border-b-4 border-orange-700 mb-6`}>
         <button
           onClick={() => setPlato("fritos")}
           className={`${
             plato == "fritos" ? "text-red-600" : "text-black py-2 pr-4 "
-          }`}
+          } ${cambioFondo? "text-white":"text-black"}`}
         >
           Platos fritos
         </button>
@@ -157,7 +158,7 @@ const Header = (props) => {
           onClick={() => setPlato("Sopa")}
           className={`${
             plato == "Sopa" ? "text-red-600" : "text-black py-2 pr-4 "
-          }`}
+          } ${cambioFondo? "text-white":"text-black"}`}
         >
           Sopas
         </button>
@@ -165,7 +166,7 @@ const Header = (props) => {
           onClick={() => setPlato("Desayuno")}
           className={`${
             plato == "Desayuno" ? "text-red-600" : "text-black py-2 pr-4 "
-          }`}
+          } ${cambioFondo? "text-white":"text-black"}`}
         >
           Desayunos
         </button>
@@ -173,7 +174,7 @@ const Header = (props) => {
           onClick={() => setPlato("Postre")}
           className={`${
             plato == "Postre" ? "text-red-600" : "text-black py-2 pr-4 "
-          }`}
+          } ${cambioFondo? "text-white":"text-black"}`}
         >
           Postres
         </button>
@@ -181,7 +182,7 @@ const Header = (props) => {
           onClick={() => setPlato("Jugo")}
           className={`${
             plato == "Jugo" ? "text-red-600" : "text-black py-2 pr-4 "
-          }`}
+          } ${cambioFondo? "text-white":"text-black"}`}
         >
           Jugos
         </button>

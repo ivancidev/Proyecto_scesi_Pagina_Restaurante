@@ -198,7 +198,7 @@ function Productos() {
       <div className="hidden md:block ">
         <p
           onClick={toggleMenu}
-          className="m-10 text-[40px] absolute text-[#262837] hover:cursor-pointer transition-all"
+          className={`${cambioFondo? "text-white":"text-[#262837]"} m-10 text-[40px] absolute  hover:cursor-pointer transition-all`}
         >
           {<BsPersonCircle />}
         </p>
@@ -228,24 +228,18 @@ function Productos() {
         setProductos={setProductos}
       />
       {/* Menu movil */}
-      <nav className="bg-orange-600 lg:hidden fixed w-full bottom-0 left-0 text-3xl text-gray-400 py-2 px-8 flex items-center justify-between rounded-tl-xl rounded-tr-xl z-50">
-        <button className="p-2">
-          <RiUser3Line />
-        </button>
-        <button className="p-2">
-          <RiAddLine />
-        </button>
+      <nav className={`${cambioFondo? "bg-slate-600":"bg-orange-600"}  lg:hidden fixed w-full bottom-0 left-0 text-3xl text-gray-400 py-2 px-8 flex items-center justify-between rounded-tl-xl rounded-tr-xl z-50`}>
         <button onClick={toggleOrders} className="p-2">
-          <RiPieChartLine />
+          <FaShoppingCart />
         </button>
         <button onClick={toggleMenu} className="text-white p-2">
-          {showMenu ? <RiCloseLine /> : <RiMenu3Fill />}
+          {showMenu ? <RiCloseLine /> : <RiUser3Line />}
         </button>
       </nav>
       <main className="lg:pl-20 lg:pr-96 pb-20">
         <div className="md:p-8 p-4">
           {/* El Header */}
-          <Header plato={plato} setPlato={setPlato} />
+          <Header plato={plato} setPlato={setPlato} cambioFondo = {cambioFondo} />
           <div className="flex items-center justify-center mb-16">
             <h2 className="text-[35px] text-orange-600 p1 ml-5 text-center">
               🧑‍🍳El Bocado Perfecto🍲
