@@ -119,10 +119,8 @@ app.post('/detalleCompra', (req, res) => {
 
   connection.query('INSERT INTO detalleCompra SET ?', detalleCompraData, (err, result) => {
     if (err) {
-      console.error('Error al insertar los datos:', err);
       res.status(500).send('Error al insertar los datos');
     } else {
-      console.log('Datos insertados correctamente:', result);
       res.status(200).send('Compra realizada con éxito');
     }
     connection.end(); // Cierra la conexión después de ejecutar la consulta
@@ -154,10 +152,8 @@ app.post('/detalleCompraRestaurante', (req, res) => {
 
   connection.query('INSERT INTO detallecomprarestaurante SET ?', detalleCompraData, (err, result) => {
     if (err) {
-      console.error('Error al insertar los datos:', err);
       res.status(500).send('Error al insertar los datos');
     } else {
-      console.log('Datos insertados correctamente:', result);
       res.status(200).send('Compra realizada con éxito');
     }
     connection.end(); // Cierra la conexión después de ejecutar la consulta
@@ -237,9 +233,5 @@ app.get("/platos/:tipo", (req, res) => {
 	});
 	connection.end();
   });
-
-
-
-
 
 app.listen(4000, () => console.log("hola soy el servidor"));
