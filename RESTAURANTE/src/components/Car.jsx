@@ -150,6 +150,7 @@ const Card = (props) => {
                 setTotalPrecio={setTotalPrecio}
                 idPlato={idPlato}
                 setIdPlato={setIdPlato}
+                cambioFondo = {cambioFondo}
               />
             ))}
           </div>
@@ -163,7 +164,7 @@ const Card = (props) => {
         </div>
         {/* Comprar */}
         <div
-          className={`${cambioFondo ? "bg-stone-800" : "bg-[#1F1D2B]"} ${
+          className={`${cambioFondo ? "bg-slate-600" : "bg-[#1F1D2B]"} ${
             comentarios ? "hidden" : "block relative w-full bottom-0 left-0 p-4 rounded-[10px]"
           }`}
         >
