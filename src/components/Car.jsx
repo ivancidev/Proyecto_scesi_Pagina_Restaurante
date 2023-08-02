@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import Order from "../components/Orden/Order";
 import Comentarios from "../components/Comentarios/Comentarios";
-import ViewCompra from "../Views/ViewCompra";
-import ViewError from "../Views/ViewError";
+import ViewCompra from "../components/Ventanas/ViewCompra";
+import ViewError from "../components/Ventanas/ViewError";
 import { FaShoppingCart } from "react-icons/fa";
 
 const Card = (props) => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import OpcionBoton from "../components/OpcionesCompra/OpcionBoton";
-import DetalleCompra from "../components/DetalleCompra/DetalleCompra";
+import OpcionBoton from "../OpcionesCompra/OpcionBoton";
+import DetalleCompra from "../DetalleCompra/DetalleCompra";
 import {BsXCircleFill} from "react-icons/bs"
 
 const ViewCompra = (props) => {
