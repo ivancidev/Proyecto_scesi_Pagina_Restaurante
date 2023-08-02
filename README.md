@@ -1,4 +1,5 @@
 
+
 # 🧑‍🍳EL BOCADO PERFECTO🍲
 
 [![Captura-de-pantalla-2023-07-22-192937.png](https://i.postimg.cc/CKSSR3f2/Captura-de-pantalla-2023-07-22-192937.png)](https://postimg.cc/QF4RPnmg)
@@ -27,7 +28,7 @@ Tambien cada cliente puede tener su propia cuenta e iniciar sesión y la compra 
 
 [![Captura-de-pantalla-2023-07-25-154724.png](https://i.postimg.cc/s2y2vDYQ/Captura-de-pantalla-2023-07-25-154724.png)](https://postimg.cc/mPX4n46B)
 
-# 📱 En movil el comentario
+# 📱 En movil
 
 [![Captura-de-pantalla-2023-07-25-154808.png](https://i.postimg.cc/PJLXBLjc/Captura-de-pantalla-2023-07-25-154808.png)](https://postimg.cc/JHLCXztc)
 
@@ -49,3 +50,8 @@ yarn
 2. Ejecutamos nuestro proyecto en local
 ```
 npm run dev
+```
+## Repositorio del servidor
+## 🔗 Link
+https://github.com/HerlanHerbasZubieta/ServidorApi
+
