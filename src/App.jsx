@@ -6,32 +6,9 @@ import Productos from "./pages/Productos";
 import Registro from "./pages/Registro";
 import PrivateRouter from "./routes/PrivateRouter";
 import NotFound from "./pages/NotFound";
+import ClientHistory from "./pages/ClientHistory";
 
 const App = () => {
-  // const routes = [];
-  // const [platos, setPlatos] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchPlatos = async () => {
-  //     try {
-  //       const response = await fetch(`http://localhost:4000/platos`);
-  //       const data = await response.json();
-  //       setPlatos(data);
-  //     } catch (error) {
-  //       console.error("Error al obtener el cliente:", error);
-  //     }
-  //   };
-
-  //   fetchPlatos();
-  // }, []);
-
-  // platos.forEach((plato) => {
-  //   routes.push({
-  //     path: plato.nombrePlato,
-  //     element: <ViewCard plato={plato} />,
-  //   });
-  // });
-
   return (
     <>
       <Router>
@@ -40,15 +17,7 @@ const App = () => {
           <Route path="/registro" element={<Registro />}></Route>
           <Route element={<PrivateRouter />}>
             <Route path="/productos" element={<Productos />}></Route>
-            
-            {/* {routes.map((route) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={route.element}
-              ></Route>
-            ))} */}
-
+            <Route path="/historyClient" element={<ClientHistory/>}></Route>
             <Route path="*" element={<NotFound />} />
           </Route>
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { FiArrowLeft } from "react-icons/fi";
-import {BsPersonSquare, BsMoonFill, BsXCircleFill} from "react-icons/bs";
+import {BsPersonSquare, BsMoonFill} from "react-icons/bs";
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import {FaIdCard} from "react-icons/fa"
 
 const Sidebar = (props) => {
   const { showMenu, setShowMenu } = props
@@ -19,7 +20,7 @@ const Sidebar = (props) => {
     const fetchClient = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/cliente/correo/${propUser.correo}`);
+          `http://localhost:4000/correo/${propUser.correo}`);
           if(!response.ok){
             throw new Error('Error al obtener los datos del cliente');
           }
@@ -44,6 +45,7 @@ const Sidebar = (props) => {
     
   };
 
+  const handleHistory = () =>{navigate("/historyClient", { state: { prop: cliente } });}
 
   return (
     <div
@@ -70,6 +72,11 @@ const Sidebar = (props) => {
             <p className="ml-3 text-white">Cambiar contraseña</p>  
             
           </li>
+          <li className="p-4 rounded-tl-xl rounded-bl-xl flex hover:bg-[#262837] hover:cursor-pointer mt-2" onClick={handleHistory}>
+            <FaIdCard className="text-2xl text-white" /> 
+            <p className="ml-3 text-white">Ver historial</p>  
+            
+          </li>
           <li className="p-4 rounded-tl-xl rounded-bl-xl flex hover:bg-[#262837] hover:cursor-pointer mt-2" onClick={()=> setFondo(!cambioFondo)}>
             <BsMoonFill className="text-2xl text-white" /> 
             <p className="ml-3 text-white">Cambiar aspecto</p>  
@@ -78,8 +85,8 @@ const Sidebar = (props) => {
         </ul>
       </div>
       <div>
-        <ul className="pl-4 md:mt-80 mt-56">
-          <li className="hover:bg-[#262837] p-4 rounded-tl-xl rounded-bl-xl group transition-colors flex hover:cursor-pointer" onClick={cerrarPaginaAnterior}>
+        <ul className="pl-4 md:mt-60 mt-44">
+          <li className="hover:bg-[#272936] p-4 rounded-tl-xl rounded-bl-xl group transition-colors flex hover:cursor-pointer" onClick={cerrarPaginaAnterior}>
               <RiLogoutCircleRLine className="text-2xl text-white" />
               <p className="ml-3 text-white">Salir</p>
           </li>

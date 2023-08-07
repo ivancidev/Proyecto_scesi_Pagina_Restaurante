@@ -29,7 +29,7 @@ const Card = (props) => {
     const fetchCliente = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/cliente/correo/${propCliente.correo}`);
+          `http://localhost:4000/correo/${propCliente.correo}`);
           if(!response.ok){
             throw new Error('Error al obtener los datos del cliente');
           }

@@ -90,7 +90,7 @@ const Login = () => {
     const fetchCliente = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/cliente/correo/${cliente.correo}`
+          `http://localhost:4000/correo/${cliente.correo}`
         );
         const data = await response.json();
         setClienteBd(data);

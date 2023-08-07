@@ -41,7 +41,7 @@ const Comentarios = (props) => {
     const fetchClient = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/cliente/correo/${propCliente.correo}`
+          `http://localhost:4000/correo/${propCliente.correo}`
         );
         const data = await response.json();
         setCliente(data);

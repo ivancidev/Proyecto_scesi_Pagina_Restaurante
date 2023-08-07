@@ -28,7 +28,7 @@ const ChangePassword = (props) => {
         const fetchClient = async () => {
           try {
             const response = await fetch(
-              `http://localhost:4000/cliente/correo/${propUser.correo}`);
+              `http://localhost:4000/correo/${propUser.correo}`);
               if(!response.ok){
                 throw new Error('Error al obtener los datos del cliente');
               }

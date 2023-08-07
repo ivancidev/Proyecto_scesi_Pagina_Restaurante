@@ -18,7 +18,7 @@ const DetalleCompra = (props) => {
   const [fechaEntrega, setFechaEntrega] = useState("");
   const [horaEnvio, setHoraEnvio] = useState("");
   const { setMostrarBotones } = props;
-  const [nombresPlatos, setNombresPlatos] = useState("");
+  const [nombresOrden, setNombresOrden] = useState("");
   const [ventanaConfirmacion, setVentanaConfirmacion] = useState(false);
   const { seleccionOpcion } = props;
   const [primerCheck, setPrimerCheck] = useState(false);
@@ -38,7 +38,7 @@ const DetalleCompra = (props) => {
 
   const concatenarNombresPlatos = () => {
     const nombres = productos.map((plato) => plato.nombreMenu).join(", ");
-    setNombresPlatos(nombres);
+    setNombresOrden(nombres);
   };
 
   const handlePrimerCheck = (e) => {
@@ -77,13 +77,13 @@ const DetalleCompra = (props) => {
       direccion,
       telefono,
       tarjeta,
-      nombresPlatos,
+      nombresOrden,
       totalPrecio,
       fechaEntrega,
       horaEnvio,
     };
     axios
-      .post("http://localhost:4000/detalleCompra", clienteDetalle)
+      .post("http://localhost:4000/detalleCompraDelivery", clienteDetalle)
       .then(({ data }) => {
         setVentanaConfirmacion(false);
         setCompraExistosa(true);
@@ -98,7 +98,7 @@ const DetalleCompra = (props) => {
     const clienteDetalle = {
       numeroMesa,
       tarjeta,
-      nombresPlatos,
+      nombresOrden,
       valorCombox,
       fechaEntrega,
       horaEnvio,
@@ -164,7 +164,7 @@ const DetalleCompra = (props) => {
         hour12: true,
       });
       concatenarNombresPlatos();
-      console.log({ nombresPlatos });
+      console.log({ nombresOrden });
 
       // Actualizamos el estado para mostrar la ventana de compra exitosa y la fecha y hora
       if (seleccionOpcion == "Restaurante") {
