@@ -14,7 +14,7 @@ const Card = (props) => {
   const [comentarios, setComentarios] = useState(false);
   const { propCliente } = props;
   const { productos, setProductos } = props;
-  const [idPlato, setIdPlato] = useState(0);
+  const [idMenu, setIdMenu] = useState(0);
   const [mostrarBotones, setMostrarBotones] = useState(false);
   const [cliente, setCliente] = useState([]);
   const [mostrarError, setMostrarError] = useState(false)
@@ -46,14 +46,14 @@ const Card = (props) => {
   const quitarCantidad = (productoId) => {
     // Buscar el producto por su ID en el array
     const index = productos.findIndex(
-      (producto) => producto.idPlato === productoId
+      (producto) => producto.idMenu === productoId
     );
 
     if (index !== -1) {
       // Obtener el producto actual y su cantidad
       const productoActual = productos[index];
       const nuevaCantidad = productoActual.cantidad - 1;
-      setTotalPrecio(totalPrecio - productoActual.precio);
+      setTotalPrecio(totalPrecio - productoActual.precioMenu);
 
       // Actualizar la cantidad y el precio total del producto
       if (nuevaCantidad > 0) {
@@ -61,21 +61,21 @@ const Card = (props) => {
         productosActualizados[index] = {
           ...productoActual,
           cantidad: nuevaCantidad,
-          precioTotal: nuevaCantidad * productoActual.precio,
+          precioTotal: nuevaCantidad * productoActual.precioMenu,
         };
         setProductos(productosActualizados);
       } else {
         // Si la cantidad llega a cero, eliminar el producto del array
         const productosActualizados = productos.filter(
-          (producto) => producto.idPlato !== productoId
+          (producto) => producto.idMenu !== productoId
         );
         setProductos(productosActualizados);
       }
     }
   };
   useEffect(() => {
-    quitarCantidad(idPlato);
-    setIdPlato(0);
+    quitarCantidad(idMenu);
+    setIdMenu(0);
   });
 
   const handleCompraClick = () => {
@@ -148,8 +148,8 @@ const Card = (props) => {
                 setOrden={setOrden}
                 totalPrecio={totalPrecio}
                 setTotalPrecio={setTotalPrecio}
-                idPlato={idPlato}
-                setIdPlato={setIdPlato}
+                idMenu={idMenu}
+                setIdMenu={setIdMenu}
                 cambioFondo = {cambioFondo}
               />
             ))}

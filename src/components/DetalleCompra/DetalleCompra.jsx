@@ -37,7 +37,7 @@ const DetalleCompra = (props) => {
   const [errores, setErrores] = useState({});
 
   const concatenarNombresPlatos = () => {
-    const nombres = productos.map((plato) => plato.nombrePlato).join(", ");
+    const nombres = productos.map((plato) => plato.nombreMenu).join(", ");
     setNombresPlatos(nombres);
   };
 
@@ -476,7 +476,7 @@ const DetalleCompra = (props) => {
               {productos.map((producto, index) => (
                 <tr key={index}>
                   <td className="px-4 py-2 text-left border-orange-500 border-2">
-                    {producto.nombrePlato}
+                    {producto.nombreMenu}
                   </td>
                   <td className="border-orange-500 border-2 px-4 py-2 text-center">
                     {producto.cantidad}

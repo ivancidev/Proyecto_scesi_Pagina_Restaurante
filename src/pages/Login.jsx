@@ -74,7 +74,7 @@ const Login = () => {
     const fetchImagenes = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/platos/${"fritos"}`
+          `http://localhost:4000/menus/${"menufrito"}`
         );
         const data = await response.json();
         setPlatos(data);

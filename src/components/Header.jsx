@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { RiSearch2Line } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
 import { BsXCircleFill } from "react-icons/bs";
 import logo from "../assets/imagenes/logo.png";
 
@@ -8,7 +7,6 @@ import logo from "../assets/imagenes/logo.png";
 const Header = (props) => {
   const [searchValue, setSearchValue] = useState("");
   const [platos, setPlatos] = useState([]);
-  const navigate = useNavigate();
   const { plato, setPlato } = props;
   const [comida, setComida] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -22,13 +20,13 @@ const Header = (props) => {
   
 
   const filteredCards = platos.filter((card) =>
-    card.nombrePlato.toLowerCase().includes(searchValue.toLowerCase())
+    card.nombreMenu.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   useEffect(() => {
     const fetchPlatos = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/platos`);
+        const response = await fetch(`http://localhost:4000/menu`);
         const data = await response.json();
         setPlatos(data);
       } catch (error) {
@@ -65,7 +63,7 @@ const Header = (props) => {
             <div className="md:flex md:mt-10 mt-52 md:justify-center">
               <div className="md:w-[400px] md:mr-6 md:mt-[-2px] mt-4">
                 <h1 className="p1 p-1 text-center text-2xl text-orange-500 whitespace-nowrap">
-                  {comida.nombrePlato}
+                  {comida.nombreMenu}
                 </h1>
                 <div className="mt-4 mb-4 flex justify-center">
                   <img
@@ -75,12 +73,12 @@ const Header = (props) => {
                   />
                 </div>
                 <p className="p1 text-center text-orange-500 p-1 text-lg text-[25px]">
-                  {comida.precio}Bs
+                  {comida.precioMenu}Bs
                 </p>
                 <p className="p1 text-[20px] text-center text-orange-500 p-1">
                   {comida.disponibilidad}
                 </p>
-                <p className="mt-5">{comida.descripcionPlato}</p>
+                <p className="mt-5">{comida.descripcionMenu}</p>
               </div>
               <div className="md:w-[500px] mt-4 md:mt-0">
                 <div className="flex justify-center p-4">
@@ -124,7 +122,7 @@ const Header = (props) => {
                 {filteredCards.map((card, index) => (
                   <div
                     className={`p-3 w-full flex text-gray-300 bg-orange-600  hover:bg-[#1F1D2B] hover:cursor-pointer hover:text-white hover:rounded `}
-                    key={card.idPlato}
+                    key={card.idMenu}
                     onClick={()=>handleOpenClick(card)}
                   >
                     <ul className="flex items-center">
@@ -134,7 +132,7 @@ const Header = (props) => {
                         className="w-[30px] h-[30px] rounded-[50%] ml-[7px]"
                       />
                       <li className="mb-4 mt-1 ml-[10px] text-[17px] ">
-                        {card.nombrePlato}
+                        {card.nombreMenu}
                       </li>
                     </ul>
                   </div>
@@ -147,9 +145,9 @@ const Header = (props) => {
       {/* Tabs */}
       <nav className={`flex items-center justify-between md:justify-start md:gap-8 border-b-4 border-orange-700 mb-6`}>
         <button
-          onClick={() => setPlato("fritos")}
+          onClick={() => setPlato("menufrito")}
           className={`${
-            plato == "fritos" ? "text-red-600" : "text-black py-2 pr-4 "
+            plato == "menufrito" ? "text-red-600" : "text-black py-2 pr-4 "
           } ${cambioFondo? "text-white":"text-black"}`}
         >
           Platos fritos

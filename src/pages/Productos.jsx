@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import {
-  RiMenu3Fill,
   RiUser3Line,
-  RiAddLine,
-  RiPieChartLine,
   RiCloseLine,
 } from "react-icons/ri";
 // Components
@@ -31,7 +28,7 @@ function Productos() {
   const location = useLocation();
   const propCliente = location.state?.prop;
   const propUser = location.state?.prop;
-  const [plato, setPlato] = useState("fritos");
+  const [plato, setPlato] = useState("menufrito");
   const [productos, setProductos] = useState([]);
   const [mostrarError, setMostrarError] = useState(false)
   const [ventana, setVentana] = useState(false)
@@ -65,7 +62,7 @@ function Productos() {
   useEffect(() => {
     const fetchPlatos = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/platos/${plato}`);
+        const response = await fetch(`http://localhost:4000/menus/${plato}`);
         const data = await response.json();
         setPlatos(data);
       } catch (error) {
@@ -79,7 +76,7 @@ function Productos() {
   const agregarProducto = (plato) => {
     // Buscar si el producto ya está en el array
     const index = productos.findIndex(
-      (producto) => producto.idPlato === plato.idPlato
+      (producto) => producto.idMenu === plato.idMenu
     );
 
     if (index !== -1) {
@@ -88,18 +85,18 @@ function Productos() {
       productosActualizados[index].cantidad += 1;
       productosActualizados[index].precioTotal =
         productosActualizados[index].cantidad *
-        productosActualizados[index].precio;
-      handlePrecio(productosActualizados[index].precio);
+        productosActualizados[index].precioMenu;
+      handlePrecio(productosActualizados[index].precioMenu);
       setProductos(productosActualizados);
     } else {
       // Si el producto no está en el array, agregarlo con cantidad 1 y precio total
       const nuevoProducto = {
         ...plato,
         cantidad: 1,
-        precioTotal: plato.precio,
+        precioTotal: plato.precioMenu,
       };
       setProductos([...productos, nuevoProducto]);
-      handlePrecio(plato.precio);
+      handlePrecio(plato.precioMenu);
     }
   };
 
@@ -107,14 +104,14 @@ function Productos() {
     return (
       <div
         className="hover:cursor-pointer hover:scale-[1.02] transition-all bg-[#1F1D2B] p-7 rounded-xl flex flex-col items-center gap-5 text-center text-gray-300 h-full"
-        key={plato.idPlato}
+        key={plato.idMenu}
       >
         <Card
           imagen={plato.imagen}
-          descripcion={plato.descripcionPlato}
-          precio={plato.precio}
+          descripcion={plato.descripcionMenu}
+          precio={plato.precioMenu}
           disponibilidad={plato.disponibilidad}
-          nombrePlato={plato.nombrePlato}
+          nombrePlato={plato.nombreMenu}
         />    
         <div className="flex flex-col h-[100%] gap-4 justify-end">
           <button
@@ -150,8 +147,8 @@ function Productos() {
       <ChangePassword propUser = {propUser} ventana = {ventana} setVentana = {setVentana}/>
       <ViewError mostrar = {mostrarError} contenido = {"Producto no disponible por el momento"}/>
       <div
-        className={`fixed inset-0 z-50 bg-white bg-transparent p-4 ${
-          modalOpen ? "flex" : "hidden"
+        className={` ${
+          modalOpen ? "flex fixed inset-0 z-50 bg-gray-500 bg-transparent p-4" : "hidden"
         }`}
       >
         <div className="items-center justify-center flex w-full h-full overflow-auto">
@@ -163,7 +160,7 @@ function Productos() {
             <div className="md:flex md:mt-10 mt-52 md:justify-center">
               <div className="md:w-[400px] md:mr-6 md:mt-[-2px] mt-4">
                 <h1 className="p1 p-1 text-center text-2xl text-orange-500 whitespace-nowrap">
-                  {comida.nombrePlato}
+                  {comida.nombreMenu}
                 </h1>
                 <div className="mt-4 mb-4 flex justify-center">
                   <img
@@ -173,12 +170,56 @@ function Productos() {
                   />
                 </div>
                 <p className="p1 text-center text-orange-500 p-1 text-lg text-[25px]">
-                  {comida.precio}Bs
+                  {comida.precioMenu}Bs
                 </p>
                 <p className="p1 text-[20px] text-center text-orange-500 p-1">
                   {comida.disponibilidad}
                 </p>
-                <p className="mt-5">{comida.descripcionPlato}</p>
+                <p className="mt-5">{comida.descripcionMenu}</p>
+              </div>
+              <div className="md:w-[500px] mt-4 md:mt-0">
+                <div className="flex justify-center p-4">
+                  <img
+                    src={logo}
+                    alt="no disponible"
+                    className="w-44 h-44 rounded-full"
+                  />
+                </div>
+                <p className="text-left">{comida.descripcionServicio}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><div
+        className={`fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75 ${
+          modalOpen ? "flex" : "hidden"
+        }`}
+      >
+        <div className="items-center justify-center flex w-full h-full overflow-auto">
+          <div className="bg-red-100 p-9 rounded-[12px] md:rounded-[20px] md:mt-[-2px] mt-24 md:w-[75%] w-[95%] relative">
+            <BsXCircleFill
+              className="text-[30px] text-orange-500 transition-all absolute md:top-5 top-56 right-4 cursor-pointer"
+              onClick={()=>setModalOpen(false)}
+            />
+            <div className="md:flex md:mt-10 mt-52 md:justify-center">
+              <div className="md:w-[400px] md:mr-6 md:mt-[-2px] mt-4">
+                <h1 className="p1 p-1 text-center text-2xl text-orange-500 whitespace-nowrap">
+                  {comida.nombreMenu}
+                </h1>
+                <div className="mt-4 mb-4 flex justify-center">
+                  <img
+                    src={comida.imagen}
+                    alt="no existe imagen"
+                    className="rounded-lg w-full h-auto md:w-[400px]"
+                  />
+                </div>
+                <p className="p1 text-center text-orange-500 p-1 text-lg text-[25px]">
+                  {comida.precioMenu}Bs
+                </p>
+                <p className="p1 text-[20px] text-center text-orange-500 p-1">
+                  {comida.disponibilidad}
+                </p>
+                <p className="mt-5">{comida.descripcionMenu}</p>
               </div>
               <div className="md:w-[500px] mt-4 md:mt-0">
                 <div className="flex justify-center p-4">

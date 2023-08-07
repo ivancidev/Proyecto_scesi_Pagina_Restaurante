@@ -3,7 +3,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 const Order = (props) => {
   const { productos } = props;
-  const { idPlato, setIdPlato } = props;
+  const { idMenu, setIdMenu } = props;
   const {cambioFondo} = props
 
   return (
@@ -17,7 +17,7 @@ const Order = (props) => {
           />
           <div>
             <h5 className="text-[16px] text-orange-400">
-              {productos.nombrePlato}
+              {productos.nombreMenu}
             </h5>
             <p className="text-[15px] text-white">
               Cantidad: {productos.cantidad} platos
@@ -36,7 +36,7 @@ const Order = (props) => {
       <div className="flex justify-center">
         <div>
           <button
-            onClick={() => setIdPlato(productos.idPlato)}
+            onClick={() => setIdMenu(productos.idMenu)}
             className="border border-red-600 p-2 rounded-lg"
           >
             <RiDeleteBin6Line className="text-red-600 font-bold" />
