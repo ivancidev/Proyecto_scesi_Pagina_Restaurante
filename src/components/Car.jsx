@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import Order from "../components/Orden/Order";
-import Comentarios from "./Comments/Comments";
 import ViewCompra from "../components/Ventanas/ViewCompra";
 import ViewError from "../components/Ventanas/ViewError";
 import { FaShoppingCart } from "react-icons/fa";
+import Comments from "./Comments/Comments";
 
 const Card = (props) => {
   const { showOrder, setShowOrder } = props;
@@ -155,7 +155,7 @@ const Card = (props) => {
               comments ? "flex flex-col-reverse " : "hidden"
             } h-[470px] md:h-[700px] lg:h-[645px] overflow-y-scroll`}
           >
-            <Comentarios propClient={propClient} />
+            <Comments propClient={propClient} />
           </div>
         </div>
         {/* Comprar */}
