@@ -2,26 +2,25 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const Comentarios = (props) => {
+const Comments = (props) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const { propCliente } = props;
-  const [cliente, setCliente] = useState([]);
-  const fechaHora = new Date().toLocaleDateString()+" "+new Date().getHours()+":"+new Date().getMinutes()+":"+new Date().getSeconds()
-  const [comentarios, setComentarios] = useState("");
-  const [comentariosBD, setComentariosBD] = useState([])
+  const { propClient } = props;
+  const [client, setClient] = useState([]);
+  const dateHour = new Date().toLocaleDateString()+" "+new Date().getHours()+":"+new Date().getMinutes()+":"+new Date().getSeconds()
+  const [newComments, setNewComments] = useState("");
+  const [commentsBD, setCommmentsBD] = useState([])
 
   const agregarComentario = (myCliente, fechaYHora, coment) => {
     const nuevoComentario = {
       avatar: myCliente.avatar,
       nombre: myCliente.nombre,
-      fechaYhora: fechaHora,
+      fechaYhora: dateHour,
       comentario: coment,
     };
     // Actualizar el estado agregando el nuevo comentario al arreglo existente
-    setComentarios(nuevoComentario);
+    setNewComments(nuevoComentario);
     onSubmit(nuevoComentario);
-    console.log(comentarios);
   };
 
   const handleInputChange = (event) => {
@@ -31,7 +30,7 @@ const Comentarios = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setComments([...comments, newComment]);
-    agregarComentario(cliente, fechaHora, newComment);
+    agregarComentario(client, dateHour, newComment);
     setNewComment("");
   };
   
@@ -41,34 +40,34 @@ const Comentarios = (props) => {
     const fetchClient = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/correo/${propCliente.correo}`
+          `http://localhost:4000/correo/${propClient.email}`
         );
         const data = await response.json();
-        setCliente(data);
+        setClient(data);
       } catch (error) {
         console.error("Error al obtener el cliente:", error);
       }
     };
 
     fetchClient();
-  }, [propCliente.correo]);
+  }, [propClient.email]);
 
   useEffect(()=>{
-    const fetchComentarios = async()=>{
+    const fetchComments = async()=>{
         try {
-            const response = await fetch('http://localhost:4000/comentarios')
+            const response = await fetch('http://localhost:4000/comments')
             const data = await response.json()
-            setComentariosBD(data)
+            setCommmentsBD(data)
         } catch (error) {
             console.error('Error al obtener los dientes:', error)
         }
     }
-    fetchComentarios()
+    fetchComments()
 }, [])
 
-  const onSubmit = (comen) => {
+  const onSubmit = (coment) => {
     axios
-      .post("http://localhost:4000/restaurante/comentarios", comen)
+      .post("http://localhost:4000/restaurante/addComments", coment)
       .then(({ data }) => {
         console.log(data);
         console.log("Se guardo el comentario");
@@ -81,7 +80,7 @@ const Comentarios = (props) => {
   return (
     <header>
       <div className="p-4">
-        {comentariosBD.map((comment) => (
+        {commentsBD.map((comment) => (
           <div className="bg-white rounded-[15px] shadow p-4 mb-4" key={comment.idComentario}>
             <div className="flex items-center">
               <img
@@ -104,13 +103,13 @@ const Comentarios = (props) => {
             <div className="flex items-center">
               <img
                 className="w-12 h-12 rounded-full mr-4"
-                src={cliente.avatar}
+                src={client.avatar}
                 alt="Avatar del usuario"
               />
               <div>
-                <p className="font-bold text-black">{cliente.nombre}</p>
+                <p className="font-bold text-black">{client.nombre}</p>
                 <p className="text-gray-500 text-sm">
-                  {fechaHora}
+                  {dateHour}
                 </p>
               </div>
             </div>
@@ -138,4 +137,4 @@ const Comentarios = (props) => {
   );
 };
 
-export default Comentarios;
+export default Comments;
