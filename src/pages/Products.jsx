@@ -20,7 +20,6 @@ function Products() {
   const [showMenu, setShowMenu] = useState(false);
   const [showOrder, setShowOrder] = useState(false);
   const [changeBackground, setChangeBackground] = useState(false);
-  const [valueFood, setValueFood] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [food, setFood] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -260,7 +259,6 @@ function Products() {
         showOrder={showOrder}
         setShowOrder={setShowOrder}
         changeBackground={changeBackground}
-        valueFood={valueFood}
         totalPrice={totalPrice}
         setTotalPrice={setTotalPrice}
         propUser={propUser}

@@ -8,68 +8,68 @@ import { FaShoppingCart } from "react-icons/fa";
 
 const Card = (props) => {
   const { showOrder, setShowOrder } = props;
-  const { cambioFondo } = props;
-  const { totalPrecio, setTotalPrecio } = props;
-  const [orden, setOrden] = useState(0);
-  const [comentarios, setComentarios] = useState(false);
-  const { propCliente } = props;
-  const { productos, setProductos } = props;
+  const { changeBackground } = props;
+  const { totalPrice, setTotalPrice } = props;
+  const [order, setOrder] = useState(0);
+  const [comments, setComments] = useState(false);
+  const { propClient } = props;
+  const { products, setProducts } = props;
   const [idMenu, setIdMenu] = useState(0);
-  const [mostrarBotones, setMostrarBotones] = useState(false);
-  const [cliente, setCliente] = useState([]);
-  const [mostrarError, setMostrarError] = useState(false)
+  const [showButtons, setShowButtons] = useState(false);
+  const [client, setClient] = useState([]);
+  const [showError, setShowError] = useState(false)
 
 
-  const handleClickComentarios = () => {
-    setComentarios(true);
+  const handleClickComments = () => {
+    setComments(true);
   };
 
   useEffect(() => {
     
-    const fetchCliente = async () => {
+    const fetchClient = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/correo/${propCliente.correo}`);
+          `http://localhost:4000/correo/${propClient.email}`);
           if(!response.ok){
             throw new Error('Error al obtener los datos del cliente');
           }
         const data = await response.json();
-        setCliente(data);
+        setClient(data);
       } catch (error) {
         console.error("Error al obtener el correo del cliente:", error);
       }
     };
 
-    fetchCliente();
+    fetchClient();
   }, []);
 
   const quitarCantidad = (productoId) => {
     // Buscar el producto por su ID en el array
-    const index = productos.findIndex(
+    const index = products.findIndex(
       (producto) => producto.idMenu === productoId
     );
 
     if (index !== -1) {
       // Obtener el producto actual y su cantidad
-      const productoActual = productos[index];
+      const productoActual = products[index];
       const nuevaCantidad = productoActual.cantidad - 1;
-      setTotalPrecio(totalPrecio - productoActual.precioMenu);
+      setTotalPrice(totalPrice - productoActual.precioMenu);
 
       // Actualizar la cantidad y el precio total del producto
       if (nuevaCantidad > 0) {
-        const productosActualizados = [...productos];
-        productosActualizados[index] = {
+        const productsActualizados = [...products];
+        productsActualizados[index] = {
           ...productoActual,
           cantidad: nuevaCantidad,
           precioTotal: nuevaCantidad * productoActual.precioMenu,
         };
-        setProductos(productosActualizados);
+        setProducts(productsActualizados);
       } else {
         // Si la cantidad llega a cero, eliminar el producto del array
-        const productosActualizados = productos.filter(
+        const productsActualizados = products.filter(
           (producto) => producto.idMenu !== productoId
         );
-        setProductos(productosActualizados);
+        setProducts(productsActualizados);
       }
     }
   };
@@ -79,13 +79,13 @@ const Card = (props) => {
   });
 
   const handleCompraClick = () => {
-    if(productos.length == 0){
-      setMostrarError(true)
+    if(products.length == 0){
+      setShowError(true)
       setTimeout(() => {
-        setMostrarError(false);
+        setShowError(false);
       }, 3000);
     }else{
-      setMostrarBotones(true);
+      setShowButtons(true);
     }
     
   };
@@ -93,12 +93,12 @@ const Card = (props) => {
   return (
     <div
       className={` lg:col-span-2 fixed top-0 ${
-        cambioFondo ? "bg-stone-800" : "bg-orange-500"
+        changeBackground ? "bg-stone-800" : "bg-orange-500"
       } w-full lg:w-96 lg:right-0 h-full transition-all z-20 ${
         showOrder ? "right-0" : "-right-full"
       }`}
     >
-      <ViewError mostrar = {mostrarError} contenido={"Agrega productos al carrito de compra"}/>
+      <ViewError mostrar = {showError} contenido={"Agrega productos al carrito de compra"}/>
       <div className="relative pt-16 lg:pt-3 text-gray-300 p-8 h-full">
         <RiCloseLine
           onClick={() => setShowOrder(false)}
@@ -108,9 +108,9 @@ const Card = (props) => {
         <div className={`flex items-center gap-4 flex-wrap mb-5`}>
           <button
             className={`${
-              comentarios ? "bg-none border border-white" : "bg-[#1F1D2B]"
+              comments ? "bg-none border border-white" : "bg-[#1F1D2B]"
             } text-white p-3 py-2 px-4 rounded-xl`}
-            onClick={() => setComentarios(false)}
+            onClick={() => setComments(false)}
           >
             
             <p className="mr-6 flex justify-center gap-4 items-center">Carrito< FaShoppingCart className="mr-3 text-[20px]"/></p>
@@ -119,58 +119,58 @@ const Card = (props) => {
           <p></p>
           <button
             className={`${
-              comentarios ? "bg-[#1F1D2B] " : "bg-none border border-white"
+              comments ? "bg-[#1F1D2B] " : "bg-none border border-white"
             } text-white p-3 py-2 px-4 rounded-xl `}
-            onClick={handleClickComentarios}
+            onClick={handleClickComments}
           >
             Comentarios
           </button>
         </div>
         <div>
-          <div className={`${comentarios? "hidden":"grid grid-cols-5 mb-2 p-4"} `}>
+          <div className={`${comments? "hidden":"grid grid-cols-5 mb-2 p-4"} `}>
             <h5 className="col-span-4 text-white">Comida</h5>
             <h5 className="text-white">SubTotal</h5>
           </div>
-          <div className={`${comentarios? "flex justify-center p-3 ":"hidden"}`}>
+          <div className={`${comments? "flex justify-center p-3 ":"hidden"}`}>
             <h2 className="text-[18px] text-white">Comentarios de las personas</h2>
           </div>
           {/* Productos seleccionados */}
           <div
             className={`${
-              comentarios ? "hidden" : "block"
+              comments ? "hidden" : "block"
             } h-[350px] md:h-[700px] lg:h-[490px] sm:h-[350px] overflow-auto`}
           >
-            {productos.map((arreglo, index) => (
+            {products.map((arreglo, index) => (
               <Order
                 key={index}
-                productos={arreglo}
-                orden={orden}
-                setOrden={setOrden}
-                totalPrecio={totalPrecio}
-                setTotalPrecio={setTotalPrecio}
+                products={arreglo}
+                order={order}
+                setOrder={setOrder}
+                totalPrice={totalPrice}
+                setTotalPrice={setTotalPrice}
                 idMenu={idMenu}
                 setIdMenu={setIdMenu}
-                cambioFondo = {cambioFondo}
+                changeBackground = {changeBackground}
               />
             ))}
           </div>
           <div
             className={`${
-              comentarios ? "flex flex-col-reverse " : "hidden"
+              comments ? "flex flex-col-reverse " : "hidden"
             } h-[470px] md:h-[700px] lg:h-[645px] overflow-y-scroll`}
           >
-            <Comentarios propCliente={propCliente} />
+            <Comentarios propClient={propClient} />
           </div>
         </div>
         {/* Comprar */}
         <div
-          className={`${cambioFondo ? "bg-slate-600" : "bg-[#1F1D2B]"} ${
-            comentarios ? "hidden" : "block relative w-full bottom-0 left-0 p-4 rounded-[10px]"
+          className={`${changeBackground ? "bg-slate-600" : "bg-[#1F1D2B]"} ${
+            comments ? "hidden" : "block relative w-full bottom-0 left-0 p-4 rounded-[10px]"
           }`}
         >
           <div className="flex items-center justify-between mb-6">
             <p className="text-white pt-2 pb-2 text-[17px]">Total Pago</p>
-            <span className="text-white text-[17px]">{Math.abs(totalPrecio)}Bs</span>
+            <span className="text-white text-[17px]">{Math.abs(totalPrice)}Bs</span>
           </div>
           <div>
             <button
@@ -184,17 +184,17 @@ const Card = (props) => {
       </div>
       <div
         className={`${
-          mostrarBotones
+          showButtons
             ? "fixed inset-0 flex items-center justify-center z-50"
             : "hidden"
         }`}
       >
         <ViewCompra
-          mostrarBotones={mostrarBotones}
-          setMostrarBotones={setMostrarBotones}
-          cliente = {cliente}
-          productos = {productos}
-          totalPrecio = {totalPrecio}
+          showButtons={showButtons}
+          setShowButtons={setShowButtons}
+          client = {client}
+          products = {products}
+          totalPrice = {totalPrice}
 
         />
       </div>
