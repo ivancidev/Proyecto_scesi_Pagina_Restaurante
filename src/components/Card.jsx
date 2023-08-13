@@ -1,20 +1,20 @@
 import React from "react";
 
 const Card = (props) => {
-  const { nombrePlato, imagen, descripcion, precio, disponibilidad } = props;
+  const { nameDish, image, description, price, availability } = props;
 
   return (
     <div className="flex flex-col items-center">
       <img
-        src={imagen}
+        src={image}
         className="w-40 h-40 object-cover -mt-20 shadow-2xl rounded-full mb-4"
       />
-      <p className="text-center font-bold text-[17px] text-white">{nombrePlato}</p>
-      <p className="mt-5 text-center">{descripcion}</p>
+      <p className="text-center font-bold text-[17px] text-white">{nameDish}</p>
+      <p className="mt-5 text-center">{description}</p>
       <div className="flex justify-end ">
-        <span className="text-white mt-5 text-[18px]">Costo: {precio}Bs</span>
+        <span className="text-white mt-5 text-[18px]">Costo: {price}Bs</span>
       </div>
-      <p className="text-gray-400 mb-5">{disponibilidad}</p>
+      <p className="text-gray-400 mb-5">{availability}</p>
     </div>
   );
 };
