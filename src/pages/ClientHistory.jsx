@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import TablaDelivery from "../components/HistorialTabla/TablaDelivery";
-import TablaRestaurante from "../components/HistorialTabla/TablaRestaurante";
+import TableDelivery from "../components/TableHistory/TableDelivery";
+import TableRestaurant from "../components/TableHistory/TableRestaurant";
 
 const ClientHistory = (prop) => {
   const location = useLocation();
   const propCliente = location.state?.prop;
-  const [historyTable, setHistoryTabla] = useState([]);
+  const [historyTable, setHistoryTable] = useState([]);
 
   useEffect(() => {
     const fetchHistorial = async () => {
@@ -16,7 +16,7 @@ const ClientHistory = (prop) => {
           `http://localhost:4000/historial/${propCliente.nombre}`
         );
         const data = await response.json();
-        setHistoryTabla(data);
+        setHistoryTable(data);
       } catch (error) {
         console.error("Error al obtener el historial:", error);
       }
@@ -39,10 +39,10 @@ const ClientHistory = (prop) => {
               className="w-full overflow-hidden rounded-lg shadow-lg mb-4"
             >
               <div className={`${key === "compraRestaurante" ? "block overflow-x-auto" : "hidden"}`}>
-                <TablaRestaurante historialRestaurante={historyTable[key]} />
+                <TableRestaurant historialRestaurante={historyTable[key]} />
               </div>
               <div className={`${key === "compraDelivery" ? "block  overflow-x-auto" : "hidden"}`}>
-                <TablaDelivery historialDelivery={historyTable[key]} />
+                <TableDelivery historialDelivery={historyTable[key]} />
               </div>
             </div>
           ))}

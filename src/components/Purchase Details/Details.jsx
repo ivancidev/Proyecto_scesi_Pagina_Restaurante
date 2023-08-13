@@ -2,25 +2,25 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { BsXCircleFill } from "react-icons/bs";
 import axios from "axios";
-import Formulario from "../FormularioDelivery/Formulario";
-import Mesas from "../MatrizMesas/Mesas";
+import Form from "../Form/Form";
+import Tables from "../MatrixTables/Tables";
 
 const DetalleCompra = (props) => {
-  const { setAbrirModal } = props;
-  const { cliente } = props;
-  const { productos } = props;
+  const { setOpenModal } = props;
+  const { client } = props;
+  const { products } = props;
   const [nombre, setNombre] = useState("");
   const [direccion, setDireccion] = useState("");
   const [telefono, setTelefono] = useState("");
   const [tarjeta, setTarjeta] = useState("");
-  const { totalPrecio } = props;
+  const { totalPrice } = props;
   const [compraExistosa, setCompraExistosa] = useState(false);
   const [fechaEntrega, setFechaEntrega] = useState("");
   const [horaEnvio, setHoraEnvio] = useState("");
-  const { setMostrarBotones } = props;
+  const { setShowButtons } = props;
   const [nombresOrden, setNombresOrden] = useState("");
   const [ventanaConfirmacion, setVentanaConfirmacion] = useState(false);
-  const { seleccionOpcion } = props;
+  const { selectionOption } = props;
   const [primerCheck, setPrimerCheck] = useState(false);
   const [segundoCheck, setSegundoCheck] = useState(false);
   const [numeroMesa, setNumeroMesa] = useState(null);
@@ -37,7 +37,7 @@ const DetalleCompra = (props) => {
   const [errores, setErrores] = useState({});
 
   const concatenarNombresPlatos = () => {
-    const nombres = productos.map((plato) => plato.nombreMenu).join(", ");
+    const nombres = products.map((plato) => plato.nombreMenu).join(", ");
     setNombresOrden(nombres);
   };
 
@@ -72,18 +72,18 @@ const DetalleCompra = (props) => {
 
 
   const handleSubmit = () => {
-    const clienteDetalle = {
+    const clientDetalle = {
       nombre,
       direccion,
       telefono,
       tarjeta,
       nombresOrden,
-      totalPrecio,
+      totalPrice,
       fechaEntrega,
       horaEnvio,
     };
     axios
-      .post("http://localhost:4000/detalleCompraDelivery", clienteDetalle)
+      .post("http://localhost:4000/detalleCompraDelivery", clientDetalle)
       .then(({ data }) => {
         setVentanaConfirmacion(false);
         setCompraExistosa(true);
@@ -95,7 +95,7 @@ const DetalleCompra = (props) => {
   };
 
   const handleSubmitRestaurante = () => {
-    const clienteDetalle = {
+    const clientDetalle = {
       numeroMesa,
       tarjeta,
       nombresOrden,
@@ -104,10 +104,10 @@ const DetalleCompra = (props) => {
       horaEnvio,
       telefono,
       nombre,
-      totalPrecio,
+      totalPrice,
     };
     axios
-      .post("http://localhost:4000/detalleCompraRestaurante", clienteDetalle)
+      .post("http://localhost:4000/detalleCompraRestaurante", clientDetalle)
       .then(({ data }) => {
         setVentanaConfirmacionResturante(false);
         tiempoEntregar();
@@ -143,7 +143,7 @@ const DetalleCompra = (props) => {
   const mostrarCompraExitosa = () => {
     let nuevosErrores = {}
 
-    if(seleccionOpcion == "Restaurante"){
+    if(selectionOption == "Restaurante"){
       nuevosErrores = validarTarjeta();
       setErrores(nuevosErrores);     
     }else{
@@ -167,10 +167,10 @@ const DetalleCompra = (props) => {
       console.log({ nombresOrden });
 
       // Actualizamos el estado para mostrar la ventana de compra exitosa y la fecha y hora
-      if (seleccionOpcion == "Restaurante") {
+      if (selectionOption == "Restaurante") {
         setVentanaConfirmacionResturante(true);
-        setNombre(cliente.nombre);
-        setTelefono(cliente.telefono);
+        setNombre(client.nombre);
+        setTelefono(client.telefono);
       } else {
         setVentanaConfirmacion(true);
       }
@@ -217,21 +217,21 @@ const DetalleCompra = (props) => {
 
   const cerrarCompraExistosa = () => {
     setCompraExistosa(false);
-    setAbrirModal(false);
-    setMostrarBotones(false);
+    setOpenModal(false);
+    setShowButtons(false);
     window.location.reload(); //recarga la pagina
   };
 
   const cerrarCompraExistosaRestaurante = () => {
     setCompraExistosaResturante(false);
-    setAbrirModal(false);
-    setMostrarBotones(false);
+    setOpenModal(false);
+    setShowButtons(false);
     window.location.reload(); //recarga la pagina
   };
 
   const tiempoEntregar = () => {
-    var tiempoDemoraCliente = parseInt(valorCombox);
-    setTiempoEntrega(parseInt(tiempoDemoraCliente + tiempoDemoraCliente / 2));
+    var tiempoDemoraClient = parseInt(valorCombox);
+    setTiempoEntrega(parseInt(tiempoDemoraClient + tiempoDemoraClient / 2));
   };
 
   return (
@@ -245,13 +245,13 @@ const DetalleCompra = (props) => {
       >
         {/*Formulario de delivery */}
         <div
-          className={`${seleccionOpcion == "Delivery" ? "block" : "hidden"}`}
+          className={`${selectionOption == "Delivery" ? "block" : "hidden"}`}
         >
           <h2 className="text-2xl font-semibold mb-4 text-orange-500">
             Por favor llene los campos para la entrega:
           </h2>
-          <p className="mb-4 text-[17px]">Cliente: {cliente.nombre}</p>
-          <Formulario
+          <p className="mb-4 text-[17px]">Cliente: {client.nombre}</p>
+          <Form
             nombre={nombre}
             setNombre={setNombre}
             direccion={direccion}
@@ -264,17 +264,17 @@ const DetalleCompra = (props) => {
           />
         </div>
         <div
-          className={`${seleccionOpcion == "Restaurante" ? "block" : "hidden"}`}
+          className={`${selectionOption == "Restaurante" ? "block" : "hidden"}`}
         >
           <h2 className="text-[18px] text-orange-500 mb-4">
             Por favor, complete los campos para la entrega en el restaurante:
           </h2>
-          <p>Usuario: {cliente.nombre}</p>
-          <p>Telefono: {cliente.telefono}</p>
+          <p>Usuario: {client.nombre}</p>
+          <p>Telefono: {client.telefono}</p>
         </div>
         <div
           className={`${
-            seleccionOpcion == "Delivery"
+            selectionOption == "Delivery"
               ? "hidden"
               : "block text-white container mx-auto px-4 py-5 bg-blue-500 rounded-[12px] mt-3 mb-3"
           }`}
@@ -324,7 +324,7 @@ const DetalleCompra = (props) => {
                 <p className="text-xl font-bold mb-4">
                   Selecciona en qué mesa usted se encuentra:
                 </p>
-                <Mesas
+                <Tables
                   numeroMesa={numeroMesa}
                   setNumeroMesa={setNumeroMesa}
                   setMostrarMesa={setMostrarMesa}
@@ -473,7 +473,7 @@ const DetalleCompra = (props) => {
               </tr>
             </thead>
             <tbody>
-              {productos.map((producto, index) => (
+              {products.map((producto, index) => (
                 <tr key={index}>
                   <td className="px-4 py-2 text-left border-orange-500 border-2">
                     {producto.nombreMenu}
@@ -492,7 +492,7 @@ const DetalleCompra = (props) => {
                 </td>
                 <td className="text-left text-[17px] font-semibold border-orange-500 border-2"></td>
                 <td className="text-right px-4 py-2 text-[17px] font-semibold border-orange-500 border-2">
-                  {totalPrecio}Bs
+                  {totalPrice}Bs
                 </td>
               </tr>
             </tbody>
@@ -506,7 +506,7 @@ const DetalleCompra = (props) => {
           <button
             onClick={mostrarCompraExitosa}
             className={` ${
-              seleccionOpcion == "Delivery"
+              selectionOption == "Delivery"
                 ? " block mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md mb-2 md:mb-0 md:mr-16"
                 : "hidden"
             } `}
@@ -515,7 +515,7 @@ const DetalleCompra = (props) => {
           </button>
           <button
             className={`${
-              seleccionOpcion == "Restaurante"
+              selectionOption == "Restaurante"
                 ? "block mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md mb-2 md:mb-0 md:mr-16"
                 : "hidden"
             }`}
@@ -525,7 +525,7 @@ const DetalleCompra = (props) => {
           </button>
           <button
             className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg shadow-md"
-            onClick={() => setAbrirModal(false)}
+            onClick={() => setOpenModal(false)}
           >
             Cancelar
           </button>
@@ -543,11 +543,11 @@ const DetalleCompra = (props) => {
             <h2 className="text-2xl font-semibold mb-4 text-orange-500">
               ¡Compra Exitosa!
             </h2>
-            <p>Usuario: {cliente.nombre}</p>
+            <p>Usuario: {client.nombre}</p>
             <p>Dirección de entrega: {direccion}</p>
             <p>Fecha de entrega: {fechaEntrega}</p>
             <p>Hora de envío: {horaEnvio}</p>
-            <p>Total Precio: {totalPrecio}</p>
+            <p>Total Precio: {totalPrice}</p>
             <p>Nuestro Email: elBocadoPerfecto@gmail.com</p>
             <p>Nuestro telefono: 71779843 </p>
           </div>
@@ -565,7 +565,7 @@ const DetalleCompra = (props) => {
             <h2 className="text-2xl font-semibold mb-4 text-orange-500">
               ¡Compra Exitosa!
             </h2>
-            <p>Usuario: {cliente.nombre}</p>
+            <p>Usuario: {client.nombre}</p>
             <p>
               Fecha y hora compra: {fechaEntrega}: {horaEnvio}
             </p>
@@ -573,7 +573,7 @@ const DetalleCompra = (props) => {
               Numero de mesa: {numeroMesa}
             </p>
             <p className={`${valorCombox != "" ? "block" : "hidden"}`}></p>
-            <p>Total Precio: {totalPrecio}</p>
+            <p>Total Precio: {totalPrice}</p>
             <p>Nuestro Email: elBocadoPerfecto@gmail.com</p>
             <p>Nuestro telefono: 71779843 </p>
             <p

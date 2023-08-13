@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Formulario = (props) => {
+const Form = (props) => {
 
     const {nombre, setNombre} = props
     const {direccion, setDireccion} = props
@@ -91,4 +91,4 @@ const Formulario = (props) => {
   )
 }
 
-export default Formulario
+export default Form

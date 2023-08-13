@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import OptionButton from "../Purchase Options/OptionButton";
-import DetalleCompra from "../DetalleCompra/DetalleCompra";
+import Details from "../Purchase Details/Details";
 import {BsXCircleFill} from "react-icons/bs"
 
 const ViewBuy = (props) => {
@@ -30,7 +30,7 @@ const ViewBuy = (props) => {
             <div
               className={`flex justify-center`}
             >
-              <DetalleCompra selectionOption = {selectionOption} setOpenModal={setOpenModal} client = {client} products = {products} totalPrice={totalPrice} setShowButtons = {setShowButtons}/>
+              <Details selectionOption = {selectionOption} setOpenModal={setOpenModal} client = {client} products = {products} totalPrice={totalPrice} setShowButtons = {setShowButtons}/>
             </div>
           </div>
         </div>

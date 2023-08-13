@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
-import Order from "../components/Orden/Order";
+import Order from "./Orders/Order";
 import ViewError from "./Window/ViewError";
 import { FaShoppingCart } from "react-icons/fa";
 import Comments from "./Comments/Comments";
@@ -10,7 +10,6 @@ const Card = (props) => {
   const { showOrder, setShowOrder } = props;
   const { changeBackground } = props;
   const { totalPrice, setTotalPrice } = props;
-  const [order, setOrder] = useState(0);
   const [comments, setComments] = useState(false);
   const { propClient } = props;
   const { products, setProducts } = props;
@@ -29,7 +28,7 @@ const Card = (props) => {
     const fetchClient = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/correo/${propClient.email}`);
+          `http://localhost:4000/email/${propClient.email}`);
           if(!response.ok){
             throw new Error('Error al obtener los datos del cliente');
           }

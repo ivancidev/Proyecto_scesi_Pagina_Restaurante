@@ -40,7 +40,7 @@ const Comments = (props) => {
     const fetchClient = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/correo/${propClient.email}`
+          `http://localhost:4000/email/${propClient.email}`
         );
         const data = await response.json();
         setClient(data);

@@ -6,39 +6,39 @@ import logo from "../assets/imagenes/logo.png";
 
 const Header = (props) => {
   const [searchValue, setSearchValue] = useState("");
-  const [platos, setPlatos] = useState([]);
-  const { plato, setPlato } = props;
-  const [comida, setComida] = useState([]);
+  const [foods, setFoods] = useState([]);
+  const { dish, setDish } = props;
+  const [food, setFood] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const {cambioFondo} = props
+  const {changeBackground} = props
 
   
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
-    setPlato(event.target.value)
+    setDish(event.target.value)
   };
   
 
-  const filteredCards = platos.filter((card) =>
+  const filteredCards = foods.filter((card) =>
     card.nombreMenu.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   useEffect(() => {
-    const fetchPlatos = async () => {
+    const fetchFoods = async () => {
       try {
         const response = await fetch(`http://localhost:4000/menu`);
         const data = await response.json();
-        setPlatos(data);
+        setFoods(data);
       } catch (error) {
         console.error("Error al obtener el cliente:", error);
       }
     };
 
-    fetchPlatos();
+    fetchFoods();
   }, []);
   const handleOpenClick = (c) => {
     setModalOpen(true);
-    setComida(c);
+    setFood(c);
   };
 
   const cerrarModal = ()=>{
@@ -63,22 +63,22 @@ const Header = (props) => {
             <div className="md:flex md:mt-10 mt-52 md:justify-center">
               <div className="md:w-[400px] md:mr-6 md:mt-[-2px] mt-4">
                 <h1 className="p1 p-1 text-center text-2xl text-orange-500 whitespace-nowrap">
-                  {comida.nombreMenu}
+                  {food.nombreMenu}
                 </h1>
                 <div className="mt-4 mb-4 flex justify-center">
                   <img
-                    src={comida.imagen}
+                    src={food.imagen}
                     alt="no existe imagen"
                     className="rounded-lg w-full h-auto md:w-[400px]"
                   />
                 </div>
                 <p className="p1 text-center text-orange-500 p-1 text-lg text-[25px]">
-                  {comida.precioMenu}Bs
+                  {food.precioMenu}Bs
                 </p>
                 <p className="p1 text-[20px] text-center text-orange-500 p-1">
-                  {comida.disponibilidad}
+                  {food.disponibilidad}
                 </p>
-                <p className="mt-5">{comida.descripcionMenu}</p>
+                <p className="mt-5">{food.descripcionMenu}</p>
               </div>
               <div className="md:w-[500px] mt-4 md:mt-0">
                 <div className="flex justify-center p-4">
@@ -88,7 +88,7 @@ const Header = (props) => {
                     className="w-44 h-44 rounded-full"
                   />
                 </div>
-                <p className="text-left">{comida.descripcionServicio}</p>
+                <p className="text-left">{food.descripcionServicio}</p>
               </div>
             </div>
           </div>
@@ -102,10 +102,10 @@ const Header = (props) => {
       <div className="flex flex-col md:flex-row md:justify-end md:items-center gap-4 mb-6">
         <form>
           <div className="w-full relative">
-            <RiSearch2Line className={`${cambioFondo? "text-black":"text-white"} absolute left-3 top-1/2 -translate-y-1/2 `} />
+            <RiSearch2Line className={`${changeBackground? "text-black":"text-white"} absolute left-3 top-1/2 -translate-y-1/2 `} />
             <input
               type="text"
-              className={`${cambioFondo ? "text-black  bg-white":"text-gray-300 bg-[#262837]"}  w-full py-2 pl-10 pr-4 rounded-lg  outline-none`}
+              className={`${changeBackground ? "text-black  bg-white":"text-gray-300 bg-[#262837]"}  w-full py-2 pl-10 pr-4 rounded-lg  outline-none`}
               placeholder="Buscar plato"
               value={searchValue}
               onChange={handleSearchChange}
@@ -145,42 +145,42 @@ const Header = (props) => {
       {/* Tabs */}
       <nav className={`flex items-center justify-between md:justify-start md:gap-8 border-b-4 border-orange-700 mb-6`}>
         <button
-          onClick={() => setPlato("menufrito")}
+          onClick={() => setDish("menufrito")}
           className={`${
-            plato == "menufrito" ? "text-red-600" : "text-black py-2 pr-4 "
-          } ${cambioFondo? "text-white":"text-black"}`}
+            dish == "menufrito" ? "text-red-600" : "text-black py-2 pr-4 "
+          } ${changeBackground? "text-white":"text-black"}`}
         >
           Platos fritos
         </button>
         <button
-          onClick={() => setPlato("Sopa")}
+          onClick={() => setDish("Sopa")}
           className={`${
-            plato == "Sopa" ? "text-red-600" : "text-black py-2 pr-4 "
-          } ${cambioFondo? "text-white":"text-black"}`}
+            dish == "Sopa" ? "text-red-600" : "text-black py-2 pr-4 "
+          } ${changeBackground? "text-white":"text-black"}`}
         >
           Sopas
         </button>
         <button
-          onClick={() => setPlato("Desayuno")}
+          onClick={() => setDish("Desayuno")}
           className={`${
-            plato == "Desayuno" ? "text-red-600" : "text-black py-2 pr-4 "
-          } ${cambioFondo? "text-white":"text-black"}`}
+            dish == "Desayuno" ? "text-red-600" : "text-black py-2 pr-4 "
+          } ${changeBackground? "text-white":"text-black"}`}
         >
           Desayunos
         </button>
         <button
-          onClick={() => setPlato("Postre")}
+          onClick={() => setDish("Postre")}
           className={`${
-            plato == "Postre" ? "text-red-600" : "text-black py-2 pr-4 "
-          } ${cambioFondo? "text-white":"text-black"}`}
+            dish == "Postre" ? "text-red-600" : "text-black py-2 pr-4 "
+          } ${changeBackground? "text-white":"text-black"}`}
         >
           Postres
         </button>
         <button
-          onClick={() => setPlato("Jugo")}
+          onClick={() => setDish("Jugo")}
           className={`${
-            plato == "Jugo" ? "text-red-600" : "text-black py-2 pr-4 "
-          } ${cambioFondo? "text-white":"text-black"}`}
+            dish == "Jugo" ? "text-red-600" : "text-black py-2 pr-4 "
+          } ${changeBackground? "text-white":"text-black"}`}
         >
           Jugos
         </button>

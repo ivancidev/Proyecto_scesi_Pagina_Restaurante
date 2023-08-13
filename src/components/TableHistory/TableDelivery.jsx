@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TablaDelivery = (props) => {
+const TableDelivery = (props) => {
     const {historialDelivery} = props;
   return (
     <header>
@@ -35,4 +35,4 @@ const TablaDelivery = (props) => {
   )
 }
 
-export default TablaDelivery
+export default TableDelivery

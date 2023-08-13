@@ -17,7 +17,7 @@ const ChangePassword = (props) => {
 
 
     const inputChange = (event)=>{
-        setCambio({
+        setChangeAccount({
             ...changeAccount,
             [event.target.name]: event.target.value
         })
@@ -28,7 +28,7 @@ const ChangePassword = (props) => {
         const fetchClient = async () => {
           try {
             const response = await fetch(
-              `http://localhost:4000/correo/${propUser.email}`);
+              `http://localhost:4000/email/${propUser.email}`);
               if(!response.ok){
                 throw new Error('Error al obtener los datos del cliente');
               }
@@ -41,17 +41,18 @@ const ChangePassword = (props) => {
     
         fetchClient();
       }, []);
-      const handleSubmit = (e) => {
-        e.preventDefault()
-          axios.post('http://localhost:4000/cambioUsuario', changeAccount).then(({data})=>{
-              console.log(data)
-              navigate('/login')
-          }).catch(({response})=>{
-              e.preventDefault()
-              console.log(response.data)
-          })
-    
-      }
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await axios.post('http://localhost:4000/changeUser', changeAccount);
+          console.log(response.data);
+          navigate('/login');
+        } catch (error) {
+          console.error(error.response ? error.response.data : 'An error occurred');
+        }
+      };
+      
 
 
   return (
@@ -67,26 +68,26 @@ const ChangePassword = (props) => {
             </div>  
           </div>
           
-            <label className="font2 block text-white font-semibold mb-2" id='nom'> Usuario: </label>
+            <label className="font2 block text-white font-semibold mb-2"> Usuario: </label>
 
             <input type="text"  className="border-b-[4px] 
-             border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50" name='nombre'  aria-labelledby='nom' placeholder='Ingresa tu nombre' value={changeAccount.name} onChange={inputChange}/>
+             border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50" name='name'  aria-labelledby='nom' placeholder='Ingresa tu nombre' value={changeAccount.name} onChange={inputChange}/>
 
-            <label className="font2 block text-white font-semibold mb-2 mt-4" id='nom'> Nuevo Usuario: </label>
+            <label className="font2 block text-white font-semibold mb-2 mt-4"> Nuevo Usuario: </label>
 
             <input type="text"  className="border-b-[4px] 
-          border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50" name='newNombre'  aria-labelledby='nom' placeholder='Ingresa tu nuevo usuario'
+          border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50" name='newName' placeholder='Ingresa tu nuevo usuario'
             value={changeAccount.newName} onChange={inputChange}/>
 
-            <label className="font2 block text-white font-semibold mb-2 mt-5" id='cont'>Contraseña:</label>
+            <label className="font2 block text-white font-semibold mb-2 mt-5">Contraseña:</label>
 
             <input type="password" autoComplete='on'  className="border-b-[4px] 
-             border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50" name='contraseña' aria-labelledby='cont' placeholder='Ingresa tu contraseña' value={changeAccount.password} onChange={inputChange}/>
+             border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50" name='password' aria-labelledby='cont' placeholder='Ingresa tu contraseña' value={changeAccount.password} onChange={inputChange}/>
             
-            <label className="font2 block text-white font-semibold mb-2 mt-5" id='cont'>Nueva Constraseña:</label>
+            <label className="font2 block text-white font-semibold mb-2 mt-5">Nueva Constraseña:</label>
 
             <input type="password" autoComplete='on'  className="border-b-[4px] 
-             border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50" name='newContraseña' aria-labelledby='cont' placeholder='Ingresa tu nueva contraseña' value={changeAccount.newPassword} onChange={inputChange}/>
+             border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50" name='newPassword' aria-labelledby='cont' placeholder='Ingresa tu nueva contraseña' value={changeAccount.newPassword} onChange={inputChange}/>
 
             <div className="font2 flex justify-center">
             <button onClick={handleSubmit}  className="bg-orange-600 text-white px-16 py-2 rounded-lg mt-[30px] hover:bg-orange-500" >Cambiar</button>

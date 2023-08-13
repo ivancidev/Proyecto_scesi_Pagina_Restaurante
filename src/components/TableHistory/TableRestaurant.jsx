@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TablaRestaurante = (props) => {
+const TablaRestaurant = (props) => {
     const {historialRestaurante} = props;
 
   return (
@@ -38,4 +38,4 @@ const TablaRestaurante = (props) => {
   )
 }
 
-export default TablaRestaurante
+export default TablaRestaurant

@@ -19,7 +19,7 @@ const Sidebar = (props) => {
     const fetchClient = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/correo/${propUser.email}`);
+          `http://localhost:4000/email/${propUser.email}`);
           if(!response.ok){
             throw new Error('Error al obtener los datos del cliente');
           }

@@ -6,42 +6,43 @@ import { useNavigate } from "react-router-dom";
 
 const Registro = () => {
   const navigate = useNavigate();
-  const [usuario, setUsuario] = useState({
-    nombre: "",
-    correo: "",
-    contraseña: "",
-    telefono: "",
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
     avatar: "",
-  });
+});
+
   const [selectedImage, setSelectedImage] = useState(null);
-  const [errores, setErrores] = useState({});
+  const [errors, setErrors] = useState({});
 
   const handleImageClick = (imageName) => {
     setSelectedImage(imageName);
-    usuario.avatar = imageName;
+    user.avatar = imageName;
   };
 
   const onChange = (event) => {
-    setUsuario({
-      ...usuario,
+    setUser({
+      ...user,
       [event.target.name]: event.target.value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const nuevosErrores = validarForm();
-    setErrores(nuevosErrores);
+    const newErrors = validarForm();
+    setErrors(newErrors);
 
     try {
-      if (Object.keys(nuevosErrores).length === 0) {
+      if (Object.keys(newErrors).length === 0) {
         axios
-          .post("http://localhost:4000/restaurante/registro", usuario)
+          .post("http://localhost:4000/register", user)
           .then(({ data }) => {
             console.log("Se encontro al cliente");
             sessionStorage.setItem("guest_session_id", "sdfsdf23423");
             setTimeout(() => {
-              navigate("/productos", { state: { prop: usuario } });
+              navigate("/products", { state: { prop: user } });
               console.log(data);
             });
           })
@@ -58,49 +59,49 @@ const Registro = () => {
   };
 
   const validarForm = () => {
-    let nuevosErrores = {};
+    let newErrors = {};
     const exRegular =
       /^(?=.*[A-Z])(?=.*\d)[A-Z\d!@#$%^&*()_+=[\]{}|\\,.?: -]*$/i;
 
     //Validacion del nombre
-    if (!usuario.nombre) {
-      nuevosErrores.nombre = "El nombre es obligatorio";
-    } else if (usuario.nombre.length < 3) {
-      nuevosErrores.nombre = "El nombre al menos debe tener 3 caracteres";
+    if (!user.name) {
+      newErrors.name = "El nombre es obligatorio";
+    } else if (user.name.length < 3) {
+      newErrors.name = "El nombre al menos debe tener 3 caracteres";
     }
     // Validación del campo email
-    if (!usuario.correo) {
-      nuevosErrores.correo = "El email es obligatorio";
-    } else if (!/\S+@\S+\.\S+/.test(usuario.correo)) {
-      nuevosErrores.correo = "El email no es válido";
+    if (!user.email) {
+      newErrors.email = "El email es obligatorio";
+    } else if (!/\S+@\S+\.\S+/.test(user.email)) {
+      newErrors.email = "El email no es válido";
     }
 
     // Validación del campo password
-    if (!usuario.contraseña) {
-      nuevosErrores.contraseña = "La contraseña es obligatoria";
-    } else if (usuario.contraseña.length < 6) {
-      nuevosErrores.contraseña =
+    if (!user.password) {
+      newErrors.password = "La contraseña es obligatoria";
+    } else if (user.password.length < 6) {
+      newErrors.password =
         "La contraseña debe tener al menos 6 caracteres";
-    } else if (!exRegular.test(usuario.contraseña)) {
-      nuevosErrores.contraseña =
+    } else if (!exRegular.test(user.password)) {
+      newErrors.password =
         "Contraseña debe tener al menos un numero, letra mayuscula o un caracter especial";
     }
 
-    if (!usuario.telefono) {
-      nuevosErrores.telefono = "El telefono es obligatorio";
-    } else if (isNaN(usuario.telefono)) {
-      nuevosErrores.telefono = "Debe ser numeros";
-    } else if (usuario.telefono.length < 8) {
-      nuevosErrores.telefono = "Debe tener 8 numeros";
-    }else if(!/^[67]/.test(usuario.telefono)){
-      nuevosErrores.telefono = "Debe iniciar con con 6 o 7";
+    if (!user.phone) {
+      newErrors.phone = "El telefono es obligatorio";
+    } else if (isNaN(user.phone)) {
+      newErrors.phone = "Debe ser numeros";
+    } else if (user.phone.length < 8) {
+      newErrors.phone = "Debe tener 8 numeros";
+    }else if(!/^[67]/.test(user.phone)){
+      newErrors.phone = "Debe iniciar con con 6 o 7";
     }
 
-    if (!usuario.avatar) {
-      nuevosErrores.avatar = "Selecciona un avatar";
+    if (!user.avatar) {
+      newErrors.avatar = "Selecciona un avatar";
     }
 
-    return nuevosErrores;
+    return newErrors;
   };
 
   return (
@@ -132,13 +133,13 @@ const Registro = () => {
                 className="border-b-[4px] 
       border-orange-500  rounded-lg p-2    w-full bg-transparent   focus:bg-transparent outline-none"
                 name="nombre"
-                value={usuario.nombre}
+                value={user.name}
                 placeholder="Ingresa tu nombre"
                 onChange={onChange}
               />
 
-              {errores.nombre && (
-                <span className="text-red-500">{errores.nombre}</span>
+              {errors.name && (
+                <span className="text-red-500">{errors.name}</span>
               )}
 
               <label
@@ -154,12 +155,12 @@ const Registro = () => {
                 className="border-b-[4px] 
       border-orange-500  rounded-lg p-2    w-full bg-transparent  focus:bg-transparent outline-none "
                 name="correo"
-                value={usuario.correo}
+                value={user.email}
                 placeholder="Ingresa tu email"
                 onChange={onChange}
               />
-              {errores.correo && (
-                <span className="text-red-500">{errores.correo}</span>
+              {errors.email && (
+                <span className="text-red-500">{errors.email}</span>
               )}
 
               <label
@@ -175,12 +176,12 @@ const Registro = () => {
                 className="border-b-[4px] 
       border-orange-500  rounded-lg p-2    w-full bg-transparent  focus:bg-transparent outline-none "
                 name="telefono"
-                value={usuario.telefono}
+                value={user.phone}
                 placeholder="Ingresa tu numero"
                 onChange={onChange}
               />
-              {errores.telefono && (
-                <span className="text-red-500">{errores.telefono}</span>
+              {errors.phone && (
+                <span className="text-red-500">{errors.phone}</span>
               )}
 
               <label
@@ -195,15 +196,15 @@ const Registro = () => {
                 type="password"
                 className="border-b-[4px] 
       border-orange-500  rounded-lg p-2    w-full bg-transparent  focus:bg-transparent outline-none "
-                value={usuario.contraseña}
+                value={user.password}
                 onChange={onChange}
                 name="contraseña"
                 aria-labelledby="nom"
                 placeholder="Ingresa tu contraseña"
                 autoComplete="on"
               />
-              {errores.contraseña && (
-                <span className="text-red-500">{errores.contraseña}</span>
+              {errors.password && (
+                <span className="text-red-500">{errors.password}</span>
               )}
             </div>
 
@@ -342,8 +343,8 @@ const Registro = () => {
                     Imagen seleccionada
                   </p>
                 )}
-                {errores.avatar && (
-                  <span className="text-red-500">{errores.avatar}</span>
+                {errors.avatar && (
+                  <span className="text-red-500">{errors.avatar}</span>
                 )}
               </div>
             </div>
