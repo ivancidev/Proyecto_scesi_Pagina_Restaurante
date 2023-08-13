@@ -140,14 +140,10 @@ const Card = (props) => {
               comments ? "hidden" : "block"
             } h-[350px] md:h-[700px] lg:h-[490px] sm:h-[350px] overflow-auto`}
           >
-            {products.map((arreglo, index) => (
+            {products.map((orders, index) => (
               <Order
                 key={index}
-                products={arreglo}
-                order={order}
-                setOrder={setOrder}
-                totalPrice={totalPrice}
-                setTotalPrice={setTotalPrice}
+                order={orders}
                 idMenu={idMenu}
                 setIdMenu={setIdMenu}
                 changeBackground = {changeBackground}
