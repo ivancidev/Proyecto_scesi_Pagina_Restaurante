@@ -144,7 +144,7 @@ function Products() {
       } w-full min-h-screen`}
     >
       <ChangePassword propUser = {propUser} window = {window} setWindow = {setWindow}/>
-      <ViewError mostrar = {showError} contenido = {"Producto no disponible por el momento"}/>
+      <ViewError showError = {showError} content = {"Producto no disponible por el momento"}/>
       <div
         className={` ${
           modalOpen ? "flex fixed inset-0 z-50 bg-gray-500 bg-transparent p-4" : "hidden"
