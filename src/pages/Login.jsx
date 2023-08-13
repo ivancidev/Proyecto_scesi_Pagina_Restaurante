@@ -4,65 +4,58 @@ import logo from "../assets/imagenes/logo.png";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [cliente, setCliente] = useState({
-    correo: "",
-    contraseña: "",
+  const [client, setClient] = useState({
+    email: "",
+    password: "",
   });
   const navigate = useNavigate();
-  const [platos, setPlatos] = useState([]);
-  const [errores, setErrores] = useState({});
-  const [clienteBd, setClienteBd] = useState([])
+  const [dishes, setDishes] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [clientFromDb, setClientFromDb] = useState([]);
 
   const inputChange = (event) => {
-    setCliente({
-      ...cliente,
+    setClient({
+      ...client,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleClickRegistro = () => navigate("/registro");
+  const handleRegistrationClick = () => navigate("/registration");
 
   const validateForm = () => {
-    let nuevosErrores = {};
+    let newErrors = {};
 
-    // Validación del campo email
-    if (!cliente.correo) {
-      nuevosErrores.correo = "El correo es obligatorio";
-    } else if (!/\S+@\S+\.\S+/.test(cliente.correo)) {
-      nuevosErrores.correo = "El correo no es válido";
+    if (!client.email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(client.email)) {
+      newErrors.email = "Email is not valid";
     }
 
-    // Validación del campo password
-    if (!cliente.contraseña) {
-      nuevosErrores.contraseña = "La contraseña es obligatoria";
-    }else if(cliente.contraseña != clienteBd.contraseña){
-      nuevosErrores.contraseña = "La contraseña es incorrecta";
+    if (!client.password) {
+      newErrors.password = "Password is required";
+    } else if (client.password !== clientFromDb.contraseña) {
+      newErrors.password = "Incorrect password";
     }
 
-    return nuevosErrores;
+    return newErrors;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const nuevosErrores = validateForm();
-    setErrores(nuevosErrores);
-
+  const handleSubmit = async (e) => {
     try {
-      if (Object.keys(nuevosErrores).length === 0) {
-        axios.post("http://localhost:4000/restaurante/cliente", cliente).then(({ data }) => {
-            sessionStorage.setItem("guest_session_id", "sdfsdf23423");
-            setTimeout(() => {
-              navigate("/productos", { state: { prop: cliente } });
-              console.log(data);
-            });
-          })
-          .catch(({ response }) => {
-            e.preventDefault();
-            console.log(response.data);
-          });
+      e.preventDefault();
+      const newErrors = validateForm();
+      setErrors(newErrors);
+
+      if (Object.keys(newErrors).length === 0) {
+        const response = await axios.post("http://localhost:4000/login", client);
+        sessionStorage.setItem("guest_session_id", "sdfsdf23423");
+        setTimeout(() => {
+          navigate("/products", { state: { prop: client } });
+          console.log(response.data);
+        });
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -71,103 +64,102 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    const fetchImagenes = async () => {
+    const fetchImages = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/menus/${"menufrito"}`
+          `http://localhost:4000/menus/${"friedmenu"}`
         );
         const data = await response.json();
-        setPlatos(data);
+        setDishes(data);
       } catch (error) {
-        console.error("Error al obtener el cliente:", error);
+        console.error("Error getting dishes:", error);
       }
     };
 
-    fetchImagenes();
+    fetchImages();
   }, []);
 
   useEffect(() => {
-    const fetchCliente = async () => {
+    const fetchClient = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/correo/${cliente.correo}`
+          `http://localhost:4000/email/${client.email}`
         );
         const data = await response.json();
-        setClienteBd(data);
+        setClientFromDb(data);
       } catch (error) {
-        console.error("Error al obtener el cliente:", error);
+        console.error("Error getting client:", error);
       }
     };
 
-    fetchCliente();
-  }, [cliente.correo]);
+    fetchClient();
+  }, [client.email]);
 
   return (
-    <section className="flex flex-col md:flex-row  items-center justify-center min-h-screen bg-[url(./assets/imagenes/fondoregistro.jpg)] bg-cover bg-center w-full p-10 gap-6">
+    <section className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-[url(./assets/imagenes/fondoregistro.jpg)] bg-cover bg-center w-full p-10 gap-6">
 
-        <form className="mx-4 md:w-[450px] p-6 md:h-[600px] rounded-3xl bg-white">
-          <div className="w-full">
-            <h1 className="font2 text-center mb-5 text-3xl font-bold">
-              Iniciar Sesión
-            </h1>
-            <div className="flex justify-center">
-              <img src={logo} alt="logo" className="rounded-full w-32 mb-5" />
-            </div>
-          </div>
-
+      <form className="mx-4 md:w-[450px] p-6 md:h-[600px] rounded-3xl bg-white">
+        <div className="w-full">
+          <h1 className="font2 text-center mb-5 text-3xl font-bold">
+            Iniciar Sesion
+          </h1>
           <div className="flex justify-center">
-            <div className="w-[310px]">
-              <label className="font2 block  mb-2 text-lg" id="nom">
-                Correo:
-              </label>
-              <input
-                type="email"
-                className="border-b-4 border-green-600 rounded-lg p-2 w-full bg-transparent focus:bg-transparent outline-none placeholder-slate-600"
-                value={cliente.correo}
-                onChange={inputChange}
-                name="correo"
-                aria-labelledby="correo"
-                placeholder="Ingresa tu correo"
-              />
-              {errores.correo && <span className="text-red-500">{errores.correo}</span>}
+            <img src={logo} alt="logo" className="rounded-full w-32 mb-5" />
+          </div>
+        </div>
 
-              <label className="font2 text-lg block mb-2 mt-7" id="cont">
-                Contraseña:
-              </label>
-              <input
-                type="password"
-                autoComplete="on"
-                className="border-b-4 border-green-600 rounded-lg p-2 w-full bg-transparent focus:bg-transparent outline-none placeholder-slate-600"
-                value={cliente.contraseña}
-                onChange={inputChange}
-                name="contraseña"
-                aria-labelledby="cont"
-                placeholder="Ingresa tu contraseña"
-              />
-              {errores.contraseña && <span className="text-red-500">{errores.contraseña}</span>}
-            </div>
+        <div className="flex justify-center">
+          <div className="w-[310px]">
+            <label className="font2 block mb-2 text-lg" id="email">
+              Email:
+            </label>
+            <input
+              type="email"
+              className="border-b-4 border-green-600 rounded-lg p-2 w-full bg-transparent focus:bg-transparent outline-none placeholder-slate-600"
+              value={client.email}
+              onChange={inputChange}
+              name="email"
+              aria-labelledby="email"
+              placeholder="Enter your email"
+            />
+            {errors.email && <span className="text-red-500">{errors.email}</span>}
+
+            <label className="font2 text-lg block mb-2 mt-7" id="pass">
+              Contraseña:
+            </label>
+            <input
+              type="password"
+              autoComplete="on"
+              className="border-b-4 border-green-600 rounded-lg p-2 w-full bg-transparent focus:bg-transparent outline-none placeholder-slate-600"
+              value={client.password}
+              onChange={inputChange}
+              name="password"
+              aria-labelledby="pass"
+              placeholder="Enter your password"
+            />
+            {errors.password && <span className="text-red-500">{errors.password}</span>}
           </div>
-          <div className="font2 flex justify-center">
-            <button
-              onClick={handleSubmit}
-              className="bg-green-600 text-white px-20 py-2 rounded-lg mt-[60px] hover:bg-green-500"
-            >
-              Enviar
-            </button>
-            
-          </div>
-          <span className=" flex justify-center text-center  mt-4 mb-4" >¿No tienes una cuenta?   <p className="text-blue-500 underline hover:cursor-pointer" onClick={handleClickRegistro}> Regístrate aquí</p> </span>
-        </form>
-      
+        </div>
+        <div className="font2 flex justify-center">
+          <button
+            onClick={handleSubmit}
+            className="bg-green-600 text-white px-20 py-2 rounded-lg mt-[60px] hover:bg-green-500"
+          >
+            Enviar
+          </button>
+        </div>
+        <span className="flex justify-center text-center mt-4 mb-4" >¿No tienes una cuenta? <p className="text-blue-500 underline hover:cursor-pointer" onClick={handleRegistrationClick}>Registrate aqui</p> </span>
+      </form>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl bg-white p-6 mt-10 sm:order-last rounded-[20px]">
         <h1 className="col-span-full text-center text-[28px] font-bold font2">
-          🧑‍🍳Te espera una gran variedad de platos🍲
+        🧑‍🍳Te espera una gran variedad de platos🍲
         </h1>
         <p className="col-span-full text-center text-[19px] font-bold font2">¡¡Vamos inicia sesión!!</p>
-        {platos.map((imagen) => (
-          <div key={imagen.idPlato} className="flex justify-center">
+        {dishes.map((image) => (
+          <div key={image.idMenu} className="flex justify-center">
             <img
-              src={imagen.imagen}
+              src={image.imagen}
               alt="login1"
               className="w-[160px] h-[160px] rounded-full"
             />
@@ -179,3 +171,4 @@ const Login = () => {
 };
 
 export default Login;
+

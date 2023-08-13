@@ -14,9 +14,9 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" exact element={<Home />}></Route>
-          <Route path="/registro" element={<Registro />}></Route>
+          <Route path="/registration" element={<Registro />}></Route>
           <Route element={<PrivateRouter />}>
-            <Route path="/productos" element={<Productos />}></Route>
+            <Route path="/products" element={<Productos />}></Route>
             <Route path="/historyClient" element={<ClientHistory/>}></Route>
             <Route path="*" element={<NotFound />} />
           </Route>
