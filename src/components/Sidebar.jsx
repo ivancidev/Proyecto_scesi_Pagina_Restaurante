@@ -9,7 +9,7 @@ const Sidebar = (props) => {
   const { showMenu, setShowMenu } = props
   const {propUser} = props
   const {window, setWindow}= props
-  const {changeBackground} = props
+  const {changeBackground, setChangeBackground} = props
   const navigate = useNavigate()
   const [client, setClient] = useState([]);
 
@@ -76,7 +76,7 @@ const Sidebar = (props) => {
             <p className="ml-3 text-white">Ver historial</p>  
             
           </li>
-          <li className="p-4 rounded-tl-xl rounded-bl-xl flex hover:bg-[#262837] hover:cursor-pointer mt-2" onClick={()=> setFondo(!changeBackground)}>
+          <li className="p-4 rounded-tl-xl rounded-bl-xl flex hover:bg-[#262837] hover:cursor-pointer mt-2" onClick={()=> setChangeBackground(!changeBackground)}>
             <BsMoonFill className="text-2xl text-white" /> 
             <p className="ml-3 text-white">Cambiar aspecto</p>  
             

@@ -98,7 +98,7 @@ const Card = (props) => {
         showOrder ? "right-0" : "-right-full"
       }`}
     >
-      <ViewError mostrar = {showError} contenido={"Agrega productos al carrito de compra"}/>
+      <ViewError showError = {showError} content={"Agrega productos al carrito de compra"}/>
       <div className="relative pt-16 lg:pt-3 text-gray-300 p-8 h-full">
         <RiCloseLine
           onClick={() => setShowOrder(false)}
