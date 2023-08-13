@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   const handleClick = () => navigate("/login");
-  const handClickProducto = () => navigate("/productos");
-  const handleClickRegistro = () => navigate("/registro");
+  const handClickProducto = () => navigate("/products");
+  const handleClickRegistro = () => navigate("/registration");
 
   return (
     <header className="bg-[url(./assets/imagenes/fondo.png)] bg-cover bg-center md:h-[100vh]">
