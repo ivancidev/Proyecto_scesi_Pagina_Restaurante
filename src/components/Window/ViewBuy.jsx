@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import OpcionBoton from "../OpcionesCompra/OpcionBoton";
+import OptionButton from "../Purchase Options/OptionButton";
 import DetalleCompra from "../DetalleCompra/DetalleCompra";
 import {BsXCircleFill} from "react-icons/bs"
 
-const ViewCompra = (props) => {
+const ViewBuy = (props) => {
   const { showButtons, setShowButtons } = props;
   const [selectionOption, setSelectionOption] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -20,7 +20,7 @@ const ViewCompra = (props) => {
       <div className="container mx-auto px-4 z-50 transition-all">
         <div className="flex justify-center">
           {/*OpcionBoton */}
-          <OpcionBoton
+          <OptionButton
             openModal={openModal}
             setOpenModal = {setOpenModal}
             showButtons={showButtons}
@@ -39,4 +39,4 @@ const ViewCompra = (props) => {
   );
 };
 
-export default ViewCompra;
+export default ViewBuy;

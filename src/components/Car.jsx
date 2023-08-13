@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import Order from "../components/Orden/Order";
-import ViewCompra from "../components/Ventanas/ViewCompra";
-import ViewError from "../components/Ventanas/ViewError";
+import ViewError from "./Window/ViewError";
 import { FaShoppingCart } from "react-icons/fa";
 import Comments from "./Comments/Comments";
+import ViewBuy from "./Window/ViewBuy";
 
 const Card = (props) => {
   const { showOrder, setShowOrder } = props;
@@ -185,7 +185,7 @@ const Card = (props) => {
             : "hidden"
         }`}
       >
-        <ViewCompra
+        <ViewBuy
           showButtons={showButtons}
           setShowButtons={setShowButtons}
           client = {client}

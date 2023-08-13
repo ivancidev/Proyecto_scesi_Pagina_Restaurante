@@ -12,7 +12,7 @@ import { useLocation } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
 import logo from "../assets/imagenes/logo.png";
 import { BsXCircleFill } from "react-icons/bs";
-import ViewError from "../components/Ventanas/ViewError";
+import ViewError from "../components/Window/ViewError";
 import ChangePassword from "../components/changePassword/ChangePassword";
 import { FaShoppingCart } from "react-icons/fa";
 
