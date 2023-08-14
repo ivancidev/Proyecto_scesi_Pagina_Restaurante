@@ -2,60 +2,46 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import logo from "../assets/imagenes/logo.png";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "../components/hooks/useForm";
+import { useApiRequest } from "../components/hooks/useApiRequest";
+import { validateForm } from "../components/helpers/validateForm";
 
 const Login = () => {
-  const [client, setClient] = useState({
+  const { formState, handleChange } = useForm({
     email: "",
     password: "",
   });
+  const n = "friedmenu";
   const navigate = useNavigate();
-  const [dishes, setDishes] = useState([]);
   const [errors, setErrors] = useState({});
-  const [clientFromDb, setClientFromDb] = useState([]);
-
-  const inputChange = (event) => {
-    setClient({
-      ...client,
-      [event.target.name]: event.target.value,
-    });
-  };
+  const { data: dishes, error } = useApiRequest(
+    `http://localhost:4000/menus/${n}`
+  );
+  const { data: clientFromDb } = useApiRequest(
+    `http://localhost:4000/email/${formState.email}`
+  );
 
   const handleRegistrationClick = () => navigate("/registration");
 
-  const validateForm = () => {
-    let newErrors = {};
-
-    if (!client.email) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(client.email)) {
-      newErrors.email = "Email is not valid";
-    }
-
-    if (!client.password) {
-      newErrors.password = "Password is required";
-    } else if (client.password !== clientFromDb.contraseña) {
-      newErrors.password = "Incorrect password";
-    }
-
-    return newErrors;
-  };
-
   const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      const newErrors = validateForm();
-      setErrors(newErrors);
+    e.preventDefault();
+    const newErrors = validateForm(formState, clientFromDb);
+    setErrors(newErrors);
 
-      if (Object.keys(newErrors).length === 0) {
-        const response = await axios.post("http://localhost:4000/login", client);
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/login",
+          formState
+        );
         sessionStorage.setItem("guest_session_id", "sdfsdf23423");
         setTimeout(() => {
-          navigate("/products", { state: { prop: client } });
+          navigate("/products", { state: { prop: formState } });
           console.log(response.data);
         });
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -63,41 +49,8 @@ const Login = () => {
     sessionStorage.removeItem("guest_session_id");
   }, []);
 
-  useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:4000/menus/${"friedmenu"}`
-        );
-        const data = await response.json();
-        setDishes(data);
-      } catch (error) {
-        console.error("Error getting dishes:", error);
-      }
-    };
-
-    fetchImages();
-  }, []);
-
-  useEffect(() => {
-    const fetchClient = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:4000/email/${client.email}`
-        );
-        const data = await response.json();
-        setClientFromDb(data);
-      } catch (error) {
-        console.error("Error getting client:", error);
-      }
-    };
-
-    fetchClient();
-  }, [client.email]);
-
   return (
     <section className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-[url(./assets/imagenes/fondoregistro.jpg)] bg-cover bg-center w-full p-10 gap-6">
-
       <form className="mx-4 md:w-[450px] p-6 md:h-[600px] rounded-3xl bg-white">
         <div className="w-full">
           <h1 className="font2 text-center mb-5 text-3xl font-bold">
@@ -116,13 +69,15 @@ const Login = () => {
             <input
               type="email"
               className="border-b-4 border-green-600 rounded-lg p-2 w-full bg-transparent focus:bg-transparent outline-none placeholder-slate-600"
-              value={client.email}
-              onChange={inputChange}
+              value={formState.email}
+              onChange={handleChange}
               name="email"
               aria-labelledby="email"
               placeholder="Enter your email"
             />
-            {errors.email && <span className="text-red-500">{errors.email}</span>}
+            {errors.email && (
+              <span className="text-red-500">{errors.email}</span>
+            )}
 
             <label className="font2 text-lg block mb-2 mt-7" id="pass">
               Contraseña:
@@ -131,13 +86,15 @@ const Login = () => {
               type="password"
               autoComplete="on"
               className="border-b-4 border-green-600 rounded-lg p-2 w-full bg-transparent focus:bg-transparent outline-none placeholder-slate-600"
-              value={client.password}
-              onChange={inputChange}
+              value={formState.password}
+              onChange={handleChange}
               name="password"
               aria-labelledby="pass"
               placeholder="Enter your password"
             />
-            {errors.password && <span className="text-red-500">{errors.password}</span>}
+            {errors.password && (
+              <span className="text-red-500">{errors.password}</span>
+            )}
           </div>
         </div>
         <div className="font2 flex justify-center">
@@ -148,27 +105,41 @@ const Login = () => {
             Enviar
           </button>
         </div>
-        <span className="flex justify-center text-center mt-4 mb-4" >¿No tienes una cuenta? <p className="text-blue-500 underline hover:cursor-pointer" onClick={handleRegistrationClick}>Registrate aqui</p> </span>
+        <span className="flex justify-center text-center mt-4 mb-4">
+          ¿No tienes una cuenta?{" "}
+          <p
+            className="text-blue-500 underline hover:cursor-pointer"
+            onClick={handleRegistrationClick}
+          >
+            Registrate aqui
+          </p>{" "}
+        </span>
       </form>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl bg-white p-6 mt-10 sm:order-last rounded-[20px]">
-        <h1 className="col-span-full text-center text-[28px] font-bold font2">
+      <div className="max-w-5xl mx-auto bg-white p-6 mt-2 rounded-[20px]">
+      <h1 className="col-span-full text-center text-[28px] font-bold font2">
         🧑‍🍳Te espera una gran variedad de platos🍲
-        </h1>
-        <p className="col-span-full text-center text-[19px] font-bold font2">¡¡Vamos inicia sesión!!</p>
-        {dishes.map((image) => (
-          <div key={image.idMenu} className="flex justify-center">
+      </h1>
+      <p className="col-span-full text-center text-[19px] font-bold font2 mb-4">
+        ¡¡Vamos inicia sesión!!
+      </p>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ${dishes && dishes.length === 1 ? 'mx-auto' : ''}`}>
+        {dishes && dishes.length > 0 ? (
+          dishes.map((dish) => (
             <img
-              src={image.imagen}
-              alt="login1"
-              className="w-[160px] h-[160px] rounded-full"
+              key={dish.idMenu}
+              src={dish.imagen}
+              alt="imagen.jpg"
+              className="w-[190px] h-[190px] md:h-[180px] lg:h-[180px] rounded-full mx-auto"
             />
-          </div>
-        ))}
+          ))
+        ) : (
+          <div>Cargando platos...</div>
+        )}
       </div>
+    </div>
     </section>
   );
 };
 
 export default Login;
-

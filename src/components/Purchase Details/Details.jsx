@@ -83,7 +83,7 @@ const DetalleCompra = (props) => {
       horaEnvio,
     };
     axios
-      .post("http://localhost:4000/detalleCompraDelivery", clientDetalle)
+      .post("http://localhost:4000/detailBuyDelivery", clientDetalle)
       .then(({ data }) => {
         setVentanaConfirmacion(false);
         setCompraExistosa(true);
@@ -107,7 +107,7 @@ const DetalleCompra = (props) => {
       totalPrice,
     };
     axios
-      .post("http://localhost:4000/detalleCompraRestaurante", clientDetalle)
+      .post("http://localhost:4000/detailPurchaseRestaurant", clientDetalle)
       .then(({ data }) => {
         setVentanaConfirmacionResturante(false);
         tiempoEntregar();
