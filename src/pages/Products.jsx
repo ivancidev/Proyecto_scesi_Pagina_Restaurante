@@ -1,8 +1,4 @@
-import { useState, useEffect } from "react";
-import {
-  RiUser3Line,
-  RiCloseLine,
-} from "react-icons/ri";
+import { RiUser3Line,RiCloseLine } from "react-icons/ri";
 // Components
 import Sidebar from "../components/Sidebar";
 import Car from "../components/Car";
@@ -15,91 +11,32 @@ import { BsXCircleFill } from "react-icons/bs";
 import ViewError from "../components/Window/ViewError";
 import ChangePassword from "../components/changePassword/ChangePassword";
 import { FaShoppingCart } from "react-icons/fa";
+import {useAddProduct} from "../components/hooks/useAddProduct"
+import {useProductState} from "../components/hooks/useProductState"
+import { useErrorHandling } from "../components/hooks/useErrorHandling";
+import { useApiRequest } from "../components/hooks/useApiRequest";
 
 function Products() {
-  const [showMenu, setShowMenu] = useState(false);
-  const [showOrder, setShowOrder] = useState(false);
-  const [changeBackground, setChangeBackground] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [food, setFood] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [dishes, setDishes] = useState([]);
+  
   const location = useLocation();
+  const { showMenu, setShowMenu, showOrder, setShowOrder, changeBackground,
+    setChangeBackground, modalOpen, setModalOpen, food, setFood, totalPrice,
+    setTotalPrice, dish, setDish, window, setWindow, toggleMenu, toggleOrders, } = useProductState()
+  const { products, setProducts, addProduct } = useAddProduct(totalPrice, setTotalPrice);
+  const { showError, handleButtonErrorClick } = useErrorHandling();
+  const { data: dishes } = useApiRequest(
+    `http://localhost:4000/menus/${dish}`
+  );
+
   const propClient = location.state?.prop;
   const propUser = location.state?.prop;
-  const [dish, setDish] = useState("friedmenu");
-  const [products, setProducts] = useState([]);
-  const [showError, setShowError] = useState(false)
-  const [window, setWindow] = useState(false)
-
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
-    setShowOrder(false);
-  };
-
-  const toggleOrders = () => {
-    setShowOrder(!showOrder);
-    setShowMenu(false);
-  };
 
   const handleOpenClick = (c) => {
     setModalOpen(true);
     setFood(c);
   };
-
-  const handlePrecio = (p) => {
-    setTotalPrice(parseInt(totalPrice) + parseInt(p));
-  };
-
-  const handleButtonErrorClick = () => {
-    setShowError(true);
-    setTimeout(() => {
-      setShowError(false);
-    }, 3000);
-  };
-
-  useEffect(() => {
-    const fetchDishes = async () => {
-      try {
-        const response = await fetch(`http://localhost:4000/menus/${dish}`);
-        const data = await response.json();
-        setDishes(data);
-      } catch (error) {
-        console.error("Error al obtener los platos:", error);
-      }
-    };
-
-    fetchDishes();
-  }, [dish]);
-
-  const addProduct = (dish) => {
-    // Buscar si el producto ya está en el array
-    const index = products.findIndex(
-      (product) => product.idMenu === dish.idMenu
-    );
-
-    if (index !== -1) {
-      // Si el producto ya está en el array, actualizar su cantidad y precio total
-      const productsActualizados = [...products];
-      productsActualizados[index].cantidad += 1;
-      productsActualizados[index].precioTotal =
-        productsActualizados[index].cantidad *
-        productsActualizados[index].precioMenu;
-      handlePrecio(productsActualizados[index].precioMenu);
-      setProducts(productsActualizados);
-    } else {
-      // Si el producto no está en el array, agregarlo con cantidad 1 y precio total
-      const nuevoProducto = {
-        ...dish,
-        cantidad: 1,
-        precioTotal: dish.precioMenu,
-      };
-      setProducts([...products, nuevoProducto]);
-      handlePrecio(dish.precioMenu);
-    }
-  };
-
-  const listFoods = dishes.map((dish) => {
+  
+  const listFoods = dishes && dishes.length > 0 ? (dishes.map((dish) => {
     return (
       <div
         className="hover:cursor-pointer hover:scale-[1.02] transition-all bg-[#1F1D2B] p-7 rounded-xl flex flex-col items-center gap-5 text-center text-gray-300 h-full"
@@ -135,7 +72,9 @@ function Products() {
       </div>
       
     );
-  });
+  })):((
+    <div>Cargando ordenes...</div>
+  ))
 
   return (
     <header
