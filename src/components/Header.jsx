@@ -145,7 +145,7 @@ const Header = (props) => {
       {/* Tabs */}
       <nav className={`flex items-center justify-between md:justify-start md:gap-8 border-b-4 border-orange-700 mb-6`}>
         <button
-          onClick={() => setDish("menufrito")}
+          onClick={() => setDish("friedmenu")}
           className={`${
             dish == "menufrito" ? "text-red-600" : "text-black py-2 pr-4 "
           } ${changeBackground? "text-white":"text-black"}`}

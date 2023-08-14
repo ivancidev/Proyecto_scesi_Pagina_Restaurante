@@ -67,7 +67,7 @@ const Comments = (props) => {
 
   const onSubmit = (coment) => {
     axios
-      .post("http://localhost:4000/restaurante/addComments", coment)
+      .post("http://localhost:4000/addComments", coment)
       .then(({ data }) => {
         console.log(data);
         console.log("Se guardo el comentario");

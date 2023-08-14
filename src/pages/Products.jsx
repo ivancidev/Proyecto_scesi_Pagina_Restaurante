@@ -269,7 +269,8 @@ function Products() {
       {/* Menu movil */}
       <nav className={`${changeBackground? "bg-slate-600":"bg-orange-500"}  lg:hidden fixed w-full bottom-0 left-0 text-3xl text-gray-400 py-2 px-8 flex items-center justify-between rounded-tl-xl rounded-tr-xl z-50`}>
         <button onClick={toggleOrders} className="text-white p-2">
-          <FaShoppingCart/>
+          {showOrder ? <RiCloseLine />: <FaShoppingCart/>}
+          
         </button>
         <button onClick={toggleMenu} className="text-white p-2">
           {showMenu ? <RiCloseLine /> : <RiUser3Line />}

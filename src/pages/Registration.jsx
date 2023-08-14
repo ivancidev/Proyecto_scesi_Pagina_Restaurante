@@ -122,7 +122,6 @@ const Registro = () => {
             <div className="mr-10 w-[340px]">
               <label
                 className="font2 block  font-semibold mb-1 text-[16px]"
-                id="nom"
               >
                 {" "}
                 Usuario:{" "}
@@ -132,7 +131,7 @@ const Registro = () => {
                 type="text"
                 className="border-b-[4px] 
       border-orange-500  rounded-lg p-2    w-full bg-transparent   focus:bg-transparent outline-none"
-                name="nombre"
+                name="name"
                 value={user.name}
                 placeholder="Ingresa tu nombre"
                 onChange={onChange}
@@ -144,7 +143,6 @@ const Registro = () => {
 
               <label
                 className="font2 block font-semibold text-[16px] mt-3"
-                id="nom"
               >
                 {" "}
                 Email:{" "}
@@ -154,7 +152,7 @@ const Registro = () => {
                 type="email"
                 className="border-b-[4px] 
       border-orange-500  rounded-lg p-2    w-full bg-transparent  focus:bg-transparent outline-none "
-                name="correo"
+                name="email"
                 value={user.email}
                 placeholder="Ingresa tu email"
                 onChange={onChange}
@@ -165,7 +163,6 @@ const Registro = () => {
 
               <label
                 className="font2 mt-3 block  font-semibold text-[16px]"
-                id="nom"
               >
                 {" "}
                 Celular:{" "}
@@ -175,7 +172,7 @@ const Registro = () => {
                 type="text"
                 className="border-b-[4px] 
       border-orange-500  rounded-lg p-2    w-full bg-transparent  focus:bg-transparent outline-none "
-                name="telefono"
+                name="phone"
                 value={user.phone}
                 placeholder="Ingresa tu numero"
                 onChange={onChange}
@@ -198,7 +195,7 @@ const Registro = () => {
       border-orange-500  rounded-lg p-2    w-full bg-transparent  focus:bg-transparent outline-none "
                 value={user.password}
                 onChange={onChange}
-                name="contraseña"
+                name="password"
                 aria-labelledby="nom"
                 placeholder="Ingresa tu contraseña"
                 autoComplete="on"

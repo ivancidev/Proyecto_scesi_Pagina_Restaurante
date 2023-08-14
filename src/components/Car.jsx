@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import Order from "./Orders/Order";
 import ViewError from "./Window/ViewError";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaRegComments } from "react-icons/fa";
 import Comments from "./Comments/Comments";
 import ViewBuy from "./Window/ViewBuy";
 
@@ -112,17 +112,17 @@ const Card = (props) => {
             onClick={() => setComments(false)}
           >
             
-            <p className="mr-6 flex justify-center gap-4 items-center">Carrito< FaShoppingCart className="mr-3 text-[20px]"/></p>
+            <p className="mr-2 flex justify-center gap-4 items-center">Carrito< FaShoppingCart className="mr-3 text-[20px]"/></p>
             
           </button>
           <p></p>
           <button
             className={`${
               comments ? "bg-[#1F1D2B] " : "bg-none border border-white"
-            } text-white p-3 py-2 px-4 rounded-xl `}
+            } text-white p-2 py-2 px-4 rounded-xl `}
             onClick={handleClickComments}
           >
-            Comentarios
+            <p className="flex justify-center gap-1 items-center">Comentarios< FaRegComments className="text-white text-[20px]"/></p>
           </button>
         </div>
         <div>

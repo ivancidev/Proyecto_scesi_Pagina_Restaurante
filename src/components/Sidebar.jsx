@@ -38,10 +38,8 @@ const Sidebar = (props) => {
     setWindow(!window)
   }
 
-  const cerrarPaginaAnterior = () => {
-    window.history.back();
+  const closePreviousPage = () => {
     navigate('/login')
-    
   };
 
   const handleHistory = () =>{navigate("/historyClient", { state: { prop: client } });}
@@ -85,7 +83,7 @@ const Sidebar = (props) => {
       </div>
       <div>
         <ul className="pl-4 md:mt-60 mt-44">
-          <li className="hover:bg-[#272936] p-4 rounded-tl-xl rounded-bl-xl group transition-colors flex hover:cursor-pointer" onClick={cerrarPaginaAnterior}>
+          <li className="hover:bg-[#272936] p-4 rounded-tl-xl rounded-bl-xl group transition-colors flex hover:cursor-pointer" onClick={closePreviousPage}>
               <RiLogoutCircleRLine className="text-2xl text-white" />
               <p className="ml-3 text-white">Salir</p>
           </li>
