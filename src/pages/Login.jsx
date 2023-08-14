@@ -7,36 +7,35 @@ import { useApiRequest } from "../components/hooks/useApiRequest";
 import { validateForm } from "../components/helpers/validateForm";
 
 const Login = () => {
-  const { formState, handleChange } = useForm({
+  const { user, handleChange } = useForm({
     email: "",
     password: "",
   });
-  const n = "friedmenu";
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-  const { data: dishes, error } = useApiRequest(
-    `http://localhost:4000/menus/${n}`
+  const { data: dishes } = useApiRequest(
+    `http://localhost:4000/menus/${"friedmenu"}`
   );
   const { data: clientFromDb } = useApiRequest(
-    `http://localhost:4000/email/${formState.email}`
+    `http://localhost:4000/email/${user.email}`
   );
 
   const handleRegistrationClick = () => navigate("/registration");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newErrors = validateForm(formState, clientFromDb);
+    const newErrors = validateForm(user, clientFromDb);
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
       try {
         const response = await axios.post(
           "http://localhost:4000/login",
-          formState
+          user
         );
         sessionStorage.setItem("guest_session_id", "sdfsdf23423");
         setTimeout(() => {
-          navigate("/products", { state: { prop: formState } });
+          navigate("/products", { state: { prop: user } });
           console.log(response.data);
         });
       } catch (error) {
@@ -69,7 +68,7 @@ const Login = () => {
             <input
               type="email"
               className="border-b-4 border-green-600 rounded-lg p-2 w-full bg-transparent focus:bg-transparent outline-none placeholder-slate-600"
-              value={formState.email}
+              value={user.email}
               onChange={handleChange}
               name="email"
               aria-labelledby="email"
@@ -86,7 +85,7 @@ const Login = () => {
               type="password"
               autoComplete="on"
               className="border-b-4 border-green-600 rounded-lg p-2 w-full bg-transparent focus:bg-transparent outline-none placeholder-slate-600"
-              value={formState.password}
+              value={user.password}
               onChange={handleChange}
               name="password"
               aria-labelledby="pass"

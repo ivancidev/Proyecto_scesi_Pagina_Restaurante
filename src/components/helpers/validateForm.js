@@ -3,15 +3,15 @@ export const validateForm = (client, clientFromDb) => {
   let errors = {};
 
   if (!client.email) {
-    errors.email = "Email is required";
+    errors.email = "El email es obligatorio";
   } else if (!/\S+@\S+\.\S+/.test(client.email)) {
-    errors.email = "Email is not valid";
+    errors.email = "El email no es válido";
   }
 
   if (!client.password) {
-    errors.password = "Password is required";
+    errors.password = "La contraseña es obligatoria";
   } else if (client.password !== clientFromDb.contraseña) {
-    errors.password = "Incorrect password";
+    errors.password = "La contraseña no es valida";
   }
 
   return errors;
