@@ -3,7 +3,6 @@ import { RiUser3Line,RiCloseLine } from "react-icons/ri";
 import Sidebar from "../components/Sidebar";
 import Car from "../components/Car";
 import Header from "../components/Header";
-import Card from "../components/Card";
 import { useLocation } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
 import logo from "../assets/imagenes/logo.png";
@@ -15,6 +14,7 @@ import {useAddProduct} from "../components/hooks/useAddProduct"
 import {useProductState} from "../components/hooks/useProductState"
 import { useErrorHandling } from "../components/hooks/useErrorHandling";
 import { useApiRequest } from "../components/hooks/useApiRequest";
+import OrderCard from "../components/Orders/OrderCard";
 
 function Products() {
   
@@ -36,45 +36,20 @@ function Products() {
     setFood(c);
   };
   
-  const listFoods = dishes && dishes.length > 0 ? (dishes.map((dish) => {
-    return (
-      <div
-        className="hover:cursor-pointer hover:scale-[1.02] transition-all bg-[#1F1D2B] p-7 rounded-xl flex flex-col items-center gap-5 text-center text-gray-300 h-full"
+  const listFoods = dishes && dishes.length > 0 ? (
+    dishes.map((dish) => (
+      <OrderCard
         key={dish.idMenu}
-      >
-        <Card
-          image={dish.imagen}
-          description={dish.descripcionMenu}
-          price={dish.precioMenu}
-          availability={dish.disponibilidad}
-          nameDish={dish.nombreMenu}
-        />    
-        <div className="flex flex-col h-[100%] gap-4 justify-end">
-          <button
-            className={`${dish.disponibilidad == "Disponible" ? "flex gap-2 pt-2 pb-2 pr-12 pl-12 bg-orange-400 rounded-[10px] text-[14px] text-white":"hidden"} `}
-            onClick={() => addProduct(dish)}
-          >
-            Agregar< FaShoppingCart className="mr-3 text-[20px]"/>
-          </button>
-          <button
-            className={`${dish.disponibilidad == "No disponible" ? "block pt-2 pb-2 pr-12 pl-12 bg-red-600 rounded-[10px] text-[14px] text-white":"hidden"} `}
-            onClick={handleButtonErrorClick}
-          >
-            No disponible
-          </button>
-          <button
-            className="pt-2 pb-2 bg-orange-400 rounded-[10px] text-[14px] text-white"
-            onClick={() => handleOpenClick(dish)}
-          >
-            Ver detalle
-          </button>
-        </div>
-      </div>
-      
-    );
-  })):((
+        dish={dish}
+        addProduct={addProduct}
+        handleButtonErrorClick={handleButtonErrorClick}
+        handleOpenClick={handleOpenClick}
+      />
+    ))
+  ) : (
     <div>Cargando ordenes...</div>
-  ))
+  );
+  
 
   return (
     <header

@@ -6,13 +6,18 @@ import { FaShoppingCart, FaRegComments } from "react-icons/fa";
 import Comments from "./Comments/Comments";
 import ViewBuy from "./Window/ViewBuy";
 
-const Card = (props) => {
-  const { showOrder, setShowOrder } = props;
-  const { changeBackground } = props;
-  const { totalPrice, setTotalPrice } = props;
+const Card = ({
+  showOrder,
+  setShowOrder,
+  changeBackground,
+  totalPrice,
+  setTotalPrice,
+  propUser,
+  propClient,
+  products,
+  setProducts,
+}) => {
   const [comments, setComments] = useState(false);
-  const { propClient } = props;
-  const { products, setProducts } = props;
   const [idMenu, setIdMenu] = useState(0);
   const [showButtons, setShowButtons] = useState(false);
   const [client, setClient] = useState([]);
@@ -139,7 +144,7 @@ const Card = (props) => {
               comments ? "hidden" : "block"
             } h-[350px] md:h-[700px] lg:h-[490px] sm:h-[350px] overflow-auto`}
           >
-            {products.map((orders, index) => (
+            {/* {products.map((orders, index) => (
               <Order
                 key={index}
                 order={orders}
@@ -147,7 +152,20 @@ const Card = (props) => {
                 setIdMenu={setIdMenu}
                 changeBackground = {changeBackground}
               />
-            ))}
+            ))} */}
+            {products && products.length > 0 ? (
+    products.map((orders, index) => (
+      <Order
+        key={index}
+        order={orders}
+        idMenu={idMenu}
+        setIdMenu={setIdMenu}
+        changeBackground = {changeBackground}
+      />
+    ))
+  ) : (
+    <div>Cargando ordenes...</div>
+  )}
           </div>
           <div
             className={`${

@@ -5,12 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "../components/hooks/useForm";
 import { useApiRequest } from "../components/hooks/useApiRequest";
 import { validateForm } from "../components/helpers/validateForm";
+import { useSelector, useDispatch } from "react-redux";
+import { addUser } from "../redux/userSlice";
+
+
 
 const Login = () => {
+
   const { user, handleChange } = useForm({
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const { data: dishes } = useApiRequest(
@@ -24,6 +30,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(addUser(user))
     const newErrors = validateForm(user, clientFromDb);
     setErrors(newErrors);
 
@@ -35,7 +42,7 @@ const Login = () => {
         );
         sessionStorage.setItem("guest_session_id", "sdfsdf23423");
         setTimeout(() => {
-          navigate("/products", { state: { prop: user } });
+          navigate("/products");
           console.log(response.data);
         });
       } catch (error) {
