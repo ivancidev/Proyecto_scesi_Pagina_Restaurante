@@ -9,7 +9,6 @@ const ViewBuy = (props) => {
   const [selectionOption, setSelectionOption] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const {client} = props
-  const {products} = props
   const {totalPrice} = props
 
   return (
@@ -30,7 +29,7 @@ const ViewBuy = (props) => {
             <div
               className={`flex justify-center`}
             >
-              <Details selectionOption = {selectionOption} setOpenModal={setOpenModal} client = {client} products = {products} totalPrice={totalPrice} setShowButtons = {setShowButtons}/>
+              <Details selectionOption = {selectionOption} setOpenModal={setOpenModal} client = {client} totalPrice={totalPrice} setShowButtons = {setShowButtons}/>
             </div>
           </div>
         </div>

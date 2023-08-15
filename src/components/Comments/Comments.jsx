@@ -1,15 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Comments = (props) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const { propClient } = props;
   const [client, setClient] = useState([]);
   const dateHour = new Date().toLocaleDateString()+" "+new Date().getHours()+":"+new Date().getMinutes()+":"+new Date().getSeconds()
   const [newComments, setNewComments] = useState("");
   const [commentsBD, setCommmentsBD] = useState([])
+
+  const user_global = JSON.parse(sessionStorage.getItem("user_logged"))
+  
+
 
   const agregarComentario = (myCliente, fechaYHora, coment) => {
     const nuevoComentario = {
@@ -40,7 +44,7 @@ const Comments = (props) => {
     const fetchClient = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/email/${propClient.email}`
+          `http://localhost:4000/email/${user_global.email}`
         );
         const data = await response.json();
         setClient(data);
@@ -50,7 +54,7 @@ const Comments = (props) => {
     };
 
     fetchClient();
-  }, [propClient.email]);
+  }, [user_global.email]);
 
   useEffect(()=>{
     const fetchComments = async()=>{

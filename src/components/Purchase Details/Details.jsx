@@ -8,7 +8,8 @@ import Tables from "../MatrixTables/Tables";
 const DetalleCompra = (props) => {
   const { setOpenModal } = props;
   const { client } = props;
-  const { products } = props;
+  const products = JSON.parse(sessionStorage.getItem("add_products"));
+
   const [nombre, setNombre] = useState("");
   const [direccion, setDireccion] = useState("");
   const [telefono, setTelefono] = useState("");
@@ -70,7 +71,6 @@ const DetalleCompra = (props) => {
     setTarjeta(value);
   };
 
-
   const handleSubmit = () => {
     const clientDetalle = {
       nombre,
@@ -119,12 +119,11 @@ const DetalleCompra = (props) => {
       });
   };
 
-
   const validarTarjeta = () => {
     let nuevosErrores = {};
 
     //validacion del campo tarjeta
-    if(!cuartoCheck){
+    if (!cuartoCheck) {
       if (!tarjeta) {
         nuevosErrores.tarjeta = "El numero de la tarjeta es obligatorio";
       } else if (isNaN(tarjeta)) {
@@ -133,25 +132,20 @@ const DetalleCompra = (props) => {
         nuevosErrores.tarjeta = "Debe tener 16 numeros";
       }
     }
-      
-    
 
     return nuevosErrores;
-  }
-    
+  };
 
   const mostrarCompraExitosa = () => {
-    let nuevosErrores = {}
+    let nuevosErrores = {};
 
-    if(selectionOption == "Restaurante"){
+    if (selectionOption == "Restaurante") {
       nuevosErrores = validarTarjeta();
-      setErrores(nuevosErrores);     
-    }else{
+      setErrores(nuevosErrores);
+    } else {
       nuevosErrores = validarForm();
       setErrores(nuevosErrores);
     }
-    
-    
 
     //si existe cero errores
     if (Object.keys(nuevosErrores).length === 0) {
@@ -219,6 +213,8 @@ const DetalleCompra = (props) => {
     setCompraExistosa(false);
     setOpenModal(false);
     setShowButtons(false);
+    sessionStorage.removeItem("add_products");
+    sessionStorage.setItem("add_products", null);
     window.location.reload(); //recarga la pagina
   };
 
@@ -226,6 +222,8 @@ const DetalleCompra = (props) => {
     setCompraExistosaResturante(false);
     setOpenModal(false);
     setShowButtons(false);
+    sessionStorage.removeItem("add_products");
+    sessionStorage.setItem("add_products", null);
     window.location.reload(); //recarga la pagina
   };
 
@@ -260,7 +258,7 @@ const DetalleCompra = (props) => {
             telefono={telefono}
             tarjeta={tarjeta}
             setTarjeta={setTarjeta}
-            errores = {errores}
+            errores={errores}
           />
         </div>
         <div
@@ -329,12 +327,10 @@ const DetalleCompra = (props) => {
                   setNumeroMesa={setNumeroMesa}
                   setMostrarMesa={setMostrarMesa}
                 />
-                
               </div>
-              
             </div>
           </span>
-          
+
           <p className={`${numeroMesa != null ? "block mt-4" : "hidden"}`}>
             Numero de mesa seleccionado: {numeroMesa}
           </p>
@@ -361,7 +357,6 @@ const DetalleCompra = (props) => {
                 <span>¿Desea hacer el pago en caja?</span>
               </label>
             </div>
-            
           </div>
           <div className={`${tercerCheck ? "block mb-4 mt-4" : "hidden"}`}>
             <label className="block mb-2">Codigo tarjeta credito:</label>
@@ -374,8 +369,8 @@ const DetalleCompra = (props) => {
               className="border border-orange-600 px-4 py-2 w-full rounded-md"
             />
             {errores.tarjeta && (
-                <span className="text-red-500">{errores.tarjeta}</span>
-              )}
+              <span className="text-red-500">{errores.tarjeta}</span>
+            )}
           </div>
           <p className={`${cuartoCheck ? "block" : "hidden"} mt4 mb-4`}>
             "El pago lo realizara en caja"
@@ -403,7 +398,6 @@ const DetalleCompra = (props) => {
                 ))}
               </select>
             </div>
-            
           </div>
           <div
             className={`${
@@ -432,7 +426,6 @@ const DetalleCompra = (props) => {
                 <span>¿Desea hacer el pago en caja?</span>
               </label>
             </div>
-           
           </div>
           <p className={`${cuartoCheck ? "block" : "hidden"} mt4 mb-4`}>
             "El pago lo realizara en caja"
@@ -452,8 +445,8 @@ const DetalleCompra = (props) => {
               className="border border-orange-600 px-4 py-2 w-full rounded-md"
             />
             {errores.tarjeta && (
-                <span className="text-red-500">{errores.tarjeta}</span>
-              )}
+              <span className="text-red-500">{errores.tarjeta}</span>
+            )}
           </div>
         </div>
         <h2>Productos Seleccionados:</h2>
@@ -473,19 +466,24 @@ const DetalleCompra = (props) => {
               </tr>
             </thead>
             <tbody>
-              {products.map((producto, index) => (
-                <tr key={index}>
-                  <td className="px-4 py-2 text-left border-orange-500 border-2">
-                    {producto.nombreMenu}
-                  </td>
-                  <td className="border-orange-500 border-2 px-4 py-2 text-center">
-                    {producto.cantidad}
-                  </td>
-                  <td className="border-orange-500 border-2 px-4 py-2 text-right">
-                    {producto.precioTotal}Bs
-                  </td>
-                </tr>
-              ))}
+              {products && products.length > 0 ? (
+                products.map((producto, index) => (
+                  <tr key={index}>
+                    <td className="px-4 py-2 text-left border-orange-500 border-2">
+                      {producto.nombreMenu}
+                    </td>
+                    <td className="border-orange-500 border-2 px-4 py-2 text-center">
+                      {producto.cantidad}
+                    </td>
+                    <td className="border-orange-500 border-2 px-4 py-2 text-right">
+                      {producto.precioTotal}Bs
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                ""
+              )}
+
               <tr>
                 <td className="text-[17px] px-4 font-semibold border-orange-500 border-2">
                   Total Pagar:

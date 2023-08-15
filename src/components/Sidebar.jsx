@@ -7,11 +7,12 @@ import {FaIdCard} from "react-icons/fa"
 
 const Sidebar = (props) => {
   const { showMenu, setShowMenu } = props
-  const {propUser} = props
   const {window, setWindow}= props
   const {changeBackground, setChangeBackground} = props
   const navigate = useNavigate()
   const [client, setClient] = useState([]);
+
+  const user_global = JSON.parse(sessionStorage.getItem("user_logged"))
 
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const Sidebar = (props) => {
     const fetchClient = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/email/${propUser.email}`);
+          `http://localhost:4000/email/${user_global.email}`);
           if(!response.ok){
             throw new Error('Error al obtener los datos del cliente');
           }

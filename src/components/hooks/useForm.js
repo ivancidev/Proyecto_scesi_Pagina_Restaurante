@@ -14,6 +14,6 @@ export const useForm = (initialState = {}) => {
       avatar: imageName,
     }));
   };
-
+  
   return { user, handleImageClick, handleChange };
 };

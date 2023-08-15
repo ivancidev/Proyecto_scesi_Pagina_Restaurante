@@ -1,14 +1,21 @@
 import { useState } from "react";
 
 export const useAddProduct = (totalPrice, setTotalPrice) => {
-  const [products, setProducts] = useState([]);
+  const products_storage = JSON.parse(sessionStorage.getItem("add_products"));
 
   const handlePrecio = (p) => {
     setTotalPrice(parseInt(totalPrice) + parseInt(p));
   };
 
-
   const addProduct = (dish) => {
+    let products = [];
+
+  if (products_storage === null) {
+    // Si products es null, inicializar como un array vacío
+    products = [];
+  } else {
+    products = [...products_storage];
+  }
     // Buscar si el producto ya está en el array
     const index = products.findIndex(
       (product) => product.idMenu === dish.idMenu
@@ -22,7 +29,7 @@ export const useAddProduct = (totalPrice, setTotalPrice) => {
         productsActualizados[index].cantidad *
         productsActualizados[index].precioMenu;
       handlePrecio(productsActualizados[index].precioMenu);
-      setProducts(productsActualizados);
+      sessionStorage.setItem("add_products", JSON.stringify(productsActualizados));
     } else {
       // Si el producto no está en el array, agregarlo con cantidad 1 y precio total
       const nuevoProducto = {
@@ -30,15 +37,13 @@ export const useAddProduct = (totalPrice, setTotalPrice) => {
         cantidad: 1,
         precioTotal: dish.precioMenu,
       };
-      setProducts([...products, nuevoProducto]);
       handlePrecio(dish.precioMenu);
+      products.push(nuevoProducto)
+      sessionStorage.setItem("add_products", JSON.stringify(products));
     }
-  };
+  }
 
   return {
-    products,
-    setProducts,
     addProduct,
-    handlePrecio,
   };
 };

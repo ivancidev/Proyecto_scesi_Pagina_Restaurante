@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../Car';
+import Card from '../Card';
 import { FaShoppingCart } from "react-icons/fa";
 
 

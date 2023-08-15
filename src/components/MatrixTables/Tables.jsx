@@ -2,16 +2,16 @@ import React from "react";
 import { useState } from "react";
 
 const Tables = (props) => {
-  const { tableNumber, setTableNumber } = props;
-  const { setShowTable } = props;
+  const { numeroMesa, setNumeroMesa } = props;
+  const { setMostrarMesa } = props;
 
   // Generates an array of 20 numbers
   const tableNumbersArray = Array.from({ length: 25 }, (_, index) => index + 1);
 
   // Function to handle click on a number
   const handleTableNumberClick = (number) => {
-    setTableNumber(number);
-    setShowTable(false);
+    setNumeroMesa(number);
+    setMostrarMesa(false);
   };
 
   return (
@@ -21,7 +21,7 @@ const Tables = (props) => {
           key={number}
           onClick={() => handleTableNumberClick(number)}
           className={`cursor-pointer border rounded-lg p-4 text-center ${
-            tableNumber === number
+            numeroMesa === number
               ? "bg-blue-500 text-white"
               : "bg-gray-200 text-gray-900"
           }`}
