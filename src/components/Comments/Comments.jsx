@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
 
 const Comments = (props) => {
   const [comments, setComments] = useState([]);
@@ -9,8 +8,7 @@ const Comments = (props) => {
   const [client, setClient] = useState([]);
   const dateHour = new Date().toLocaleDateString()+" "+new Date().getHours()+":"+new Date().getMinutes()+":"+new Date().getSeconds()
   const [newComments, setNewComments] = useState("");
-  const [commentsBD, setCommmentsBD] = useState([])
-
+  const [commentsRedi, setCommmentsRedi] = useState([])
   const user_global = JSON.parse(sessionStorage.getItem("user_logged"))
   
 
@@ -22,7 +20,6 @@ const Comments = (props) => {
       fechaYhora: dateHour,
       comentario: coment,
     };
-    // Actualizar el estado agregando el nuevo comentario al arreglo existente
     setNewComments(nuevoComentario);
     onSubmit(nuevoComentario);
   };
@@ -56,18 +53,15 @@ const Comments = (props) => {
     fetchClient();
   }, [user_global.email]);
 
-  useEffect(()=>{
-    const fetchComments = async()=>{
-        try {
-            const response = await fetch('http://localhost:4000/comments')
-            const data = await response.json()
-            setCommmentsBD(data)
-        } catch (error) {
-            console.error('Error al obtener los dientes:', error)
-        }
-    }
-    fetchComments()
-}, [])
+  useEffect(() => {
+    axios.get("http://localhost:4000/comments")
+      .then(response => {
+        setCommmentsRedi(response.data);
+      })
+      .catch(error => {
+        console.error("Error al obtener los comentarios:", error);
+      });
+  }, []);
 
   const onSubmit = (coment) => {
     axios
@@ -84,7 +78,7 @@ const Comments = (props) => {
   return (
     <header>
       <div className="p-4">
-        {commentsBD.map((comment) => (
+        {commentsRedi.map((comment) => (
           <div className="bg-white rounded-[15px] shadow p-4 mb-4" key={comment.idComentario}>
             <div className="flex items-center">
               <img

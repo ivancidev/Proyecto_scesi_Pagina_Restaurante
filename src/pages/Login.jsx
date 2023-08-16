@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "../components/hooks/useForm";
 import { useApiRequest } from "../components/hooks/useApiRequest";
 import { validateForm } from "../components/helpers/validateForm";
-import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../redux/userSlice";
 
 
 const Login = () => {
@@ -24,38 +22,28 @@ const Login = () => {
     `http://localhost:4000/email/${user.email}`
   );
   const handleRegistrationClick = () => navigate("/registration");
-  const user2 = useSelector((state)=> state.user)
-  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateForm(user, clientFromDb);
     setErrors(newErrors);
 
-    
-
     if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await axios.post(
+        await axios.post(
           "http://localhost:4000/login",
           user
         );
-        alert(user2.email)
         sessionStorage.setItem("guest_session_id", "sdfsdf23423");
         sessionStorage.setItem("user_logged", JSON.stringify(user))
         setTimeout(() => {
           navigate("/products");
-          console.log(response.data);
         });
       } catch (error) {
         console.error(error);
       }
     }
   };
-
-  useEffect(() => {
-    dispatch(addUser(user))
-  });
 
   useEffect(() => {
     sessionStorage.removeItem("guest_session_id");
