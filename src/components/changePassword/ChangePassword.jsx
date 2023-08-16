@@ -4,6 +4,7 @@ import { BsXCircleFill } from "react-icons/bs";
 import { useApiRequest } from "../hooks/useApiRequest";
 import { useForm } from "../hooks/useForm";
 import useKeepBd from "../hooks/useKeepBd";
+import useDeleteKey from "../hooks/useDeleteKey";
 
 const ChangePassword = ({ window, setWindow }) => {
   const { user: userChange, handleChange } = useForm({
@@ -18,6 +19,13 @@ const ChangePassword = ({ window, setWindow }) => {
     `http://localhost:4000/email/${user_global.email}`
   );
   const { handleSubmit } = useKeepBd(userChange, navigate)
+  const { deleteKey } = useDeleteKey(`http://localhost:4000/delete-key/email/${user_global.email}`)
+
+  const handleSubmitForm = (e) =>{
+    e.preventDefault()
+    handleSubmit()
+    deleteKey()
+  }
 
   return (
     <header
@@ -109,7 +117,7 @@ const ChangePassword = ({ window, setWindow }) => {
 
           <div className="font2 flex justify-center">
             <button
-              onClick={handleSubmit}
+              onClick={handleSubmitForm}
               className="bg-orange-600 text-white px-16 py-2 rounded-lg mt-[30px] hover:bg-orange-500"
             >
               Cambiar
