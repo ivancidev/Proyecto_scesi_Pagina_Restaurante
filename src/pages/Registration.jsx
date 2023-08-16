@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "../components/hooks/useForm";
 import { validationRegister } from "../components/helpers/validationRegister";
 import axios from "axios";
+import useFormAndSubmit from "../components/hooks/useFormAndSubmit";
 
 const Registration = () => {
   const { user, handleImageClick, handleChange } = useForm({
@@ -14,28 +15,17 @@ const Registration = () => {
     phone: "",
     avatar: "",
   });
-  const navigate = useNavigate();
-  const [errors, setErrors] = useState({});
+  const navigate = useNavigate()
+  const navigateFunction = () => navigate("/products")
+  const { isLoading, handleSubmit, errors } = useFormAndSubmit(
+    user, "",
+    "http://localhost:4000/register"
+  );
 
-  const handleSubmit = async (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    const newErrors = validationRegister(user);
-    setErrors(newErrors);
-  
-    if (Object.keys(newErrors).length === 0) {
-      try {
-        await axios.post("http://localhost:4000/register", user);
-        sessionStorage.setItem("guest_session_id", "sdfsdf23423");
-        sessionStorage.setItem("user_logged", JSON.stringify(user))
-        setTimeout(() => {
-          navigate("/products");
-        });
-      } catch (error) {
-        console.log(error.response);
-      }
-    }
+    handleSubmit(navigateFunction);
   };
-  
 
   return (
     <section className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-[url(./assets/imagenes/fondoregistro.jpg)] bg-cover  bg-center w-[100%] p-1 gap-14">
@@ -274,9 +264,9 @@ const Registration = () => {
         <div className="flex justify-center">
           <button
             className="bg-orange-500 text-white px-8 md:px-16 lg:px-32 py-2 rounded-lg mt-5 md:mt-10 lg:mt-20 hover:bg-orange-600"
-            onClick={handleSubmit}
+            onClick={handleFormSubmit} disabled={isLoading}
           >
-            Registrarse
+            {isLoading? 'Registrando...':'Registrarse'}
           </button>
         </div>
       </div>

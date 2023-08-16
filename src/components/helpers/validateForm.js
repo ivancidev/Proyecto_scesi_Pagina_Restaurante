@@ -17,3 +17,5 @@ export const validateForm = (client, clientFromDb) => {
   return errors;
 };
 
+export default validateForm;
+

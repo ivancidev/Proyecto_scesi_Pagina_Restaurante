@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "../components/hooks/useForm";
 import { useApiRequest } from "../components/hooks/useApiRequest";
 import { validateForm } from "../components/helpers/validateForm";
+import useFormAndSubmit from "../components/hooks/useFormAndSubmit";
 
 
 const Login = () => {
@@ -14,47 +15,32 @@ const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({});
   const { data: dishes } = useApiRequest(
     `http://localhost:4000/menus/${"friedmenu"}`
   );
   const { data: clientFromDb } = useApiRequest(
     `http://localhost:4000/email/${user.email}`
   );
+  const { isLoading, handleSubmit, errors } = useFormAndSubmit(
+    user,
+    clientFromDb,
+    "http://localhost:4000/login"
+  );
+  const navigateFunction = () => navigate("/products")
   const handleRegistrationClick = () => navigate("/registration");
 
-  const handleSubmit = async (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    const newErrors = validateForm(user, clientFromDb);
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      try {
-        await axios.post(
-          "http://localhost:4000/login",
-          user
-        );
-        sessionStorage.setItem("guest_session_id", "sdfsdf23423");
-        sessionStorage.setItem("user_logged", JSON.stringify(user))
-        setTimeout(() => {
-          navigate("/products");
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    handleSubmit(navigateFunction);
   };
 
-  useEffect(() => {
-    sessionStorage.removeItem("guest_session_id");
-  }, []);
 
   return (
     <section className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-[url(./assets/imagenes/fondoregistro.jpg)] bg-cover bg-center w-full p-10 gap-6">
-      <form className="mx-4 md:w-[450px] p-6 md:h-[600px] rounded-3xl bg-white">
+      <form onSubmit={handleFormSubmit} className="mx-4 md:w-[450px] p-6 md:h-[600px] rounded-3xl bg-white">
         <div className="w-full">
           <h1 className="font2 text-center mb-5 text-3xl font-bold">
-            Iniciar Sesion
+            Inicia Sesión
           </h1>
           <div className="flex justify-center">
             <img src={logo} alt="logo" className="rounded-full w-32 mb-5" />
@@ -98,11 +84,10 @@ const Login = () => {
           </div>
         </div>
         <div className="font2 flex justify-center">
-          <button
-            onClick={handleSubmit}
+          <button type="submit" disabled={isLoading}
             className="bg-green-600 text-white px-20 py-2 rounded-lg mt-[60px] hover:bg-green-500"
           >
-            Enviar
+            {isLoading? 'Iniciando sesion...':'Iniciar sesion'}
           </button>
         </div>
         <span className="flex justify-center text-center mt-4 mb-4">

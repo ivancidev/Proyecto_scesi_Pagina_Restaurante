@@ -41,3 +41,5 @@ export const validationRegister = (user) => {
 
   return newErrors;
 };
+
+export default validationRegister;
