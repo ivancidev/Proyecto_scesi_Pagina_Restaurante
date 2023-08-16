@@ -1,9 +1,9 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { BsXCircleFill } from "react-icons/bs";
 import { useApiRequest } from "../hooks/useApiRequest";
 import { useForm } from "../hooks/useForm";
+import useKeepBd from "../hooks/useKeepBd";
 
 const ChangePassword = ({ window, setWindow }) => {
   const { user: userChange, handleChange } = useForm({
@@ -17,20 +17,7 @@ const ChangePassword = ({ window, setWindow }) => {
   const { data: client } = useApiRequest(
     `http://localhost:4000/email/${user_global.email}`
   );
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:4000/changeUser",
-        userChange
-      );
-      console.log(response.data);
-      navigate("/login");
-    } catch (error) {
-      console.error(error.response ? error.response.data : "An error occurred");
-    }
-  };
+  const { handleSubmit } = useKeepBd(userChange, navigate)
 
   return (
     <header
