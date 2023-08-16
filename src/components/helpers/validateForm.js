@@ -10,7 +10,7 @@ export const validateForm = (client, clientFromDb) => {
 
   if (!client.password) {
     errors.password = "La contraseña es obligatoria";
-  } else if (client.password !== clientFromDb.contraseña) {
+  } else if (client.password !== clientFromDb[0].contraseña) {
     errors.password = "La contraseña no es valida";
   }
 
