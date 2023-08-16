@@ -26,7 +26,7 @@ const Sidebar = (props) => {
   };
 
   const handleHistory = () => {
-    navigate("/historyClient", { state: { prop: client } });
+    navigate("/historyClient", { state: { prop: client[0] } });
   };
 
   return (

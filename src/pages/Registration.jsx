@@ -26,8 +26,9 @@ const Registration = () => {
       try {
         await axios.post("http://localhost:4000/register", user);
         sessionStorage.setItem("guest_session_id", "sdfsdf23423");
+        sessionStorage.setItem("user_logged", JSON.stringify(user))
         setTimeout(() => {
-          navigate("/products", { state: { prop: user } });
+          navigate("/products");
         });
       } catch (error) {
         console.log(error.response);

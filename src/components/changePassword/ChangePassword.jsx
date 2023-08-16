@@ -2,51 +2,28 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BsXCircleFill } from "react-icons/bs";
+import { useApiRequest } from "../hooks/useApiRequest";
+import { useForm } from "../hooks/useForm";
 
-const ChangePassword = (props) => {
-  const { window, setWindow } = props;
-  const [changeAccount, setChangeAccount] = useState({
+const ChangePassword = ({ window, setWindow }) => {
+  const { user: userChange, handleChange } = useForm({
     name: "",
     newName: "",
     password: "",
     newPassword: "",
   });
   const navigate = useNavigate();
-  const [client, setClient] = useState([]);
   const user_global = JSON.parse(sessionStorage.getItem("user_logged"));
-
-  const inputChange = (event) => {
-    setChangeAccount({
-      ...changeAccount,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  useEffect(() => {
-    const fetchClient = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:4000/email/${user_global.email}`
-        );
-        if (!response.ok) {
-          throw new Error("Error al obtener los datos del cliente");
-        }
-        const data = await response.json();
-        setClient(data);
-      } catch (error) {
-        console.error("Error al obtener el correo del cliente:", error);
-      }
-    };
-
-    fetchClient();
-  }, []);
+  const { data: client } = useApiRequest(
+    `http://localhost:4000/email/${user_global.email}`
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
         "http://localhost:4000/changeUser",
-        changeAccount
+        userChange
       );
       console.log(response.data);
       navigate("/login");
@@ -70,13 +47,19 @@ const ChangePassword = (props) => {
             >
               <BsXCircleFill className="text-[26px] text-white" />
             </div>
-            <div className="flex justify-center">
-              <img
-                src={client.avatar}
-                alt="logo"
-                className="rounded-[50%] w-[100px] mb-5"
-              />
-            </div>
+            {client !== null ? (
+              <div className="flex justify-center">
+                <img
+                  src={client[0].avatar}
+                  alt="logo"
+                  className="rounded-[50%] w-[100px] mb-5"
+                />
+              </div>
+            ) : (
+              <div className="flex justify-center">
+                <p>El objeto client es nulo.</p>
+              </div>
+            )}
           </div>
 
           <label className=" block text-white mb-2"> Usuario: </label>
@@ -88,8 +71,8 @@ const ChangePassword = (props) => {
             name="name"
             aria-labelledby="nom"
             placeholder="Ingresa tu nombre"
-            value={changeAccount.name}
-            onChange={inputChange}
+            value={userChange.name}
+            onChange={handleChange}
           />
 
           <label className=" block text-white mb-2 mt-4">
@@ -103,8 +86,8 @@ const ChangePassword = (props) => {
           border-orange-600  rounded-lg p-2 w-full bg-transparent  focus:bg-transparent outline-none placeholder-blue-50"
             name="newName"
             placeholder="Ingresa un nuevo usuario"
-            value={changeAccount.newName}
-            onChange={inputChange}
+            value={userChange.newName}
+            onChange={handleChange}
           />
 
           <label className=" block text-white mb-2 mt-5">Contraseña:</label>
@@ -117,8 +100,8 @@ const ChangePassword = (props) => {
             name="password"
             aria-labelledby="cont"
             placeholder="Ingresa tu contraseña"
-            value={changeAccount.password}
-            onChange={inputChange}
+            value={userChange.password}
+            onChange={handleChange}
           />
 
           <label className=" block text-white mb-2 mt-5">
@@ -133,8 +116,8 @@ const ChangePassword = (props) => {
             name="newPassword"
             aria-labelledby="cont"
             placeholder="Ingresa una nueva contraseña"
-            value={changeAccount.newPassword}
-            onChange={inputChange}
+            value={userChange.newPassword}
+            onChange={handleChange}
           />
 
           <div className="font2 flex justify-center">
