@@ -1,6 +1,5 @@
 import React from "react";
 import { BsXCircleFill } from "react-icons/bs";
-import logo from "../assets/imagenes/logo.png";
 
 
 const ModalWindow = ({modalOpen, setModalOpen, food}) => {
@@ -41,7 +40,7 @@ const ModalWindow = ({modalOpen, setModalOpen, food}) => {
             <div className="md:w-[500px] mt-4 md:mt-0">
               <div className="flex justify-center p-4">
                 <img
-                  src={logo}
+                  src="/logo.png"
                   alt="no disponible"
                   className="w-44 h-44 rounded-full"
                 />

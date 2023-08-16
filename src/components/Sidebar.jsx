@@ -45,7 +45,7 @@ const Sidebar = (props) => {
                 className={`${
                   changeBackground
                     ? "hover:text-slate-400"
-                    : "hover:text-[#262837]"
+                    : "hover:text-[#4f5269]"
                 } text-[30px] text-white mr-5 `}
               />
             }

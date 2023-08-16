@@ -5,6 +5,7 @@ import ViewError from "./Window/ViewError";
 import { FaShoppingCart, FaRegComments } from "react-icons/fa";
 import Comments from "./Comments/Comments";
 import ViewBuy from "./Window/ViewBuy";
+import useRemoveCart from "./hooks/useRemoveCart";
 
 const Car = ({
   showOrder,
@@ -18,9 +19,10 @@ const Car = ({
   const [showButtons, setShowButtons] = useState(false);
   const [client, setClient] = useState([]);
   const [showError, setShowError] = useState(false);
-
   const user_global = JSON.parse(sessionStorage.getItem("user_logged"));
-  var products = JSON.parse(sessionStorage.getItem("add_products"));
+  var productsStorage = JSON.parse(sessionStorage.getItem("add_products"));
+  const { products } = useRemoveCart(productsStorage, idMenu,setIdMenu, totalPrice, setTotalPrice)
+  
 
   const handleClickComments = () => {
     setComments(true);
@@ -44,52 +46,6 @@ const Car = ({
 
     fetchClient();
   }, []);
-
-  const quitarCantidad = (productoId) => {
-    // Buscar el producto por su ID en el array
-    const index = products.findIndex(
-      (producto) => producto.idMenu === productoId
-    );
-
-    if (index !== -1) {
-      // Obtener el producto actual y su cantidad
-      const productoActual = products[index];
-      const nuevaCantidad = productoActual.cantidad - 1;
-      setTotalPrice(totalPrice - productoActual.precioMenu);
-
-      // Actualizar la cantidad y el precio total del producto
-      if (nuevaCantidad > 0) {
-        const productsActualizados = [...products];
-        productsActualizados[index] = {
-          ...productoActual,
-          cantidad: nuevaCantidad,
-          precioTotal: nuevaCantidad * productoActual.precioMenu,
-        };
-        console.log(productsActualizados);
-        sessionStorage.setItem(
-          "add_products",
-          JSON.stringify(productsActualizados)
-        );
-      } else {
-        // Si la cantidad llega a cero, eliminar el producto del array
-        console.log("Productos " + products);
-        const productsActualizados = products.filter(
-          (producto) => producto.idMenu !== productoId
-        );
-        console.log("Productos actualizados " + productsActualizados);
-        sessionStorage.setItem(
-          "add_products",
-          JSON.stringify(productsActualizados)
-        );
-      }
-    }
-  };
-  useEffect(() => {
-    if (products != null) {
-      quitarCantidad(idMenu);
-      setIdMenu(0);
-    }
-  });
 
   const handleCompraClick = () => {
     if (products.length == 0) {
