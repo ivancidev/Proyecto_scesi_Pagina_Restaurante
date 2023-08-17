@@ -1,126 +1,66 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import useComments from "../hooks/useComments";
 
-const Comments = (props) => {
-  const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState("");
-  const [client, setClient] = useState([]);
-  const dateHour = new Date().toLocaleDateString()+" "+new Date().getHours()+":"+new Date().getMinutes()+":"+new Date().getSeconds()
-  const [newComments, setNewComments] = useState("");
-  const [commentsRedi, setCommmentsRedi] = useState([])
-  const user_global = JSON.parse(sessionStorage.getItem("user_logged"))
-  
-
-
-  const agregarComentario = (myCliente, fechaYHora, coment) => {
-    const nuevoComentario = {
-      avatar: myCliente.avatar,
-      nombre: myCliente.nombre,
-      fechaYhora: dateHour,
-      comentario: coment,
-    };
-    setNewComments(nuevoComentario);
-    onSubmit(nuevoComentario);
-  };
-
-  const handleInputChange = (event) => {
-    setNewComment(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setComments([...comments, newComment]);
-    agregarComentario(client, dateHour, newComment);
-    setNewComment("");
-  };
-  
-
-
-  useEffect(() => {
-    const fetchClient = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:4000/email/${user_global.email}`
-        );
-        const data = await response.json();
-        setClient(data);
-      } catch (error) {
-        console.error("Error al obtener el cliente:", error);
-      }
-    };
-
-    fetchClient();
-  }, [user_global.email]);
-
-  useEffect(() => {
-    axios.get("http://localhost:4000/comments")
-      .then(response => {
-        setCommmentsRedi(response.data);
-      })
-      .catch(error => {
-        console.error("Error al obtener los comentarios:", error);
-      });
-  }, []);
-
-  const onSubmit = (coment) => {
-    axios
-      .post("http://localhost:4000/addComments", coment)
-      .then(({ data }) => {
-        console.log(data);
-        console.log("Se guardo el comentario");
-      })
-      .catch(({ response }) => {
-        console.log(response.data);
-      });
-  };
+const Comments = () => {
+  const {
+    comments,
+    commentsRedi,
+    newComment,
+    setNewComment,
+    client,
+    formattedDate,
+    handleSubmit,
+  } = useComments();
 
   return (
     <header>
       <div className="p-4">
-        {commentsRedi.map((comment) => (
-          <div className="bg-white rounded-[15px] shadow p-4 mb-4" key={comment.idComentario}>
-            <div className="flex items-center">
-              <img
-                className="w-12 h-12 rounded-full mr-4"
-                src={comment.avatar}
-                alt="Avatar del usuario"
-              />
-              <div>
-                <p className="font-bold text-black">{comment.nombre}</p>
-                <p className="text-gray-500 text-sm">
-                  {comment.fechaYhora}
-                </p>
+        {commentsRedi != null ? (
+          commentsRedi.map((comment) => (
+            <div
+              className="bg-white rounded-[15px] shadow p-4 mb-4"
+              key={comment.idComentario}
+            >
+              <div className="flex items-center">
+                <img
+                  className="w-12 h-12 rounded-full mr-4"
+                  src={comment.avatar}
+                  alt="Avatar del usuario"
+                />
+                <div>
+                  <p className="font-bold text-black">{comment.nombre}</p>
+                  <p className="text-gray-500 text-sm">{comment.fechaYhora}</p>
+                </div>
               </div>
+              <p className="text-gray-800 mt-2">{comment.comentario}</p>
             </div>
-            <p className="text-gray-800 mt-2">{comment.comentario}</p>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div>Cargando..</div>
+        )}
         {comments.map((comment, index) => (
           <div className="bg-white shadow rounded-[15px] p-4 mb-4" key={index}>
             <div className="flex items-center">
               <img
                 className="w-12 h-12 rounded-full mr-4"
-                src={client.avatar}
+                src={client[0].avatar}
                 alt="Avatar del usuario"
               />
               <div>
-                <p className="font-bold text-black">{client.nombre}</p>
-                <p className="text-gray-500 text-sm">
-                  {dateHour}
-                </p>
+                <p className="font-bold text-black">{client[0].nombre}</p>
+                <p className="text-gray-500 text-sm">{formattedDate}</p>
               </div>
             </div>
             <p className="text-gray-800 mt-2">{comment}</p>
           </div>
         ))}
 
-
         <form className="mt-4">
           <textarea
             value={newComment}
-            onChange={handleInputChange}
-            className="w-full p-4 rounded-[15px] text-black" placeholder="Escribe tu comentario"
+            onChange={(e) => setNewComment(e.target.value)}
+            className="w-full p-4 rounded-[15px] text-black"
+            placeholder="Escribe tu comentario"
           />
           <button
             type="submit"
