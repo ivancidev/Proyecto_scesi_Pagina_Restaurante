@@ -5,6 +5,7 @@ import Form from "../Form/Form";
 import Tables from "../MatrixTables/Tables";
 import usePost from "../hooks/usePost";
 import { concatenarNombresPlatos, validarForm, validarTarjeta } from "../helpers/detailHelper";
+import ConfirmationModal from "../Window/ConfirmationModal";
 
 const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selectionOption }) => {
 
@@ -529,46 +530,10 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
       )}
 
       {deliveryConfirmation && (
-        <div className="transition-all fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md flex flex-col justify-center items-center">
-            <p className="mb-4">¿Desea confirmar la compra?</p>
-            <div className="flex">
-              <button
-                className="text-white py-2 px-5 rounded-[8px] bg-blue-500 font-semibold mr-7"
-                onClick={handleDeliverySubmit}
-              >
-                Confirmar
-              </button>
-              <button
-                className="text-white py-2 px-5 rounded-[8px] bg-red-500 font-semibold"
-                onClick={() => setDeliveryConfirmation(false)}
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </div>
+        <ConfirmationModal setConfirmation={setDeliveryConfirmation} handleSubmit={handleDeliverySubmit}/>
       )}
       {restaurantConfirmation && (
-        <div className="transition-all fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md flex flex-col justify-center items-center">
-            <p className="mb-4">¿Desea confirmar la compra?</p>
-            <div className="flex">
-              <button
-                className="text-white py-2 px-5 rounded-[8px] bg-blue-500 font-semibold mr-7"
-                onClick={handleRestaurantSubmit}
-              >
-                Confirmar
-              </button>
-              <button
-                className="text-white py-2 px-5 rounded-[8px] bg-red-500 font-semibold"
-                onClick={() => setRestaurantConfirmation(false)}
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </div>
+        <ConfirmationModal setConfirmation={setRestaurantConfirmation} handleSubmit={handleRestaurantSubmit}/>
       )}
     </header>
   );
