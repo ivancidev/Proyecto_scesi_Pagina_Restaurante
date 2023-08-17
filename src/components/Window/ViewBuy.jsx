@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import OptionButton from "../Purchase Options/OptionButton";
-import Details from "../Purchase Details/Details";
 import { BsXCircleFill } from "react-icons/bs";
 import useApiRequest from "../hooks/useApiRequest";
+import DetailBuy from "../DetailsBuy/DetailBuy";
 
 const ViewBuy = (props) => {
   const { showButtons, setShowButtons } = props;
@@ -35,7 +35,7 @@ const ViewBuy = (props) => {
           <div className={`${openModal ? "flex justify-center" : "hidden"}`}>
             <div className={`flex justify-center`}>
               {client !== null ? (
-                <Details
+                <DetailBuy
                   selectionOption={selectionOption}
                   setOpenModal={setOpenModal}
                   client={client}

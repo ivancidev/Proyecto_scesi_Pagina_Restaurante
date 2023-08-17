@@ -1,27 +1,20 @@
 import React from "react";
 import { useState } from "react";
 import { BsXCircleFill } from "react-icons/bs";
-import axios from "axios";
 import Form from "../Form/Form";
 import Tables from "../MatrixTables/Tables";
+import usePost from "../hooks/usePost";
 
-const DetalleCompra = (props) => {
-  const { setOpenModal } = props;
+const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selectionOption }) => {
+
   const products = JSON.parse(sessionStorage.getItem("add_products"));
-  const { client } = props 
-
   const [nombre, setNombre] = useState("");
   const [direccion, setDireccion] = useState("");
   const [telefono, setTelefono] = useState("");
   const [tarjeta, setTarjeta] = useState("");
-  const { totalPrice } = props;
-  const [compraExistosa, setCompraExistosa] = useState(false);
   const [fechaEntrega, setFechaEntrega] = useState("");
   const [horaEnvio, setHoraEnvio] = useState("");
-  const { setShowButtons } = props;
   const [nombresOrden, setNombresOrden] = useState("");
-  const [ventanaConfirmacion, setVentanaConfirmacion] = useState(false);
-  const { selectionOption } = props;
   const [primerCheck, setPrimerCheck] = useState(false);
   const [segundoCheck, setSegundoCheck] = useState(false);
   const [numeroMesa, setNumeroMesa] = useState(null);
@@ -30,12 +23,62 @@ const DetalleCompra = (props) => {
   const [cuartoCheck, setCuartoCheck] = useState(false);
   const opcionesCombox = [10, 15, 30, 45, 60, 120];
   const [valorCombox, setValorCombox] = useState("");
-  const [ventanaConfirmacionResturante, setVentanaConfirmacionResturante] =
-    useState(false);
-  const [compraExistosaResturante, setCompraExistosaResturante] =
-    useState(false);
   const [tiempoEntrega, setTiempoEntrega] = useState(0);
   const [errores, setErrores] = useState({});
+  const clientDelivery = {
+    nombre,
+    direccion,
+    telefono,
+    tarjeta,
+    nombresOrden,
+    totalPrice,
+    fechaEntrega,
+    horaEnvio,
+  };
+  const clientRestaurant = {
+    numeroMesa,
+    tarjeta,
+    nombresOrden,
+    valorCombox,
+    fechaEntrega,
+    horaEnvio,
+    telefono,
+    nombre,
+    totalPrice,
+  };
+
+  const {
+    confirmation: deliveryConfirmation,
+    setConfirmation: setDeliveryConfirmation,
+    buy: deliveryBuy,
+    setBuy: setDeliveryBuy,
+    handleSubmit: handleDelivery,
+  } = usePost("http://localhost:4000/detailBuyDelivery", clientDelivery);
+
+  const {
+    confirmation: restaurantConfirmation,
+    setConfirmation: setRestaurantConfirmation,
+    buy: restaurantBuy,
+    setBuy: setRestaurantBuy,
+    handleSubmit: handleRestaurant,
+  } = usePost(
+    "http://localhost:4000/detailPurchaseRestaurant",
+    clientRestaurant
+  );
+
+  const handleDeliverySubmit = () =>{
+    handleDelivery()
+    setDeliveryConfirmation(false);
+    setDeliveryBuy(true);
+  }
+
+  const handleRestaurantSubmit = () =>{
+    handleRestaurant()
+    setRestaurantConfirmation(false);
+    tiempoEntregar();
+    setRestaurantBuy(true);
+  }
+
 
   const concatenarNombresPlatos = () => {
     const nombres = products.map((plato) => plato.nombreMenu).join(", ");
@@ -69,54 +112,6 @@ const DetalleCompra = (props) => {
   const handleInputChangeTarjeta = (e) => {
     const { value } = e.target;
     setTarjeta(value);
-  };
-
-  const handleSubmit = () => {
-    const clientDetalle = {
-      nombre,
-      direccion,
-      telefono,
-      tarjeta,
-      nombresOrden,
-      totalPrice,
-      fechaEntrega,
-      horaEnvio,
-    };
-    axios
-      .post("http://localhost:4000/detailBuyDelivery", clientDetalle)
-      .then(({ data }) => {
-        setVentanaConfirmacion(false);
-        setCompraExistosa(true);
-        console.log(data);
-      })
-      .catch(({ response }) => {
-        console.log(response.data);
-      });
-  };
-
-  const handleSubmitRestaurante = () => {
-    const clientDetalle = {
-      numeroMesa,
-      tarjeta,
-      nombresOrden,
-      valorCombox,
-      fechaEntrega,
-      horaEnvio,
-      telefono,
-      nombre,
-      totalPrice,
-    };
-    axios
-      .post("http://localhost:4000/detailPurchaseRestaurant", clientDetalle)
-      .then(({ data }) => {
-        setVentanaConfirmacionResturante(false);
-        tiempoEntregar();
-        setCompraExistosaResturante(true);
-        console.log(data);
-      })
-      .catch(({ response }) => {
-        console.log(response.data);
-      });
   };
 
   const validarTarjeta = () => {
@@ -162,11 +157,11 @@ const DetalleCompra = (props) => {
 
       // Actualizamos el estado para mostrar la ventana de compra exitosa y la fecha y hora
       if (selectionOption == "Restaurante") {
-        setVentanaConfirmacionResturante(true);
+        setRestaurantConfirmation(true);
         setNombre(client[0].nombre);
         setTelefono(client[0].telefono);
       } else {
-        setVentanaConfirmacion(true);
+        setDeliveryConfirmation(true);
       }
 
       setFechaEntrega(fechaEntrega);
@@ -210,7 +205,7 @@ const DetalleCompra = (props) => {
   };
 
   const cerrarCompraExistosa = () => {
-    setCompraExistosa(false);
+    setDeliveryBuy(false);
     setOpenModal(false);
     setShowButtons(false);
     sessionStorage.removeItem("add_products");
@@ -219,7 +214,7 @@ const DetalleCompra = (props) => {
   };
 
   const cerrarCompraExistosaRestaurante = () => {
-    setCompraExistosaResturante(false);
+    setRestaurantBuy(false);
     setOpenModal(false);
     setShowButtons(false);
     sessionStorage.removeItem("add_products");
@@ -236,7 +231,7 @@ const DetalleCompra = (props) => {
     <header className="fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75">
       <div
         className={`${
-          compraExistosa
+          deliveryBuy
             ? "hidden transition-all"
             : "transition-all bg-white p-8 rounded-lg shadow-lg w-11/12 md:w-2/3 lg:w-[750px] overflow-y-auto h-[650px]"
         }`}
@@ -466,23 +461,21 @@ const DetalleCompra = (props) => {
               </tr>
             </thead>
             <tbody>
-              {products && products.length > 0 ? (
-                products.map((producto, index) => (
-                  <tr key={index}>
-                    <td className="px-4 py-2 text-left border-orange-500 border-2">
-                      {producto.nombreMenu}
-                    </td>
-                    <td className="border-orange-500 border-2 px-4 py-2 text-center">
-                      {producto.cantidad}
-                    </td>
-                    <td className="border-orange-500 border-2 px-4 py-2 text-right">
-                      {producto.precioTotal}Bs
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                ""
-              )}
+              {products && products.length > 0
+                ? products.map((producto, index) => (
+                    <tr key={index}>
+                      <td className="px-4 py-2 text-left border-orange-500 border-2">
+                        {producto.nombreMenu}
+                      </td>
+                      <td className="border-orange-500 border-2 px-4 py-2 text-center">
+                        {producto.cantidad}
+                      </td>
+                      <td className="border-orange-500 border-2 px-4 py-2 text-right">
+                        {producto.precioTotal}Bs
+                      </td>
+                    </tr>
+                  ))
+                : ""}
 
               <tr>
                 <td className="text-[17px] px-4 font-semibold border-orange-500 border-2">
@@ -529,7 +522,7 @@ const DetalleCompra = (props) => {
           </button>
         </div>
       </div>
-      {compraExistosa && (
+      {deliveryBuy && (
         <div className="transition-all fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75">
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
             <div className="flex justify-end">
@@ -551,7 +544,7 @@ const DetalleCompra = (props) => {
           </div>
         </div>
       )}
-      {compraExistosaResturante && (
+      {restaurantBuy && (
         <div className="transition-all fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75">
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
             <div className="flex justify-end">
@@ -595,20 +588,20 @@ const DetalleCompra = (props) => {
         </div>
       )}
 
-      {ventanaConfirmacion && (
+      {deliveryConfirmation && (
         <div className="transition-all fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75">
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md flex flex-col justify-center items-center">
             <p className="mb-4">¿Desea confirmar la compra?</p>
             <div className="flex">
               <button
                 className="text-white py-2 px-5 rounded-[8px] bg-blue-500 font-semibold mr-7"
-                onClick={handleSubmit}
+                onClick={handleDeliverySubmit}
               >
                 Confirmar
               </button>
               <button
                 className="text-white py-2 px-5 rounded-[8px] bg-red-500 font-semibold"
-                onClick={() => setVentanaConfirmacion(false)}
+                onClick={() => setDeliveryConfirmation(false)}
               >
                 Cancelar
               </button>
@@ -616,20 +609,20 @@ const DetalleCompra = (props) => {
           </div>
         </div>
       )}
-      {ventanaConfirmacionResturante && (
+      {restaurantConfirmation && (
         <div className="transition-all fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75">
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md flex flex-col justify-center items-center">
             <p className="mb-4">¿Desea confirmar la compra?</p>
             <div className="flex">
               <button
                 className="text-white py-2 px-5 rounded-[8px] bg-blue-500 font-semibold mr-7"
-                onClick={handleSubmitRestaurante}
+                onClick={handleRestaurantSubmit}
               >
                 Confirmar
               </button>
               <button
                 className="text-white py-2 px-5 rounded-[8px] bg-red-500 font-semibold"
-                onClick={() => setVentanaConfirmacionResturante(false)}
+                onClick={() => setRestaurantConfirmation(false)}
               >
                 Cancelar
               </button>
@@ -641,4 +634,4 @@ const DetalleCompra = (props) => {
   );
 };
 
-export default DetalleCompra;
+export default DetailBuy;
