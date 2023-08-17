@@ -20,3 +20,5 @@ export const useApiRequest = (url, initialState = null) => {
 
   return { data, error };
 };
+
+export default useApiRequest;

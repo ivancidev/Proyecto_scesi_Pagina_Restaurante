@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import Order from "./Orders/Order";
 import ViewError from "./Window/ViewError";
@@ -7,45 +7,18 @@ import Comments from "./Comments/Comments";
 import ViewBuy from "./Window/ViewBuy";
 import useRemoveCart from "./hooks/useRemoveCart";
 
-const Car = ({
-  showOrder,
-  setShowOrder,
-  changeBackground,
-  totalPrice,
-  setTotalPrice,
-}) => {
+const Car = ({ showOrder, setShowOrder, changeBackground, totalPrice, setTotalPrice }) => {
+
   const [comments, setComments] = useState(false);
   const [idMenu, setIdMenu] = useState(0);
   const [showButtons, setShowButtons] = useState(false);
-  const [client, setClient] = useState([]);
   const [showError, setShowError] = useState(false);
-  const user_global = JSON.parse(sessionStorage.getItem("user_logged"));
   var productsStorage = JSON.parse(sessionStorage.getItem("add_products"));
-  const { products } = useRemoveCart(productsStorage, idMenu,setIdMenu, totalPrice, setTotalPrice)
-  
+  const { products } = useRemoveCart(productsStorage, idMenu, setIdMenu, totalPrice, setTotalPrice)
 
   const handleClickComments = () => {
     setComments(true);
   };
-
-  useEffect(() => {
-    const fetchClient = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:4000/email/${user_global.email}`
-        );
-        if (!response.ok) {
-          throw new Error("Error al obtener los datos del cliente");
-        }
-        const data = await response.json();
-        setClient(data);
-      } catch (error) {
-        console.error("Error al obtener el correo del cliente:", error);
-      }
-    };
-
-    fetchClient();
-  }, []);
 
   const handleCompraClick = () => {
     if (products.length == 0) {
@@ -68,7 +41,7 @@ const Car = ({
     >
       <ViewError
         showError={showError}
-        content={"Agrega productos al carrito de compra"}
+        content={"Agrega productos al carrito de compra 🛒"}
       />
       <div className="relative pt-16 lg:pt-3 text-gray-300 p-8 h-full">
         <RiCloseLine
@@ -145,6 +118,7 @@ const Car = ({
               comments ? "flex flex-col-reverse " : "hidden"
             } h-[470px] md:h-[700px] lg:h-[645px] overflow-y-scroll`}
           >
+            {/* Comentarios de las personas */}
             <Comments />
           </div>
         </div>
@@ -182,7 +156,6 @@ const Car = ({
         <ViewBuy
           showButtons={showButtons}
           setShowButtons={setShowButtons}
-          client={client}
           totalPrice={totalPrice}
         />
       </div>

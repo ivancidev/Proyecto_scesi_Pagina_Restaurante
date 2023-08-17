@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import { BsXCircleFill } from "react-icons/bs";
 import axios from "axios";
@@ -7,8 +7,8 @@ import Tables from "../MatrixTables/Tables";
 
 const DetalleCompra = (props) => {
   const { setOpenModal } = props;
-  const { client } = props;
   const products = JSON.parse(sessionStorage.getItem("add_products"));
+  const { client } = props 
 
   const [nombre, setNombre] = useState("");
   const [direccion, setDireccion] = useState("");
@@ -163,8 +163,8 @@ const DetalleCompra = (props) => {
       // Actualizamos el estado para mostrar la ventana de compra exitosa y la fecha y hora
       if (selectionOption == "Restaurante") {
         setVentanaConfirmacionResturante(true);
-        setNombre(client.nombre);
-        setTelefono(client.telefono);
+        setNombre(client[0].nombre);
+        setTelefono(client[0].telefono);
       } else {
         setVentanaConfirmacion(true);
       }
@@ -248,7 +248,7 @@ const DetalleCompra = (props) => {
           <h2 className="text-2xl font-semibold mb-4 text-orange-500">
             Por favor llene los campos para la entrega:
           </h2>
-          <p className="mb-4 text-[17px]">Cliente: {client.nombre}</p>
+          <p className="mb-4 text-[17px]">Cliente: {client[0].nombre}</p>
           <Form
             nombre={nombre}
             setNombre={setNombre}
@@ -267,8 +267,8 @@ const DetalleCompra = (props) => {
           <h2 className="text-[18px] text-orange-500 mb-4">
             Por favor, complete los campos para la entrega en el restaurante:
           </h2>
-          <p>Usuario: {client.nombre}</p>
-          <p>Telefono: {client.telefono}</p>
+          <p>Usuario: {client[0].nombre}</p>
+          <p>Telefono: {client[0].telefono}</p>
         </div>
         <div
           className={`${
@@ -541,7 +541,7 @@ const DetalleCompra = (props) => {
             <h2 className="text-2xl font-semibold mb-4 text-orange-500">
               ¡Compra Exitosa!
             </h2>
-            <p>Usuario: {client.nombre}</p>
+            <p>Usuario: {client[0].nombre}</p>
             <p>Dirección de entrega: {direccion}</p>
             <p>Fecha de entrega: {fechaEntrega}</p>
             <p>Hora de envío: {horaEnvio}</p>
@@ -563,7 +563,7 @@ const DetalleCompra = (props) => {
             <h2 className="text-2xl font-semibold mb-4 text-orange-500">
               ¡Compra Exitosa!
             </h2>
-            <p>Usuario: {client.nombre}</p>
+            <p>Usuario: {client[0].nombre}</p>
             <p>
               Fecha y hora compra: {fechaEntrega}: {horaEnvio}
             </p>
