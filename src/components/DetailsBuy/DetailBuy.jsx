@@ -4,6 +4,7 @@ import { BsXCircleFill } from "react-icons/bs";
 import Form from "../Form/Form";
 import Tables from "../MatrixTables/Tables";
 import usePost from "../hooks/usePost";
+import { concatenarNombresPlatos, validarForm, validarTarjeta } from "../helpers/detailHelper";
 
 const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selectionOption }) => {
 
@@ -79,12 +80,6 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
     setRestaurantBuy(true);
   }
 
-
-  const concatenarNombresPlatos = () => {
-    const nombres = products.map((plato) => plato.nombreMenu).join(", ");
-    setNombresOrden(nombres);
-  };
-
   const handlePrimerCheck = (e) => {
     setPrimerCheck(e.target.checked);
     setSegundoCheck(false);
@@ -114,35 +109,17 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
     setTarjeta(value);
   };
 
-  const validarTarjeta = () => {
-    let nuevosErrores = {};
-
-    //validacion del campo tarjeta
-    if (!cuartoCheck) {
-      if (!tarjeta) {
-        nuevosErrores.tarjeta = "El numero de la tarjeta es obligatorio";
-      } else if (isNaN(tarjeta)) {
-        nuevosErrores.tarjeta = "Debe ser numeros";
-      } else if (tarjeta.length < 16) {
-        nuevosErrores.tarjeta = "Debe tener 16 numeros";
-      }
-    }
-
-    return nuevosErrores;
-  };
-
   const mostrarCompraExitosa = () => {
     let nuevosErrores = {};
 
     if (selectionOption == "Restaurante") {
-      nuevosErrores = validarTarjeta();
+      nuevosErrores = validarTarjeta(cuartoCheck, tarjeta);
       setErrores(nuevosErrores);
     } else {
-      nuevosErrores = validarForm();
+      nuevosErrores = validarForm(nombre, direccion, telefono, tarjeta );
       setErrores(nuevosErrores);
     }
 
-    //si existe cero errores
     if (Object.keys(nuevosErrores).length === 0) {
       // Obtenemos la fecha y hora actual
       const fechaActual = new Date();
@@ -152,9 +129,7 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
         minute: "numeric",
         hour12: true,
       });
-      concatenarNombresPlatos();
-      console.log({ nombresOrden });
-
+      concatenarNombresPlatos(products, setNombresOrden);
       // Actualizamos el estado para mostrar la ventana de compra exitosa y la fecha y hora
       if (selectionOption == "Restaurante") {
         setRestaurantConfirmation(true);
@@ -169,48 +144,13 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
     }
   };
 
-  const validarForm = () => {
-    let nuevosErrores = {};
-
-    // Validación del campo nombre
-    if (!nombre) {
-      nuevosErrores.nombre = "El nombre de usuario es obligatorio";
-    }
-
-    // Validación del campo direccion
-    if (!direccion) {
-      nuevosErrores.direccion = "La direccion es obligatoria";
-    }
-    //validacion del campo telefono
-    if (!telefono) {
-      nuevosErrores.telefono = "El telefono es obligatorio";
-    } else if (isNaN(telefono)) {
-      nuevosErrores.telefono = "Debe ser numeros";
-    } else if (telefono.length < 8) {
-      nuevosErrores.telefono = "Debe tener 8 numeros";
-    } else if (!/^[67]/.test(telefono)) {
-      nuevosErrores.telefono = "Debe iniciar con con 6 o 7";
-    }
-
-    //validacion del campo tarjeta
-    if (!tarjeta) {
-      nuevosErrores.tarjeta = "El numero de la tarjeta es obligatorio";
-    } else if (isNaN(tarjeta)) {
-      nuevosErrores.tarjeta = "Debe ser numeros";
-    } else if (tarjeta.length < 16) {
-      nuevosErrores.tarjeta = "Debe tener 16 numeros";
-    }
-
-    return nuevosErrores;
-  };
-
   const cerrarCompraExistosa = () => {
     setDeliveryBuy(false);
     setOpenModal(false);
     setShowButtons(false);
     sessionStorage.removeItem("add_products");
     sessionStorage.setItem("add_products", null);
-    window.location.reload(); //recarga la pagina
+    window.location.reload(); 
   };
 
   const cerrarCompraExistosaRestaurante = () => {
@@ -219,7 +159,7 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
     setShowButtons(false);
     sessionStorage.removeItem("add_products");
     sessionStorage.setItem("add_products", null);
-    window.location.reload(); //recarga la pagina
+    window.location.reload(); 
   };
 
   const tiempoEntregar = () => {
