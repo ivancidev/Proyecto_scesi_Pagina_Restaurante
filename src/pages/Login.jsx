@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import logo from "../assets/imagenes/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../components/hooks/useForm";
 import { useApiRequest } from "../components/hooks/useApiRequest";
-import { validateForm } from "../components/helpers/validateForm";
 import useFormAndSubmit from "../components/hooks/useFormAndSubmit";
+import { createNewPostLogin, getPostEmail, getPostMenuFried } from "../api/posts";
 
 
 const Login = () => {
@@ -15,17 +14,9 @@ const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
-  const { data: dishes } = useApiRequest(
-    `http://localhost:4000/menus/${"friedmenu"}`
-  );
-  const { data: clientFromDb } = useApiRequest(
-    `http://localhost:4000/email/${user.email}`
-  );
-  const { isLoading, handleSubmit, errors } = useFormAndSubmit(
-    user,
-    clientFromDb,
-    "http://localhost:4000/login"
-  );
+  const { data: dishes } = useApiRequest(getPostMenuFried("friedmenu"));
+  const { data: clientFromDb } = useApiRequest(getPostEmail(user.email));
+  const { isLoading, handleSubmit, errors } = useFormAndSubmit( user, clientFromDb, createNewPostLogin() );
   const navigateFunction = () => navigate("/products")
   const handleRegistrationClick = () => navigate("/registration");
 
