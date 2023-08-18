@@ -7,12 +7,10 @@ import { concatenateNamesDishes, validateForm, validateCard } from "../helpers/d
 import ConfirmationModal from "../Window/ConfirmationModal";
 import PurchaseSuccesModal from "../Window/PurchaseSuccesModal";
 import ProductsTable from "../tables/ProductsTable";
+import PaymentOptions from "../PaymentOptions";
 
-const DetailBuy = ({ setOpenModal, client, totalPrice,
-  setShowButtons,
-  selectionOption,
-}) => {
-  const products = JSON.parse(sessionStorage.getItem("add_products"));
+const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selectionOption }) => {
+  
   const [name, setName] = useState("");
   const [addres, setAddres] = useState("");
   const [phone, setPhone] = useState("");
@@ -30,27 +28,9 @@ const DetailBuy = ({ setOpenModal, client, totalPrice,
   const [valueCombox, setValueCombox] = useState("");
   const [duration, setDuration] = useState(0);
   const [errors, setErrors] = useState({});
-  const clientDelivery = {
-    name,
-    addres,
-    phone,
-    numberCard,
-    orderNames,
-    totalPrice,
-    date,
-    hour,
-  };
-  const clientRestaurant = {
-    numberTable,
-    numberCard,
-    orderNames,
-    valueCombox,
-    date,
-    hour,
-    phone,
-    name,
-    totalPrice,
-  };
+  const products = JSON.parse(sessionStorage.getItem("add_products"));
+  const clientDelivery = { name, addres, phone, numberCard, orderNames, totalPrice, date, hour };
+  const clientRestaurant = { numberTable, numberCard, orderNames, valueCombox, date, hour, phone, name, totalPrice };
 
   const {
     confirmation: deliveryConfirmation,
@@ -216,30 +196,14 @@ const DetailBuy = ({ setOpenModal, client, totalPrice,
               : "block text-white container mx-auto px-4 py-5 bg-blue-500 rounded-[12px] mt-3 mb-3"
           }`}
         >
-          <p className="mb-3">Elige una de las opciones</p>
-          <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-8">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={oneCheck}
-                onChange={handleOneCheck}
-                className="form-checkbox h-5 w-5 text-blue-500"
-              />
-              <span>
-                ¿Se encuentra en nuestro restaurante y desea comer aquí?
-              </span>
-            </label>
-
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={secondCheck}
-                onChange={handleSecondCheck}
-                className="form-checkbox h-5 w-5 text-blue-500"
-              />
-              <span>¿Va a recoger su pedido solamente?</span>
-            </label>
-          </div>
+          <PaymentOptions
+            oneCheck={oneCheck}
+            handleOneCheck={handleOneCheck}
+            secondCheck={secondCheck}
+            hanleSecondCheck={handleSecondCheck}
+            thirdCheck={false}
+            open={true}
+          />
         </div>
         <div className={`${oneCheck ? "block" : "hidden"}`}>
           <span className="mt-4 mb-4">
@@ -273,30 +237,14 @@ const DetailBuy = ({ setOpenModal, client, totalPrice,
           <p className={`${numberTable != null ? "block mt-4" : "hidden"}`}>
             Numero de mesa seleccionado: {numberTable}
           </p>
-          <div className="text-white container mx-auto px-4 py-5 bg-blue-500 rounded-[12px] mt-3 mb-3">
-            <p className="mb-3">Elige una de las opciones:</p>
-            <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-8">
-              <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={thirdCheck}
-                  onChange={handleThirdCheck}
-                  className="form-checkbox h-5 w-5 text-blue-500"
-                />
-                <span>¿Desea hacer el pago con tarjeta de crédito?</span>
-              </label>
-
-              <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={fourthCheck}
-                  onChange={handleFourthCheck}
-                  className="form-checkbox h-5 w-5 text-blue-500"
-                />
-                <span>¿Desea hacer el pago en caja?</span>
-              </label>
-            </div>
-          </div>
+          <PaymentOptions
+            oneCheck={thirdCheck}
+            handleOneCheck={handleThirdCheck}
+            secondCheck={fourthCheck}
+            hanleSecondCheck={handleFourthCheck}
+            thirdCheck={fourthCheck}
+            open={false}
+          />
           <div className={`${thirdCheck ? "block mb-4 mt-4" : "hidden"}`}>
             <label className="block mb-2">Codigo tarjeta credito:</label>
             <input
@@ -311,9 +259,6 @@ const DetailBuy = ({ setOpenModal, client, totalPrice,
               <span className="text-red-500">{errors.numberCard}</span>
             )}
           </div>
-          <p className={`${fourthCheck ? "block" : "hidden"} mt4 mb-4 font-semibold`}>
-            "El pago lo realizara en caja"
-          </p>
         </div>
         <div className={`${secondCheck ? "block overflow-hidden" : "hidden"}`}>
           <div>
@@ -338,37 +283,16 @@ const DetailBuy = ({ setOpenModal, client, totalPrice,
               </select>
             </div>
           </div>
-          <div
-            className={`${
-              valueCombox != "" ? "block" : "hidden"
-            } text-white container mx-auto px-4 py-5 bg-blue-500 rounded-[12px] mt-3 mb-3`}
-          >
-            <p className="mb-3">Elige una de las opciones:</p>
-            <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-8">
-              <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={thirdCheck}
-                  onChange={handleThirdCheck}
-                  className="form-checkbox h-5 w-5 text-blue-500"
-                />
-                <span>¿Desea hacer el pago con tarjeta de crédito?</span>
-              </label>
-
-              <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={fourthCheck}
-                  onChange={handleFourthCheck}
-                  className="form-checkbox h-5 w-5 text-blue-500"
-                />
-                <span>¿Desea hacer el pago en caja?</span>
-              </label>
-            </div>
+          <div className={`${valueCombox != "" ? "block" : "hidden"}`}>
+            <PaymentOptions
+              oneCheck={thirdCheck}
+              handleOneCheck={handleThirdCheck}
+              secondCheck={fourthCheck}
+              hanleSecondCheck={handleFourthCheck}
+              thirdCheck={fourthCheck}
+              open={false}
+            />
           </div>
-          <p className={`${fourthCheck ? "block" : "hidden"} mt4 mb-4 font-semibold`}>
-            "El pago lo realizara en caja"
-          </p>
           <div
             className={`${
               valueCombox != "" && thirdCheck ? "block mb-4 mt-4" : "hidden"
@@ -388,7 +312,7 @@ const DetailBuy = ({ setOpenModal, client, totalPrice,
             )}
           </div>
         </div>
-        <ProductsTable products={products} totalPrice={totalPrice}/>
+        <ProductsTable products={products} totalPrice={totalPrice} />
         <p>Direccion del restaurante:</p>
         <div className="flex justify-center mb-6 mt-4">
           <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d30461.81505356121!2d-66.30604799999999!3d-17.3768704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sbo!4v1689888959806!5m2!1ses-419!2sbo"></iframe>
