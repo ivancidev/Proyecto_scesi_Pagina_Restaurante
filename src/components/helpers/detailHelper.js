@@ -1,47 +1,49 @@
-export const concatenarNombresPlatos = (products, setNombresOrden) => {
-    const nombres = products.map((plato) => plato.nombreMenu).join(", ");
-    setNombresOrden(nombres);
+export const concatenateNamesDishes = (products, setOrderNames) => {
+    const names = products.map((dish) => dish.nombreMenu).join(", ");
+    setOrderNames(names);
   };
   
-  export const validarTarjeta = (cuartoCheck, tarjeta) => {
-    let nuevosErrores = {};
+  export const validateCard = (fourthCheck, numberCard) => {
+    let newErrors = {};
   
-    if (!cuartoCheck) {
-      if (!tarjeta) {
-        nuevosErrores.tarjeta = "El numero de la tarjeta es obligatorio";
-      } else if (isNaN(tarjeta)) {
-        nuevosErrores.tarjeta = "Debe ser numeros";
-      } else if (tarjeta.length < 16) {
-        nuevosErrores.tarjeta = "Debe tener 16 numeros";
+    if (!fourthCheck) {
+      if (!numberCard) {
+        newErrors.numberCard = "El numero de la tarjeta es obligatorio";
+      } else if (isNaN(numberCard)) {
+        newErrors.numberCard = "Debe ser numeros";
+      } else if (numberCard.length < 16) {
+        newErrors.numberCard = "Debe tener 16 numeros";
       }
     }
   
-    return nuevosErrores;
+    return newErrors;
   };
   
-  export const validarForm = (nombre, direccion, telefono, tarjeta) => {
-    let nuevosErrores = {};
+  export const validateForm = (name, addres, phone, numberCard) => {
+    let newErrors = {};
   
-    if (!nombre) {
-      nuevosErrores.nombre = "El nombre de usuario es obligatorio";
+    if (!name) {
+      newErrors.name = "El nombre de usuario es obligatorio";
     }
   
-    if (!direccion) {
-      nuevosErrores.direccion = "La direccion es obligatoria";
+    if (!addres) {
+      newErrors.addres = "La direccion es obligatoria";
     }
   
-    if (!telefono) {
-      nuevosErrores.telefono = "El telefono es obligatorio";
-    } else if (isNaN(telefono) || telefono.length !== 8 || !/^[67]/.test(telefono)) {
-      nuevosErrores.telefono = "El telefono es inválido";
+    if (!phone) {
+      newErrors.phone = "El telefono es obligatorio";
+    } else if (isNaN(phone) || phone.length !== 8 || !/^[67]/.test(phone)) {
+      newErrors.phone = "El telefono es inválido";
     }
   
-    if (!tarjeta) {
-      nuevosErrores.tarjeta = "El numero de la tarjeta es obligatorio";
-    } else if (isNaN(tarjeta) || tarjeta.length !== 16) {
-      nuevosErrores.tarjeta = "La tarjeta es inválida";
+    if (!numberCard) {
+      newErrors.numberCard = "El numero de la tarjeta es obligatorio";
+    } else if (isNaN(numberCard)) {
+      newErrors.numberCard = "Debe ser numeros";
+    } else if (numberCard.length < 16) {
+      newErrors.numberCard= "Debe tener 16 numeros";
     }
   
-    return nuevosErrores;
+    return newErrors;
   };
   

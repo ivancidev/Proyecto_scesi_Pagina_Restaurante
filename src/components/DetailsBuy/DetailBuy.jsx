@@ -1,51 +1,53 @@
 import React from "react";
 import { useState } from "react";
-import { BsXCircleFill } from "react-icons/bs";
 import Form from "../Form/Form";
 import Tables from "../MatrixTables/Tables";
 import usePost from "../hooks/usePost";
-import { concatenarNombresPlatos, validarForm, validarTarjeta } from "../helpers/detailHelper";
+import { concatenateNamesDishes, validateForm, validateCard } from "../helpers/detailHelper";
 import ConfirmationModal from "../Window/ConfirmationModal";
+import PurchaseSuccesModal from "../Window/PurchaseSuccesModal";
 
-const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selectionOption }) => {
-
+const DetailBuy = ({ setOpenModal, client, totalPrice,
+  setShowButtons,
+  selectionOption,
+}) => {
   const products = JSON.parse(sessionStorage.getItem("add_products"));
-  const [nombre, setNombre] = useState("");
-  const [direccion, setDireccion] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [tarjeta, setTarjeta] = useState("");
-  const [fechaEntrega, setFechaEntrega] = useState("");
-  const [horaEnvio, setHoraEnvio] = useState("");
-  const [nombresOrden, setNombresOrden] = useState("");
-  const [primerCheck, setPrimerCheck] = useState(false);
-  const [segundoCheck, setSegundoCheck] = useState(false);
-  const [numeroMesa, setNumeroMesa] = useState(null);
-  const [mostrarMesa, setMostrarMesa] = useState(false);
-  const [tercerCheck, setTercerCheck] = useState(false);
-  const [cuartoCheck, setCuartoCheck] = useState(false);
-  const opcionesCombox = [10, 15, 30, 45, 60, 120];
-  const [valorCombox, setValorCombox] = useState("");
-  const [tiempoEntrega, setTiempoEntrega] = useState(0);
-  const [errores, setErrores] = useState({});
+  const [name, setName] = useState("");
+  const [addres, setAddres] = useState("");
+  const [phone, setPhone] = useState("");
+  const [numberCard, setNumberCard] = useState("");
+  const [date, setDate] = useState("");
+  const [hour, setHour] = useState("");
+  const [orderNames, setOrderNames] = useState("");
+  const [oneCheck, setOneCheck] = useState(false);
+  const [secondCheck, setSecondCheck] = useState(false);
+  const [numberTable, setNumberTable] = useState(null);
+  const [showTable, setShowTable] = useState(false);
+  const [thirdCheck, setThirdCheck] = useState(false);
+  const [fourthCheck, setFourthCheck] = useState(false);
+  const comboOptions = [10, 15, 30, 45, 60, 120];
+  const [valueCombox, setValueCombox] = useState("");
+  const [duration, setDuration] = useState(0);
+  const [errors, setErrors] = useState({});
   const clientDelivery = {
-    nombre,
-    direccion,
-    telefono,
-    tarjeta,
-    nombresOrden,
+    name,
+    addres,
+    phone,
+    numberCard,
+    orderNames,
     totalPrice,
-    fechaEntrega,
-    horaEnvio,
+    date,
+    hour,
   };
   const clientRestaurant = {
-    numeroMesa,
-    tarjeta,
-    nombresOrden,
-    valorCombox,
-    fechaEntrega,
-    horaEnvio,
-    telefono,
-    nombre,
+    numberTable,
+    numberCard,
+    orderNames,
+    valueCombox,
+    date,
+    hour,
+    phone,
+    name,
     totalPrice,
   };
 
@@ -68,104 +70,104 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
     clientRestaurant
   );
 
-  const handleDeliverySubmit = () =>{
-    handleDelivery()
+  const handleDeliverySubmit = () => {
+    handleDelivery();
     setDeliveryConfirmation(false);
     setDeliveryBuy(true);
-  }
+  };
 
-  const handleRestaurantSubmit = () =>{
-    handleRestaurant()
+  const handleRestaurantSubmit = () => {
+    handleRestaurant();
     setRestaurantConfirmation(false);
-    tiempoEntregar();
+    timeDelivery();
     setRestaurantBuy(true);
-  }
-
-  const handlePrimerCheck = (e) => {
-    setPrimerCheck(e.target.checked);
-    setSegundoCheck(false);
   };
 
-  const handleSegundoCheck = (e) => {
-    setSegundoCheck(e.target.checked);
-    setPrimerCheck(false);
+  const handleOneCheck = (e) => {
+    setOneCheck(e.target.checked);
+    setSecondCheck(false);
   };
 
-  const handleTercerCheck = (e) => {
-    setTercerCheck(e.target.checked);
-    setCuartoCheck(false);
+  const handleSecondCheck = (e) => {
+    setSecondCheck(e.target.checked);
+    setOneCheck(false);
   };
 
-  const handleCuartoCheck = (e) => {
-    setCuartoCheck(e.target.checked);
-    setTercerCheck(false);
+  const handleThirdCheck = (e) => {
+    setThirdCheck(e.target.checked);
+    setFourthCheck(false);
+  };
+
+  const handleFourthCheck = (e) => {
+    setFourthCheck(e.target.checked);
+    setThirdCheck(false);
   };
 
   const handleCombox = (event) => {
-    setValorCombox(event.target.value);
+    setValueCombox(event.target.value);
   };
 
-  const handleInputChangeTarjeta = (e) => {
+  const handleInputChangeCard = (e) => {
     const { value } = e.target;
-    setTarjeta(value);
+    setNumberCard(value);
   };
 
-  const mostrarCompraExitosa = () => {
-    let nuevosErrores = {};
+  const showBuySuccess = () => {
+    let newErrors = {};
 
     if (selectionOption == "Restaurante") {
-      nuevosErrores = validarTarjeta(cuartoCheck, tarjeta);
-      setErrores(nuevosErrores);
+      newErrors = validateCard(fourthCheck, numberCard);
+      setErrors(newErrors);
     } else {
-      nuevosErrores = validarForm(nombre, direccion, telefono, tarjeta );
-      setErrores(nuevosErrores);
+      newErrors = validateForm(name, addres, phone, numberCard);
+      setErrors(newErrors);
     }
 
-    if (Object.keys(nuevosErrores).length === 0) {
+    if (Object.keys(newErrors).length === 0) {
       // Obtenemos la fecha y hora actual
-      const fechaActual = new Date();
-      const fechaEntrega = fechaActual.toLocaleDateString("es-ES");
-      const horaEnvio = fechaActual.toLocaleTimeString("es-ES", {
+      const dateAct = new Date();
+      const dateDelivery = dateAct.toLocaleDateString("es-ES");
+      const hourDelivery = dateAct.toLocaleTimeString("es-ES", {
         hour: "numeric",
         minute: "numeric",
         hour12: true,
       });
-      concatenarNombresPlatos(products, setNombresOrden);
+      concatenateNamesDishes(products, setOrderNames);
       // Actualizamos el estado para mostrar la ventana de compra exitosa y la fecha y hora
       if (selectionOption == "Restaurante") {
         setRestaurantConfirmation(true);
-        setNombre(client[0].nombre);
-        setTelefono(client[0].telefono);
+        setName(client[0].nombre);
+        setPhone(client[0].telefono);
       } else {
         setDeliveryConfirmation(true);
       }
 
-      setFechaEntrega(fechaEntrega);
-      setHoraEnvio(horaEnvio);
+      setDate(dateDelivery);
+      setHour(hourDelivery);
     }
   };
 
-  const cerrarCompraExistosa = () => {
+  const closeBuyDelivery = () => {
     setDeliveryBuy(false);
     setOpenModal(false);
     setShowButtons(false);
     sessionStorage.removeItem("add_products");
     sessionStorage.setItem("add_products", null);
-    window.location.reload(); 
+    window.location.reload();
   };
 
-  const cerrarCompraExistosaRestaurante = () => {
+  const closeBuySuccess = () => {
     setRestaurantBuy(false);
     setOpenModal(false);
     setShowButtons(false);
     sessionStorage.removeItem("add_products");
     sessionStorage.setItem("add_products", null);
-    window.location.reload(); 
+    window.location.reload();
   };
 
-  const tiempoEntregar = () => {
-    var tiempoDemoraClient = parseInt(valorCombox);
-    setTiempoEntrega(parseInt(tiempoDemoraClient + tiempoDemoraClient / 2));
+  const timeDelivery = () => {
+    var timeDelayClient = parseInt(valueCombox);
+    setDuration(parseInt(timeDelayClient + timeDelayClient / 2));
   };
 
   return (
@@ -186,15 +188,15 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
           </h2>
           <p className="mb-4 text-[17px]">Cliente: {client[0].nombre}</p>
           <Form
-            nombre={nombre}
-            setNombre={setNombre}
-            direccion={direccion}
-            setDireccion={setDireccion}
-            setTelefono={setTelefono}
-            telefono={telefono}
-            tarjeta={tarjeta}
-            setTarjeta={setTarjeta}
-            errores={errores}
+            name={name}
+            setName={setName}
+            addres={addres}
+            setAddres={setAddres}
+            setPhone={setPhone}
+            phone={phone}
+            numberCard={numberCard}
+            setNumberCard={setNumberCard}
+            errors={errors}
           />
         </div>
         <div
@@ -218,8 +220,8 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
             <label className="flex items-center space-x-2">
               <input
                 type="checkbox"
-                checked={primerCheck}
-                onChange={handlePrimerCheck}
+                checked={oneCheck}
+                onChange={handleOneCheck}
                 className="form-checkbox h-5 w-5 text-blue-500"
               />
               <span>
@@ -230,26 +232,26 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
             <label className="flex items-center space-x-2">
               <input
                 type="checkbox"
-                checked={segundoCheck}
-                onChange={handleSegundoCheck}
+                checked={secondCheck}
+                onChange={handleSecondCheck}
                 className="form-checkbox h-5 w-5 text-blue-500"
               />
               <span>¿Va a recoger su pedido solamente?</span>
             </label>
           </div>
         </div>
-        <div className={`${primerCheck ? "block" : "hidden"}`}>
+        <div className={`${oneCheck ? "block" : "hidden"}`}>
           <span className="mt-4 mb-4">
             <label>Seleccione en que mesa se encuentra:</label>
             <button
-              onClick={() => setMostrarMesa(true)}
+              onClick={() => setShowTable(true)}
               className="bg-blue-500 pt-2 pb-2 pr-4 pl-4 ml-4 rounded-[10px] text-white"
             >
               Seleccionar
             </button>
             <div
               className={`${
-                mostrarMesa
+                showTable
                   ? "fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75"
                   : "hidden"
               }`}
@@ -259,16 +261,16 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
                   Selecciona en qué mesa usted se encuentra:
                 </p>
                 <Tables
-                  numeroMesa={numeroMesa}
-                  setNumeroMesa={setNumeroMesa}
-                  setMostrarMesa={setMostrarMesa}
+                  numberTable={numberTable}
+                  setNumberTable={setNumberTable}
+                  setShowTable={setShowTable}
                 />
               </div>
             </div>
           </span>
 
-          <p className={`${numeroMesa != null ? "block mt-4" : "hidden"}`}>
-            Numero de mesa seleccionado: {numeroMesa}
+          <p className={`${numberTable != null ? "block mt-4" : "hidden"}`}>
+            Numero de mesa seleccionado: {numberTable}
           </p>
           <div className="text-white container mx-auto px-4 py-5 bg-blue-500 rounded-[12px] mt-3 mb-3">
             <p className="mb-3">Elige una de las opciones:</p>
@@ -276,8 +278,8 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
               <label className="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  checked={tercerCheck}
-                  onChange={handleTercerCheck}
+                  checked={thirdCheck}
+                  onChange={handleThirdCheck}
                   className="form-checkbox h-5 w-5 text-blue-500"
                 />
                 <span>¿Desea hacer el pago con tarjeta de crédito?</span>
@@ -286,33 +288,33 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
               <label className="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  checked={cuartoCheck}
-                  onChange={handleCuartoCheck}
+                  checked={fourthCheck}
+                  onChange={handleFourthCheck}
                   className="form-checkbox h-5 w-5 text-blue-500"
                 />
                 <span>¿Desea hacer el pago en caja?</span>
               </label>
             </div>
           </div>
-          <div className={`${tercerCheck ? "block mb-4 mt-4" : "hidden"}`}>
+          <div className={`${thirdCheck ? "block mb-4 mt-4" : "hidden"}`}>
             <label className="block mb-2">Codigo tarjeta credito:</label>
             <input
               type="text"
-              name="tarjeta"
-              value={tarjeta}
-              onChange={handleInputChangeTarjeta}
+              name="numberCard"
+              value={numberCard}
+              onChange={handleInputChangeCard}
               placeholder="Ingresa el numero de tu tarjeta de credito"
               className="border border-orange-600 px-4 py-2 w-full rounded-md"
             />
-            {errores.tarjeta && (
-              <span className="text-red-500">{errores.tarjeta}</span>
+            {errors.numberCard && (
+              <span className="text-red-500">{errors.numberCard}</span>
             )}
           </div>
-          <p className={`${cuartoCheck ? "block" : "hidden"} mt4 mb-4`}>
+          <p className={`${fourthCheck ? "block" : "hidden"} mt4 mb-4 font-semibold`}>
             "El pago lo realizara en caja"
           </p>
         </div>
-        <div className={`${segundoCheck ? "block overflow-hidden" : "hidden"}`}>
+        <div className={`${secondCheck ? "block overflow-hidden" : "hidden"}`}>
           <div>
             <div className="text-white container mx-auto px-4 py-5 bg-blue-500 rounded-[12px] mt-3 mb-3">
               <p className="mb-3">
@@ -322,12 +324,12 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
               <label htmlFor="comboBox">Seleccione una opción:</label>
               <select
                 id="comboBox"
-                value={valorCombox}
+                value={valueCombox}
                 onChange={handleCombox}
                 className="ml-4 text-black mt-1 mb-4 p-2 border border-gray-300 rounded-md"
               >
                 <option value="">Seleccionar:</option>
-                {opcionesCombox.map((opcion, index) => (
+                {comboOptions.map((opcion, index) => (
                   <option key={index} value={opcion}>
                     {opcion}min
                   </option>
@@ -337,7 +339,7 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
           </div>
           <div
             className={`${
-              valorCombox != "" ? "block" : "hidden"
+              valueCombox != "" ? "block" : "hidden"
             } text-white container mx-auto px-4 py-5 bg-blue-500 rounded-[12px] mt-3 mb-3`}
           >
             <p className="mb-3">Elige una de las opciones:</p>
@@ -345,8 +347,8 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
               <label className="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  checked={tercerCheck}
-                  onChange={handleTercerCheck}
+                  checked={thirdCheck}
+                  onChange={handleThirdCheck}
                   className="form-checkbox h-5 w-5 text-blue-500"
                 />
                 <span>¿Desea hacer el pago con tarjeta de crédito?</span>
@@ -355,37 +357,37 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
               <label className="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  checked={cuartoCheck}
-                  onChange={handleCuartoCheck}
+                  checked={fourthCheck}
+                  onChange={handleFourthCheck}
                   className="form-checkbox h-5 w-5 text-blue-500"
                 />
                 <span>¿Desea hacer el pago en caja?</span>
               </label>
             </div>
           </div>
-          <p className={`${cuartoCheck ? "block" : "hidden"} mt4 mb-4`}>
+          <p className={`${fourthCheck ? "block" : "hidden"} mt4 mb-4 font-semibold`}>
             "El pago lo realizara en caja"
           </p>
           <div
             className={`${
-              valorCombox != "" && tercerCheck ? "block mb-4 mt-4" : "hidden"
+              valueCombox != "" && thirdCheck ? "block mb-4 mt-4" : "hidden"
             }`}
           >
             <label className="block mb-2">Codigo tarjeta credito:</label>
             <input
               type="text"
-              name="tarjeta"
-              value={tarjeta}
-              onChange={handleInputChangeTarjeta}
+              name="numberCard"
+              value={numberCard}
+              onChange={handleInputChangeCard}
               placeholder="Ingresa el numero de tu tarjeta de credito"
               className="border border-orange-600 px-4 py-2 w-full rounded-md"
             />
-            {errores.tarjeta && (
-              <span className="text-red-500">{errores.tarjeta}</span>
+            {errors.numberCard && (
+              <span className="text-red-500">{errors.numberCard}</span>
             )}
           </div>
         </div>
-        <h2>Productos Seleccionados:</h2>
+        <h2 className="font-semibold">Productos Seleccionados:</h2>
         <div className="overflow-x-auto overflow-y-auto h-56">
           <table className="w-full mt-2 mb-3 ">
             <thead>
@@ -436,22 +438,8 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
         </div>
         <div className="flex flex-col justify-center md:flex-row md:justify-center">
           <button
-            onClick={mostrarCompraExitosa}
-            className={` ${
-              selectionOption == "Delivery"
-                ? " block mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md mb-2 md:mb-0 md:mr-16"
-                : "hidden"
-            } `}
-          >
-            Comprar
-          </button>
-          <button
-            className={`${
-              selectionOption == "Restaurante"
-                ? "block mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md mb-2 md:mb-0 md:mr-16"
-                : "hidden"
-            }`}
-            onClick={mostrarCompraExitosa}
+            onClick={showBuySuccess}
+            className={`block mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md mb-2 md:mb-0 md:mr-16`}
           >
             Comprar
           </button>
@@ -463,77 +451,45 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
           </button>
         </div>
       </div>
+
       {deliveryBuy && (
-        <div className="transition-all fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-            <div className="flex justify-end">
-              <BsXCircleFill
-                className="text-3xl text-orange-500 cursor-pointer"
-                onClick={cerrarCompraExistosa}
-              />
-            </div>
-            <h2 className="text-2xl font-semibold mb-4 text-orange-500">
-              ¡Compra Exitosa!
-            </h2>
-            <p>Usuario: {client[0].nombre}</p>
-            <p>Dirección de entrega: {direccion}</p>
-            <p>Fecha de entrega: {fechaEntrega}</p>
-            <p>Hora de envío: {horaEnvio}</p>
-            <p>Total Precio: {totalPrice}</p>
-            <p>Nuestro Email: elBocadoPerfecto@gmail.com</p>
-            <p>Nuestro telefono: 71779843 </p>
-          </div>
-        </div>
+        <PurchaseSuccesModal
+          closeSucces={closeBuyDelivery}
+          client={client}
+          addres={addres}
+          date={date}
+          time={hour}
+          totalPrice={totalPrice}
+        />
       )}
+
       {restaurantBuy && (
-        <div className="transition-all fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-            <div className="flex justify-end">
-              <BsXCircleFill
-                className="text-3xl text-orange-500 cursor-pointer"
-                onClick={cerrarCompraExistosaRestaurante}
-              />
-            </div>
-            <h2 className="text-2xl font-semibold mb-4 text-orange-500">
-              ¡Compra Exitosa!
-            </h2>
-            <p>Usuario: {client[0].nombre}</p>
-            <p>
-              Fecha y hora compra: {fechaEntrega}: {horaEnvio}
-            </p>
-            <p className={`${numeroMesa != null ? "block" : "hidden"}`}>
-              Numero de mesa: {numeroMesa}
-            </p>
-            <p className={`${valorCombox != "" ? "block" : "hidden"}`}></p>
-            <p>Total Precio: {totalPrice}</p>
-            <p>Nuestro Email: elBocadoPerfecto@gmail.com</p>
-            <p>Nuestro telefono: 71779843 </p>
-            <p
-              className={`${
-                primerCheck ? "block font-bold mt-2 mb-2" : "hidden"
-              }`}
-            >
-              Por favor, tenga en cuenta que el tiempo estimado para recibir su
-              pedido es de 10 a 15 minutos.
-            </p>
-            <p
-              className={`${
-                segundoCheck ? "block font-bold mt-2 mb-2" : "hidden"
-              }`}
-            >
-              Por favor, tenga en cuenta que el tiempo estimado para recibir su
-              pedido es {tiempoEntrega} minutos, debido a que usted demorará{" "}
-              {valorCombox} minutos.
-            </p>
-          </div>
-        </div>
+        <PurchaseSuccesModal
+          closeSucces={closeBuySuccess}
+          client={client}
+          date={date}
+          time={hour}
+          numberTable={numberTable}
+          valueCombox={valueCombox}
+          totalPrice={totalPrice}
+          oneCheck={oneCheck}
+          secondCheck={secondCheck}
+          deliveryBuy={deliveryBuy}
+          duration={duration}
+        />
       )}
 
       {deliveryConfirmation && (
-        <ConfirmationModal setConfirmation={setDeliveryConfirmation} handleSubmit={handleDeliverySubmit}/>
+        <ConfirmationModal
+          setConfirmation={setDeliveryConfirmation}
+          handleSubmit={handleDeliverySubmit}
+        />
       )}
       {restaurantConfirmation && (
-        <ConfirmationModal setConfirmation={setRestaurantConfirmation} handleSubmit={handleRestaurantSubmit}/>
+        <ConfirmationModal
+          setConfirmation={setRestaurantConfirmation}
+          handleSubmit={handleRestaurantSubmit}
+        />
       )}
     </header>
   );
