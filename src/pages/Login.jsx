@@ -14,7 +14,7 @@ const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
-  const { data: dishes } = useApiRequest(getPostMenus("friedmenu"));
+  const { data: dishes } = useApiRequest(getPostMenus("menuFried"));
   const { data: clientFromDb } = useApiRequest(getPostEmail(user.email));
   const { isLoading, handleSubmit, errors } = useFormAndSubmit( user, clientFromDb, createNewPostLogin() );
   const navigateFunction = () => navigate("/products")

@@ -71,7 +71,7 @@ const Sidebar = ({setShowMenu, showMenu, changeBackground, setChangeBackground, 
             onClick={handlClickWindow}
           >
             <BsPersonSquare className="text-2xl text-white" />
-            <p className="ml-3 text-white">Cambiar contraseña</p>
+            <p className="ml-3 text-white">Cambiar Usuario</p>
           </li>
           <li
             className="p-4 rounded-tl-xl rounded-bl-xl flex hover:bg-[#262837] hover:cursor-pointer mt-2"
