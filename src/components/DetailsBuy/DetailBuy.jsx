@@ -1,11 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import Form from "../Form/Form";
-import Tables from "../MatrixTables/Tables";
+import MatrixTable from "../tables/MatrixTable";
 import usePost from "../hooks/usePost";
 import { concatenateNamesDishes, validateForm, validateCard } from "../helpers/detailHelper";
 import ConfirmationModal from "../Window/ConfirmationModal";
 import PurchaseSuccesModal from "../Window/PurchaseSuccesModal";
+import ProductsTable from "../tables/ProductsTable";
 
 const DetailBuy = ({ setOpenModal, client, totalPrice,
   setShowButtons,
@@ -260,7 +261,7 @@ const DetailBuy = ({ setOpenModal, client, totalPrice,
                 <p className="text-xl font-bold mb-4">
                   Selecciona en qué mesa usted se encuentra:
                 </p>
-                <Tables
+                <MatrixTable
                   numberTable={numberTable}
                   setNumberTable={setNumberTable}
                   setShowTable={setShowTable}
@@ -387,51 +388,7 @@ const DetailBuy = ({ setOpenModal, client, totalPrice,
             )}
           </div>
         </div>
-        <h2 className="font-semibold">Productos Seleccionados:</h2>
-        <div className="overflow-x-auto overflow-y-auto h-56">
-          <table className="w-full mt-2 mb-3 ">
-            <thead>
-              <tr className="text-orange-500 ">
-                <th className="px-4 py-2 text-left border-orange-500 border-2">
-                  Nombre del Producto
-                </th>
-                <th className="px-4 py-2 text-center border-orange-500 border-2">
-                  Cantidad
-                </th>
-                <th className="px-4 py-2 text-right border-orange-500 border-2">
-                  Precio
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {products && products.length > 0
-                ? products.map((producto, index) => (
-                    <tr key={index}>
-                      <td className="px-4 py-2 text-left border-orange-500 border-2">
-                        {producto.nombreMenu}
-                      </td>
-                      <td className="border-orange-500 border-2 px-4 py-2 text-center">
-                        {producto.cantidad}
-                      </td>
-                      <td className="border-orange-500 border-2 px-4 py-2 text-right">
-                        {producto.precioTotal}Bs
-                      </td>
-                    </tr>
-                  ))
-                : ""}
-
-              <tr>
-                <td className="text-[17px] px-4 font-semibold border-orange-500 border-2">
-                  Total Pagar:
-                </td>
-                <td className="text-left text-[17px] font-semibold border-orange-500 border-2"></td>
-                <td className="text-right px-4 py-2 text-[17px] font-semibold border-orange-500 border-2">
-                  {totalPrice}Bs
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <ProductsTable products={products} totalPrice={totalPrice}/>
         <p>Direccion del restaurante:</p>
         <div className="flex justify-center mb-6 mt-4">
           <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d30461.81505356121!2d-66.30604799999999!3d-17.3768704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sbo!4v1689888959806!5m2!1ses-419!2sbo"></iframe>

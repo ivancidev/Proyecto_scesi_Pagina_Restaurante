@@ -1,6 +1,6 @@
 import React from "react";
 
-const Tables = ({ numberTable, setNumberTable, setShowTable}) => {
+const MatrixTable = ({ numberTable, setNumberTable, setShowTable}) => {
 
   const tableNumbersArray = Array.from({ length: 25 }, (_, index) => index + 1);
 
@@ -28,5 +28,5 @@ const Tables = ({ numberTable, setNumberTable, setShowTable}) => {
   );
 };
 
-export default Tables;
+export default MatrixTable;
 
