@@ -1,9 +1,9 @@
 import { RiUser3Line, RiCloseLine } from "react-icons/ri";
 import Sidebar from "../components/Sidebar";
-import Car from "../components/Car";
+import CardDetails from "../components/CardDetails";
 import Header from "../components/Header";
 import { BsPersonCircle } from "react-icons/bs";
-import ViewError from "../components/Window/ViewError";
+import ModalError from "../components/Modals/ModalError";
 import ChangePassword from "../components/changePassword/ChangePassword";
 import { FaShoppingCart } from "react-icons/fa";
 import { useAddProduct } from "../components/hooks/useAddProduct";
@@ -11,7 +11,7 @@ import { useProductState } from "../components/hooks/useProductState";
 import { useErrorHandling } from "../components/hooks/useErrorHandling";
 import { useApiRequest } from "../components/hooks/useApiRequest";
 import OrderCard from "../components/Orders/OrderCard";
-import ModalWindow from "../components/Window/ModalWindow";
+import ModalWindow from "../components/Modals/ModalWindow";
 import { getPostMenus } from "../api/posts";
 
 function Products() {
@@ -51,7 +51,7 @@ function Products() {
       } w-full min-h-screen`}
     >
       <ChangePassword window={window} setWindow={setWindow} />
-      <ViewError
+      <ModalError
         showError={showError}
         content={"Producto no disponible por el momento"}
       />
@@ -81,7 +81,7 @@ function Products() {
         />
       </div>
 
-      <Car
+      <CardDetails
         showOrder={showOrder}
         setShowOrder={setShowOrder}
         changeBackground={changeBackground}

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import Order from "./Orders/Order";
-import ViewError from "./Window/ViewError";
 import { FaShoppingCart, FaRegComments } from "react-icons/fa";
 import Comments from "./Comments/Comments";
-import ViewBuy from "./Window/ViewBuy";
 import useRemoveCart from "./hooks/useRemoveCart";
 import { getProductsStorage } from "../api/posts";
+import ModalError from "./Modals/ModalError";
+import ModalBuy from "./Modals/ModalBuy";
 
-const Car = ({ showOrder, setShowOrder, changeBackground, totalPrice, setTotalPrice }) => {
+const CardDetails = ({ showOrder, setShowOrder, changeBackground, totalPrice, setTotalPrice }) => {
 
   const [comments, setComments] = useState(false);
   const [idMenu, setIdMenu] = useState(0);
@@ -41,7 +41,7 @@ const Car = ({ showOrder, setShowOrder, changeBackground, totalPrice, setTotalPr
         showOrder ? "right-0" : "-right-full"
       }`}
     >
-      <ViewError
+      <ModalError
         showError={showError}
         content={"Agrega tu orden al carrito de compra 🛒"}
       />
@@ -155,7 +155,7 @@ const Car = ({ showOrder, setShowOrder, changeBackground, totalPrice, setTotalPr
             : "hidden"
         }`}
       >
-        <ViewBuy
+        <ModalBuy
           showButtons={showButtons}
           setShowButtons={setShowButtons}
           totalPrice={totalPrice}
@@ -165,4 +165,4 @@ const Car = ({ showOrder, setShowOrder, changeBackground, totalPrice, setTotalPr
   );
 };
 
-export default Car;
+export default CardDetails;

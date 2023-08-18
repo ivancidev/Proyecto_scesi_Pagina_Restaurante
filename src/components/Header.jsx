@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useApiRequest from "./hooks/useApiRequest";
 import { getPostEmail,getUserFromLocalStorage, } from "../api/posts";
-import ModalWindow from "./Window/ModalWindow";
+import ModalWindow from "./Modals/ModalWindow";
 import SearcherOrder from "./SearcherOrder";
 
 const Header = ({ dish, setDish, changeBackground }) => {

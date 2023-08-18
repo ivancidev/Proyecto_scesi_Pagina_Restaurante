@@ -6,7 +6,7 @@ import useApiRequest from "../hooks/useApiRequest";
 import DetailBuy from "../DetailsBuy/DetailBuy";
 import { getPostEmail, getUserFromLocalStorage } from "../../api/posts";
 
-const ViewBuy = ({ showButtons, setShowButtons, totalPrice }) => {
+const ModalBuy = ({ showButtons, setShowButtons, totalPrice }) => {
   const [selectionOption, setSelectionOption] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const user_global = getUserFromLocalStorage();
@@ -50,4 +50,4 @@ const ViewBuy = ({ showButtons, setShowButtons, totalPrice }) => {
   );
 };
 
-export default ViewBuy;
+export default ModalBuy;

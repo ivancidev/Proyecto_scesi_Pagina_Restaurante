@@ -1,7 +1,6 @@
 import React from "react";
 import { BsXCircleFill } from "react-icons/bs";
 
-
 const ModalWindow = ({modalOpen, setModalOpen, food}) => {
   return (
     <header
