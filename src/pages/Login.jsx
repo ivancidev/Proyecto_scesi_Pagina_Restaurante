@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "../components/hooks/useForm";
 import { useApiRequest } from "../components/hooks/useApiRequest";
 import useFormAndSubmit from "../components/hooks/useFormAndSubmit";
-import { createNewPostLogin, getPostEmail, getPostMenuFried } from "../api/posts";
+import { createNewPostLogin, getPostEmail, getPostMenus } from "../api/posts";
 
 
 const Login = () => {
@@ -14,7 +14,7 @@ const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
-  const { data: dishes } = useApiRequest(getPostMenuFried("friedmenu"));
+  const { data: dishes } = useApiRequest(getPostMenus("friedmenu"));
   const { data: clientFromDb } = useApiRequest(getPostEmail(user.email));
   const { isLoading, handleSubmit, errors } = useFormAndSubmit( user, clientFromDb, createNewPostLogin() );
   const navigateFunction = () => navigate("/products")

@@ -1,18 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import useApiRequest from './useApiRequest'; // Importa el hook useApiRequest
-
+import useApiRequest from './useApiRequest'; 
+import { createNewPostComments, getPostComments, getPostEmail, getUserFromLocalStorage } from '../../api/posts';
 const useComments = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
-  const user_global = JSON.parse(sessionStorage.getItem('user_logged'));
+  const user_global = getUserFromLocalStorage()
   const formattedDate = new Date().toLocaleString('es');
-  const { data: commentsRedi } = useApiRequest(
-    "http://localhost:4000/comments"
-  );
-  const { data: client } = useApiRequest(
-    `http://localhost:4000/email/${user_global.email}`
-  );
+  const { data: commentsRedi } = useApiRequest(getPostComments());
+  const { data: client } = useApiRequest(getPostEmail(user_global.email));
 
   const addComment = (user, comment) => {
     const newCommentObj = {
@@ -35,10 +31,9 @@ const useComments = () => {
 
   const onSubmit = (comment) => {
     axios
-      .post('http://localhost:4000/addComments', comment)
+      .post(createNewPostComments(), comment)
       .then(({ data }) => {
         console.log(data);
-        console.log('Se guardó el comentario');
       })
       .catch(({ response }) => {
         console.log(response.data);

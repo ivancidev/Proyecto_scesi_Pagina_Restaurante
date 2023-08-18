@@ -6,6 +6,7 @@ import { FaShoppingCart, FaRegComments } from "react-icons/fa";
 import Comments from "./Comments/Comments";
 import ViewBuy from "./Window/ViewBuy";
 import useRemoveCart from "./hooks/useRemoveCart";
+import { getProductsStorage } from "../api/posts";
 
 const Car = ({ showOrder, setShowOrder, changeBackground, totalPrice, setTotalPrice }) => {
 
@@ -13,8 +14,9 @@ const Car = ({ showOrder, setShowOrder, changeBackground, totalPrice, setTotalPr
   const [idMenu, setIdMenu] = useState(0);
   const [showButtons, setShowButtons] = useState(false);
   const [showError, setShowError] = useState(false);
-  var productsStorage = JSON.parse(sessionStorage.getItem("add_products"));
+  const productsStorage = getProductsStorage()
   const { products } = useRemoveCart(productsStorage, idMenu, setIdMenu, totalPrice, setTotalPrice)
+
 
   const handleClickComments = () => {
     setComments(true);
@@ -41,7 +43,7 @@ const Car = ({ showOrder, setShowOrder, changeBackground, totalPrice, setTotalPr
     >
       <ViewError
         showError={showError}
-        content={"Agrega productos al carrito de compra 🛒"}
+        content={"Agrega tu orden al carrito de compra 🛒"}
       />
       <div className="relative pt-16 lg:pt-3 text-gray-300 p-8 h-full">
         <RiCloseLine

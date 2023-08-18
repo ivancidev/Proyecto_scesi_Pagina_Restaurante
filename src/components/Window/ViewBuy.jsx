@@ -4,16 +4,13 @@ import OptionButton from "../Purchase Options/OptionButton";
 import { BsXCircleFill } from "react-icons/bs";
 import useApiRequest from "../hooks/useApiRequest";
 import DetailBuy from "../DetailsBuy/DetailBuy";
+import { getPostEmail, getUserFromLocalStorage } from "../../api/posts";
 
-const ViewBuy = (props) => {
-  const { showButtons, setShowButtons } = props;
+const ViewBuy = ({ showButtons, setShowButtons, totalPrice }) => {
   const [selectionOption, setSelectionOption] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-  const { totalPrice } = props;
-  const user_global = JSON.parse(sessionStorage.getItem("user_logged"));
-  const { data: client } = useApiRequest(
-    `http://localhost:4000/email/${user_global.email}`
-  );
+  const user_global = getUserFromLocalStorage();
+  const { data: client } = useApiRequest(getPostEmail(user_global.email));
 
   return (
     <header className="fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75">

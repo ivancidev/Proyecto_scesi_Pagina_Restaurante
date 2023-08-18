@@ -1,10 +1,7 @@
 import React from "react";
 
-const OpcionBoton = (props) => {
-  const { showButtons } = props;
-  const { openModal, setOpenModal } = props;
-  const { setSelectionOption } = props
-
+const OpcionBoton = ({ openModal, setOpenModal, showButtons, setSelectionOption}) => {
+  
   const handleOpcionClick = (opcion) => {
     setSelectionOption(opcion);
     setOpenModal(true);

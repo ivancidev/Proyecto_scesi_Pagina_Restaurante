@@ -8,7 +8,7 @@ export const useProductState = () => {
   const [food, setFood] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [dishes, setDishes] = useState([]);
-  const [dish, setDish] = useState("friedmenu");
+  const [dish, setDish] = useState("menuFried");
   const [products, setProducts] = useState([]);
   const [showError, setShowError] = useState(false);
   const [window, setWindow] = useState(false);

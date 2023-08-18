@@ -1,41 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { RiSearch2Line } from "react-icons/ri";
 import { BsXCircleFill } from "react-icons/bs";
 import logo from "../assets/imagenes/logo.png";
+import useApiRequest from "./hooks/useApiRequest";
+import { getAllMenu } from "../api/posts";
 
 
-const Header = (props) => {
+const Header = ({dish, setDish, changeBackground}) => {
   const [searchValue, setSearchValue] = useState("");
-  const [foods, setFoods] = useState([]);
-  const { dish, setDish } = props;
   const [food, setFood] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const {changeBackground} = props
+  const { data: foods } = useApiRequest(getAllMenu())
 
-  
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
     setDish(event.target.value)
   };
   
 
-  const filteredCards = foods.filter((card) =>
+  const filteredCards = foods? (foods.filter((card) =>
     card.nombreMenu.toLowerCase().includes(searchValue.toLowerCase())
-  );
+  )):([]);
 
-  useEffect(() => {
-    const fetchFoods = async () => {
-      try {
-        const response = await fetch(`http://localhost:4000/menu`);
-        const data = await response.json();
-        setFoods(data);
-      } catch (error) {
-        console.error("Error al obtener el cliente:", error);
-      }
-    };
-
-    fetchFoods();
-  }, []);
   const handleOpenClick = (c) => {
     setModalOpen(true);
     setFood(c);
@@ -145,9 +131,9 @@ const Header = (props) => {
       {/* Tabs */}
       <nav className={`flex items-center justify-between md:justify-start md:gap-8 border-b-4 border-orange-700 mb-6`}>
         <button
-          onClick={() => setDish("friedmenu")}
+          onClick={() => setDish("menuFried")}
           className={`${
-            dish == "menufrito" ? "text-red-600" : "text-black py-2 pr-4 "
+            dish == "menuFried" ? "text-red-600" : "text-black py-2 pr-4 "
           } ${changeBackground? "text-white":"text-black"}`}
         >
           Platos fritos

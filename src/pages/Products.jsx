@@ -1,5 +1,4 @@
 import { RiUser3Line, RiCloseLine } from "react-icons/ri";
-// Components
 import Sidebar from "../components/Sidebar";
 import Car from "../components/Car";
 import Header from "../components/Header";
@@ -13,6 +12,7 @@ import { useErrorHandling } from "../components/hooks/useErrorHandling";
 import { useApiRequest } from "../components/hooks/useApiRequest";
 import OrderCard from "../components/Orders/OrderCard";
 import ModalWindow from "../components/Window/ModalWindow";
+import { getPostMenus } from "../api/posts";
 
 function Products() {
   const {
@@ -37,31 +37,12 @@ function Products() {
   } = useProductState();
   const { showError, handleButtonErrorClick } = useErrorHandling();
   const { addProduct } = useAddProduct(totalPrice, setTotalPrice);
-  const { data: dishes } = useApiRequest(`http://localhost:4000/menus/${dish}`);
+  const { data: dishes } = useApiRequest(getPostMenus(dish));
 
   const handleOpenClick = (foodSelecction) => {
     setModalOpen(true);
     setFood(foodSelecction);
   };
-
-  const listFoods =
-    dishes && dishes.length > 0 ? (
-      dishes.map((dish) => (
-        <OrderCard
-          key={dish.idMenu}
-          dish={dish}
-          addProduct={addProduct}
-          handleButtonErrorClick={handleButtonErrorClick}
-          handleOpenClick={handleOpenClick}
-        />
-      ))
-    ) : (
-      <div className="flex flex-col justify-center items-center h-full w-full">
-        <p className="text-[25px] text-slate-700 font-serif">
-          Cargando ordenes...
-        </p>
-      </div>
-    );
 
   return (
     <header
@@ -137,7 +118,23 @@ function Products() {
           <div
             className={`p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16`}
           >
-            {listFoods}
+            {dishes && dishes.length > 0 ? (
+              dishes.map((dish) => (
+                <OrderCard
+                  key={dish.idMenu}
+                  dish={dish}
+                  addProduct={addProduct}
+                  handleButtonErrorClick={handleButtonErrorClick}
+                  handleOpenClick={handleOpenClick}
+                />
+              ))
+            ) : (
+              <div className="flex flex-col justify-center items-center h-full w-full">
+                <p className="text-[25px] text-slate-700 font-serif">
+                  Cargando ordenes...
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </main>

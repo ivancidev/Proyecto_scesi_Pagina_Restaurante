@@ -8,6 +8,7 @@ import ConfirmationModal from "../Window/ConfirmationModal";
 import PurchaseSuccesModal from "../Window/PurchaseSuccesModal";
 import ProductsTable from "../tables/ProductsTable";
 import PaymentOptions from "../PaymentOptions";
+import { createNewPostDelivery, createNewPostRestaurant, getDeleteProductsStorage, getProductsStorage } from "../../api/posts";
 
 const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selectionOption }) => {
   
@@ -28,7 +29,7 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
   const [valueCombox, setValueCombox] = useState("");
   const [duration, setDuration] = useState(0);
   const [errors, setErrors] = useState({});
-  const products = JSON.parse(sessionStorage.getItem("add_products"));
+  const products = getProductsStorage()
   const clientDelivery = { name, addres, phone, numberCard, orderNames, totalPrice, date, hour };
   const clientRestaurant = { numberTable, numberCard, orderNames, valueCombox, date, hour, phone, name, totalPrice };
 
@@ -38,7 +39,7 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
     buy: deliveryBuy,
     setBuy: setDeliveryBuy,
     handleSubmit: handleDelivery,
-  } = usePost("http://localhost:4000/detailBuyDelivery", clientDelivery);
+  } = usePost(createNewPostDelivery(), clientDelivery);
 
   const {
     confirmation: restaurantConfirmation,
@@ -46,10 +47,7 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
     buy: restaurantBuy,
     setBuy: setRestaurantBuy,
     handleSubmit: handleRestaurant,
-  } = usePost(
-    "http://localhost:4000/detailPurchaseRestaurant",
-    clientRestaurant
-  );
+  } = usePost(createNewPostRestaurant(), clientRestaurant);
 
   const handleDeliverySubmit = () => {
     handleDelivery();
@@ -132,8 +130,7 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
     setDeliveryBuy(false);
     setOpenModal(false);
     setShowButtons(false);
-    sessionStorage.removeItem("add_products");
-    sessionStorage.setItem("add_products", null);
+    getDeleteProductsStorage()
     window.location.reload();
   };
 
@@ -141,8 +138,7 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
     setRestaurantBuy(false);
     setOpenModal(false);
     setShowButtons(false);
-    sessionStorage.removeItem("add_products");
-    sessionStorage.setItem("add_products", null);
+    getDeleteProductsStorage()
     window.location.reload();
   };
 

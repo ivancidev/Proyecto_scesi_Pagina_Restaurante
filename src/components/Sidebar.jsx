@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { FiArrowLeft } from "react-icons/fi";
 import { BsPersonSquare, BsMoonFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { FaIdCard } from "react-icons/fa";
 import { useApiRequest } from "./hooks/useApiRequest";
+import { getPostEmail, getUserFromLocalStorage } from "../api/posts";
 
-const Sidebar = (props) => {
-  const { showMenu, setShowMenu } = props;
-  const { window, setWindow } = props;
-  const { changeBackground, setChangeBackground } = props;
+const Sidebar = ({setShowMenu, showMenu, changeBackground, setChangeBackground, window, setWindow}) => {
   const navigate = useNavigate();
-  const user_global = JSON.parse(sessionStorage.getItem("user_logged"));
+  const user_global = getUserFromLocalStorage()
 
-  const { data: client } = useApiRequest(
-    `http://localhost:4000/email/${user_global.email}`
-  );
+  const { data: client } = useApiRequest(getPostEmail(user_global.email));
 
   const handlClickWindow = () => {
     setWindow(!window);

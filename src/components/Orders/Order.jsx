@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-const Order = (props) => {
-  const { order } = props;
-  const { idMenu, setIdMenu } = props;
-  const {changeBackground} = props
-
+const Order = ({ order, setIdMenu, changeBackground }) => {
   return (
     <div className={`${changeBackground ? "bg-slate-600":"bg-[#262837]"} block  p-4 rounded-xl mb-4`}>
       <div className="grid grid-cols-5 mb-4 justify-between">

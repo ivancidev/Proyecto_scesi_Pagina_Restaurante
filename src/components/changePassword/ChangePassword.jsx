@@ -5,6 +5,7 @@ import { useApiRequest } from "../hooks/useApiRequest";
 import { useForm } from "../hooks/useForm";
 import useKeepBd from "../hooks/useKeepBd";
 import useDeleteKey from "../hooks/useDeleteKey";
+import { deletePostKey, getPostEmail, getUserFromLocalStorage } from "../../api/posts";
 
 const ChangePassword = ({ window, setWindow }) => {
   const { user: userChange, handleChange } = useForm({
@@ -14,12 +15,10 @@ const ChangePassword = ({ window, setWindow }) => {
     newPassword: "",
   });
   const navigate = useNavigate();
-  const user_global = JSON.parse(sessionStorage.getItem("user_logged"));
-  const { data: client } = useApiRequest(
-    `http://localhost:4000/email/${user_global.email}`
-  );
+  const user_global = getUserFromLocalStorage()
+  const { data: client } = useApiRequest(getPostEmail(user_global.email));
   const { handleSubmit } = useKeepBd(userChange, navigate)
-  const { deleteKey } = useDeleteKey(`http://localhost:4000/delete-key/email/${user_global.email}`)
+  const { deleteKey } = useDeleteKey(deletePostKey(user_global.email))
 
   const handleSubmitForm = (e) =>{
     e.preventDefault()
