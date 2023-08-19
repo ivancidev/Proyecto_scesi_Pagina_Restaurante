@@ -14,25 +14,29 @@ Tambien cada cliente puede tener su propia cuenta e iniciar sesión y la compra 
 # 💻 En escritorio
 
 
-[![Captura-de-pantalla-2023-07-22-191316.png](https://i.postimg.cc/vmyxQ8Lx/Captura-de-pantalla-2023-07-22-191316.png)](https://postimg.cc/JsTzxLFR)
+[![Captura-de-pantalla-2023-08-19-080417.png](https://i.postimg.cc/yxgXYHKR/Captura-de-pantalla-2023-08-19-080417.png)](https://postimg.cc/1VSNJbfR)
 
-[![Captura-de-pantalla-2023-07-25-154259.png](https://i.postimg.cc/6qCS2wLq/Captura-de-pantalla-2023-07-25-154259.png)](https://postimg.cc/ZvKj2GQz)
+[![Captura-de-pantalla-2023-08-19-080524.png](https://i.postimg.cc/m27pQYxH/Captura-de-pantalla-2023-08-19-080524.png)](https://postimg.cc/2V8xYBSk)
 
-[![Captura-de-pantalla-2023-07-22-191700.png](https://i.postimg.cc/brVFhF7d/Captura-de-pantalla-2023-07-22-191700.png)](https://postimg.cc/ctYc7T4N)
+[![Captura-de-pantalla-2023-08-19-080629.png](https://i.postimg.cc/tCmJNxh9/Captura-de-pantalla-2023-08-19-080629.png)](https://postimg.cc/YhYtpjnP)
 
-[![Captura-de-pantalla-2023-07-25-160045.png](https://i.postimg.cc/wxhRxZ8G/Captura-de-pantalla-2023-07-25-160045.png)](https://postimg.cc/Z055Vfq8)
+[![Captura-de-pantalla-2023-08-19-080734.png](https://i.postimg.cc/c1zGDM5k/Captura-de-pantalla-2023-08-19-080734.png)](https://postimg.cc/Cdb25D0b)
 
-[![Captura-de-pantalla-2023-07-25-154411.png](https://i.postimg.cc/GhV8hCgG/Captura-de-pantalla-2023-07-25-154411.png)](https://postimg.cc/tYdC2Lj4)
+[![Captura-de-pantalla-2023-08-19-080815.png](https://i.postimg.cc/8kvg0rQ1/Captura-de-pantalla-2023-08-19-080815.png)](https://postimg.cc/qgpFtqvY)
 
-[![Captura-de-pantalla-2023-07-25-154524.png](https://i.postimg.cc/j2C2tgzM/Captura-de-pantalla-2023-07-25-154524.png)](https://postimg.cc/2LRrxx9W)
+[![Captura-de-pantalla-2023-08-19-080920.png](https://i.postimg.cc/prb4HqbP/Captura-de-pantalla-2023-08-19-080920.png)](https://postimg.cc/ZBHVPP5Q)
 
-[![Captura-de-pantalla-2023-07-25-154724.png](https://i.postimg.cc/s2y2vDYQ/Captura-de-pantalla-2023-07-25-154724.png)](https://postimg.cc/mPX4n46B)
+[![Captura-de-pantalla-2023-08-19-081005.png](https://i.postimg.cc/kg1H4n31/Captura-de-pantalla-2023-08-19-081005.png)](https://postimg.cc/DSG6p3zL)
+
+[![Captura-de-pantalla-2023-08-19-081056.png](https://i.postimg.cc/fRGx5FxW/Captura-de-pantalla-2023-08-19-081056.png)](https://postimg.cc/VJFrkKG2)
+
+[![Captura-de-pantalla-2023-08-19-081146.png](https://i.postimg.cc/0Q8KBqrv/Captura-de-pantalla-2023-08-19-081146.png)](https://postimg.cc/94nfDKGg)
 
 # 📱 En movil
 
-[![Captura-de-pantalla-2023-07-25-154808.png](https://i.postimg.cc/PJLXBLjc/Captura-de-pantalla-2023-07-25-154808.png)](https://postimg.cc/JHLCXztc)
+[![Captura-de-pantalla-2023-08-19-081253.png](https://i.postimg.cc/NFKM3Gc3/Captura-de-pantalla-2023-08-19-081253.png)](https://postimg.cc/p5tR8HyC)
 
-[![Captura-de-pantalla-2023-07-25-154848.png](https://i.postimg.cc/rp88qZT5/Captura-de-pantalla-2023-07-25-154848.png)](https://postimg.cc/qN5fLLz7)
+[![Captura-de-pantalla-2023-08-19-081353.png](https://i.postimg.cc/5y8047Xg/Captura-de-pantalla-2023-08-19-081353.png)](https://postimg.cc/PvrhKMzv)
 
 
 
