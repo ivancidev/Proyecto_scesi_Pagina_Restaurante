@@ -10,7 +10,7 @@ const useFormAndSubmit = (user, clientFromDb = {}, url) => {
 
   const handleSubmit = async (navigateFunction) => {
     let newErrors = null
-    if (Object.keys(clientFromDb).length > 0) {
+    if (clientFromDb) {
         newErrors = validateForm(user, clientFromDb);
       } else {
         newErrors = validationRegister(user);
