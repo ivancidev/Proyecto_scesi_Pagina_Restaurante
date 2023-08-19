@@ -23,7 +23,7 @@ const CardDetails = ({ showOrder, setShowOrder, changeBackground, totalPrice, se
   };
 
   const handleCompraClick = () => {
-    if (products.length == 0) {
+    if (products == null || products.length == 0) {
       setShowError(true);
       setTimeout(() => {
         setShowError(false);

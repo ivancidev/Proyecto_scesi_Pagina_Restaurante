@@ -53,7 +53,7 @@ function Products() {
       <ChangePassword window={window} setWindow={setWindow} />
       <ModalError
         showError={showError}
-        content={"Producto no disponible por el momento"}
+        content={"Orden no disponible por el momento"}
       />
       <ModalWindow
         modalOpen={modalOpen}
