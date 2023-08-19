@@ -7,6 +7,7 @@ import Registration from "./pages/Registration";
 import PrivateRouter from "./routes/PrivateRouter";
 import NotFound from "./pages/NotFound";
 import ClientHistory from "./pages/ClientHistory";
+import OrdersFavorites from "./pages/OrdersFavorites";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route element={<PrivateRouter />}>
             <Route path="/products" element={<Products />}></Route>
             <Route path="/historyClient" element={<ClientHistory/>}></Route>
+            <Route path="/ordersFavorites" element={< OrdersFavorites/>}></Route>
             <Route path="*" element={<NotFound />} />
           </Route>
 

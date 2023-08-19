@@ -15,7 +15,7 @@ const CardDetails = ({ showOrder, setShowOrder, changeBackground, totalPrice, se
   const [showButtons, setShowButtons] = useState(false);
   const [showError, setShowError] = useState(false);
   const productsStorage = getProductsStorage()
-  const { products } = useRemoveCart(productsStorage, idMenu, setIdMenu, totalPrice, setTotalPrice)
+  const { products } = useRemoveCart(productsStorage, idMenu, setIdMenu, totalPrice, setTotalPrice,"add_products")
 
 
   const handleClickComments = () => {

@@ -13,31 +13,17 @@ import { useApiRequest } from "../components/hooks/useApiRequest";
 import OrderCard from "../components/Orders/OrderCard";
 import ModalWindow from "../components/Modals/ModalWindow";
 import { getPostMenus } from "../api/posts";
+import { useState } from "react";
+import ModalSucces from "../components/Modals/ModalSucces";
 
 function Products() {
-  const {
-    showMenu,
-    setShowMenu,
-    showOrder,
-    setShowOrder,
-    changeBackground,
-    setChangeBackground,
-    modalOpen,
-    setModalOpen,
-    food,
-    setFood,
-    totalPrice,
-    setTotalPrice,
-    dish,
-    setDish,
-    window,
-    setWindow,
-    toggleMenu,
-    toggleOrders,
-  } = useProductState();
+  const { showMenu, setShowMenu, showOrder, setShowOrder, changeBackground, setChangeBackground,
+    modalOpen, setModalOpen, food, setFood, totalPrice, setTotalPrice, dish, setDish,
+    window, setWindow, toggleMenu, toggleOrders } = useProductState();
   const { showError, handleButtonErrorClick } = useErrorHandling();
-  const { addProduct } = useAddProduct(totalPrice, setTotalPrice);
+  const { addProduct } = useAddProduct( totalPrice, setTotalPrice, "add_products" );
   const { data: dishes } = useApiRequest(getPostMenus(dish));
+  const [showSucces, setShowSucces] = useState(false);
 
   const handleOpenClick = (foodSelecction) => {
     setModalOpen(true);
@@ -118,6 +104,11 @@ function Products() {
           <div
             className={`p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16`}
           >
+            <ModalSucces
+              showError={showSucces}
+              content={"Orden favorito agregado"}
+            />
+
             {dishes && dishes.length > 0 ? (
               dishes.map((dish) => (
                 <OrderCard
@@ -126,6 +117,8 @@ function Products() {
                   addProduct={addProduct}
                   handleButtonErrorClick={handleButtonErrorClick}
                   handleOpenClick={handleOpenClick}
+                  showSucces={showSucces}
+                  setShowSucces={setShowSucces}
                 />
               ))
             ) : (

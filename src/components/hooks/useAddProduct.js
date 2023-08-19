@@ -1,6 +1,6 @@
 
-export const useAddProduct = (totalPrice, setTotalPrice) => {
-  const products_storage = JSON.parse(sessionStorage.getItem("add_products")) || [];
+export const useAddProduct = (totalPrice, setTotalPrice, key) => {
+  const products_storage = JSON.parse(sessionStorage.getItem(key)) || [];
 
   const handlePrecio = (p) => {
     setTotalPrice(parseInt(totalPrice) + parseInt(p));
@@ -12,7 +12,7 @@ export const useAddProduct = (totalPrice, setTotalPrice) => {
     updatedProducts[index].precioTotal =
       updatedProducts[index].cantidad * updatedProducts[index].precioMenu;
     handlePrecio(updatedProducts[index].precioMenu);
-    sessionStorage.setItem("add_products", JSON.stringify(updatedProducts));
+    sessionStorage.setItem(key, JSON.stringify(updatedProducts));
   };
 
   const addProduct = (dish) => {
@@ -29,7 +29,7 @@ export const useAddProduct = (totalPrice, setTotalPrice) => {
       };
       handlePrecio(dish.precioMenu);
       products.push(nuevoProducto);
-      sessionStorage.setItem("add_products", JSON.stringify(products));
+      sessionStorage.setItem(key, JSON.stringify(products));
     }
   };
 

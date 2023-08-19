@@ -1,16 +1,15 @@
 import React from "react";
-import { RiLogoutCircleRLine } from "react-icons/ri";
+import { RiLogoutCircleRLine, RiStarSmileFill } from "react-icons/ri";
 import { FiArrowLeft } from "react-icons/fi";
 import { BsPersonSquare, BsMoonFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { FaIdCard } from "react-icons/fa";
 import { useApiRequest } from "./hooks/useApiRequest";
 import { getPostEmail, getUserFromLocalStorage } from "../api/posts";
-
 const Sidebar = ({setShowMenu, showMenu, changeBackground, setChangeBackground, window, setWindow}) => {
+  
   const navigate = useNavigate();
   const user_global = getUserFromLocalStorage()
-
   const { data: client } = useApiRequest(getPostEmail(user_global.email));
 
   const handlClickWindow = () => {
@@ -26,10 +25,10 @@ const Sidebar = ({setShowMenu, showMenu, changeBackground, setChangeBackground, 
   };
 
   return (
-    <div
+    <header
       className={`${
         changeBackground ? "bg-stone-800" : "bg-orange-600"
-      } fixed lg:left-0 top-0 w-60 h-full flex-col justify-between py-6 rounded-tr-xl rounded-br-xl z-20 transition-all ${
+      } fixed lg:left-0 top-0 w-60 h-full flex-col justify-between py-6 rounded-tr-xl rounded-br-xl z-10 transition-all ${
         showMenu ? "left-0" : "-left-full"
       }`}
     >
@@ -67,11 +66,11 @@ const Sidebar = ({setShowMenu, showMenu, changeBackground, setChangeBackground, 
             </p>
           </li>
           <li
-            className="p-4 rounded-tl-xl rounded-bl-xl flex hover:bg-[#262837] hover:cursor-pointer mt-28"
+            className="p-4 rounded-tl-xl rounded-bl-xl flex hover:bg-[#262837] hover:cursor-pointer mt-16"
             onClick={handlClickWindow}
           >
             <BsPersonSquare className="text-2xl text-white" />
-            <p className="ml-3 text-white">Cambiar Usuario</p>
+            <p className="ml-3 text-white">Cambiar usuario</p>
           </li>
           <li
             className="p-4 rounded-tl-xl rounded-bl-xl flex hover:bg-[#262837] hover:cursor-pointer mt-2"
@@ -87,10 +86,17 @@ const Sidebar = ({setShowMenu, showMenu, changeBackground, setChangeBackground, 
             <BsMoonFill className="text-2xl text-white" />
             <p className="ml-3 text-white">Cambiar aspecto</p>
           </li>
+          <li
+            className="p-4 rounded-tl-xl rounded-bl-xl flex hover:bg-[#262837] hover:cursor-pointer mt-2"
+            onClick={() => navigate("/ordersFavorites", { state: { prop: client[0] } })}
+          >
+            <RiStarSmileFill className="text-2xl text-white" />
+            <p className="ml-3 text-white">Ver favoritos</p>
+          </li>
         </ul>
       </div>
       <div>
-        <ul className="pl-4 md:mt-60 mt-44">
+        <ul className="pl-4 md:mt-56 mt-44">
           <li
             className="hover:bg-[#272936] p-4 rounded-tl-xl rounded-bl-xl group transition-colors flex hover:cursor-pointer"
             onClick={closePreviousPage}
@@ -100,7 +106,7 @@ const Sidebar = ({setShowMenu, showMenu, changeBackground, setChangeBackground, 
           </li>
         </ul>
       </div>
-    </div>
+    </header>
   );
 };
 

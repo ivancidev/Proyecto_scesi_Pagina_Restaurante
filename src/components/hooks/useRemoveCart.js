@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 
-const useRemoveCart = (products, idMenu,setIdMenu, totalPrice, setTotalPrice) => {
+const useRemoveCart = (products, idMenu ,setIdMenu, totalPrice, setTotalPrice, key) => {
 
 
     const removeOrder = (productoId) => {
@@ -26,7 +26,7 @@ const useRemoveCart = (products, idMenu,setIdMenu, totalPrice, setTotalPrice) =>
             };
             console.log(productsActualizados);
             sessionStorage.setItem(
-              "add_products",
+              key,
               JSON.stringify(productsActualizados)
             );
           } else {
@@ -37,7 +37,7 @@ const useRemoveCart = (products, idMenu,setIdMenu, totalPrice, setTotalPrice) =>
             );
             console.log("Productos actualizados " + productsActualizados);
             sessionStorage.setItem(
-              "add_products",
+              key,
               JSON.stringify(productsActualizados)
             );
           }
