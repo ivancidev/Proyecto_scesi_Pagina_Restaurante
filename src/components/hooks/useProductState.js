@@ -9,8 +9,6 @@ export const useProductState = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [dishes, setDishes] = useState([]);
   const [dish, setDish] = useState("menuFried");
-  const [products, setProducts] = useState([]);
-  const [showError, setShowError] = useState(false);
   const [window, setWindow] = useState(false);
 
   const toggleMenu = () => {
@@ -40,10 +38,6 @@ export const useProductState = () => {
     setDishes,
     dish,
     setDish,
-    products,
-    setProducts,
-    showError,
-    setShowError,
     window,
     setWindow,
     toggleMenu,

@@ -29,9 +29,10 @@ const DetailBuy = ({ setOpenModal, client, totalPrice, setShowButtons, selection
   const [valueCombox, setValueCombox] = useState("");
   const [duration, setDuration] = useState(0);
   const [errors, setErrors] = useState({});
-  const products = getProductsStorage()
-  const clientDelivery = { name, addres, phone, numberCard, orderNames, totalPrice, date, hour };
-  const clientRestaurant = { numberTable, numberCard, orderNames, valueCombox, date, hour, phone, name, totalPrice };
+  const products = getProductsStorage();
+  const idClient = client[0].idCliente
+  const clientDelivery = { name, addres, phone, numberCard, orderNames, totalPrice, date, hour, idClient };
+  const clientRestaurant = { numberTable, numberCard, orderNames, valueCombox, date, hour, phone, name, totalPrice, idClient };
 
   const {
     confirmation: deliveryConfirmation,

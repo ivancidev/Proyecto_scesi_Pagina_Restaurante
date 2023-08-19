@@ -44,40 +44,40 @@ const Header = ({ dish, setDish, changeBackground }) => {
         <button
           onClick={() => setDish("menuFried")}
           className={`${
-            dish == "menuFried" ? "text-red-600" : "text-black py-2 pr-4 "
-          } ${changeBackground ? "text-white" : "text-black"}`}
+            dish == "menuFried" ? "text-red-500" : "text-black py-2 pr-4 "
+          } ${changeBackground ? "text-gray-50" : "text-black"}`}
         >
           Platos fritos
         </button>
         <button
           onClick={() => setDish("Sopa")}
           className={`${
-            dish == "Sopa" ? "text-red-600" : "text-black py-2 pr-4 "
-          } ${changeBackground ? "text-white" : "text-black"}`}
+            dish == "Sopa" ? "text-red-500" : "text-black py-2 pr-4 "
+          } ${changeBackground ? "text-gray-50" : "text-black"}`}
         >
           Sopas
         </button>
         <button
           onClick={() => setDish("Desayuno")}
           className={`${
-            dish == "Desayuno" ? "text-red-600" : "text-black py-2 pr-4 "
-          } ${changeBackground ? "text-white" : "text-black"}`}
+            dish == "Desayuno" ? "text-red-500" : "text-black py-2 pr-4 "
+          } ${changeBackground ? "text-gray-50" : "text-black"}`}
         >
           Desayunos
         </button>
         <button
           onClick={() => setDish("Postre")}
           className={`${
-            dish == "Postre" ? "text-red-600" : "text-black py-2 pr-4 "
-          } ${changeBackground ? "text-white" : "text-black"}`}
+            dish == "Postre" ? "text-red-500" : "text-black py-2 pr-4 "
+          } ${changeBackground ? "text-gray-50" : "text-black"}`}
         >
           Postres
         </button>
         <button
           onClick={() => setDish("Jugo")}
           className={`${
-            dish == "Jugo" ? "text-red-600" : "text-black py-2 pr-4 "
-          } ${changeBackground ? "text-white" : "text-black"}`}
+            dish == "Jugo" ? "text-red-500" : "text-black py-2 pr-4 "
+          } ${changeBackground ? "text-gray-50" : "text-black"}`}
         >
           Jugos
         </button>
